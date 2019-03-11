@@ -5,6 +5,7 @@ import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.GridLayoutManager
+import android.support.v7.widget.RecyclerView
 import dagger.android.AndroidInjection
 import io.realm.OrderedRealmCollection
 import io.realm.Realm
@@ -23,8 +24,10 @@ import javax.inject.Inject
  * @property deviceListAdapter DeviceListAdapter
  */
 class DeviceListActivity: AppCompatActivity() {
-    //@Inject lateinit var realm: Realm
-    //var data: RealmResults<DeviceModel>? = null
+    /**
+    @Inject lateinit var realm: Realm
+    var data: RealmResults<DeviceModel>? = null
+    **/
     @Inject lateinit var viewModelFactory: AppViewModelFactory
     val viewModel by lazy { ViewModelProviders.of(this, viewModelFactory).get(DeviceListViewModel::class.java) }
     var deviceListAdapter: DeviceListAdapter = DeviceListAdapter()
