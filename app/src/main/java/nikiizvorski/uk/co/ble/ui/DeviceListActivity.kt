@@ -23,12 +23,13 @@ import javax.inject.Inject
  * @property deviceListAdapter DeviceListAdapter
  */
 class DeviceListActivity: AppCompatActivity() {
+    //@Inject lateinit var realm: Realm
+    //var data: RealmResults<DeviceModel>? = null
     @Inject lateinit var viewModelFactory: AppViewModelFactory
-    @Inject lateinit var realm: Realm
-
     val viewModel by lazy { ViewModelProviders.of(this, viewModelFactory).get(DeviceListViewModel::class.java) }
     var deviceListAdapter: DeviceListAdapter = DeviceListAdapter()
     var deviceRealmList: DeviceRealmListAdapter? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
@@ -37,17 +38,17 @@ class DeviceListActivity: AppCompatActivity() {
         initUI()
     }
 
-    private var data: RealmResults<DeviceModel>? = null
-
     private fun initUI() {
         post_list.layoutManager = GridLayoutManager(this, 2)
-        //post_list.adapter = deviceListAdapter
+        post_list.adapter = deviceListAdapter
 
+        /**
         realm.executeTransaction(Realm.Transaction { realm ->
             data = realm.where(DeviceModel::class.java).findAll()
         })
 
         post_list.adapter = DeviceRealmListAdapter(this, data, true)
+        **/
 
         viewModel.visibility.observe(this, Observer { visibility ->
             progressBar.visibility = visibility!!
@@ -56,8 +57,8 @@ class DeviceListActivity: AppCompatActivity() {
         viewModel.data.observe(this, Observer { data ->
             if (data != null) {
                 Timber.d("Data Observed Size: %s", data.size)
-                //deviceListAdapter.updateData(data)
-                //deviceListAdapter.notifyDataSetChanged()
+                deviceListAdapter.updateData(data)
+                deviceListAdapter.notifyDataSetChanged()
             }
         })
     }
