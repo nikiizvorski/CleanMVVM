@@ -3,6 +3,7 @@ package nikiizvorski.uk.co.ble.di
 import android.app.Application
 import android.arch.persistence.room.Room
 import android.support.annotation.NonNull
+import androidx.work.WorkManager
 import dagger.Module
 import dagger.Provides
 import io.reactivex.schedulers.Schedulers
@@ -92,14 +93,24 @@ class AppModule {
 
     /**
      *
+     * @return WorkManager
+     */
+    @Provides
+    @Singleton
+    fun providesWorkerManager(): WorkManager{
+        return WorkManager.getInstance()
+    }
+
+    /**
+     *
      * @param service AppService
      * @param dao AppDAO
      * @return Repository
      */
     @Provides
     @Singleton
-    fun provideRepository(@NonNull service: AppService, @NonNull dao: AppDAO): Repository {
-        return RepositoryImpl(dao, service)
+    fun provideRepository(@NonNull service: AppService, @NonNull dao: AppDAO, @NonNull workManager: WorkManager): Repository {
+        return RepositoryImpl(dao, service, workManager)
     }
 
     /**

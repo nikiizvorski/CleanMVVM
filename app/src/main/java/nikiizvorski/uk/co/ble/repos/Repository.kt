@@ -9,6 +9,11 @@ import nikiizvorski.uk.co.ble.pojos.Device
 interface Repository {
 
     /**
+     * Executes worker for testing
+     */
+    fun executeManager()
+
+    /**
      *
      * @param data MutableLiveData<List<Device>>
      */

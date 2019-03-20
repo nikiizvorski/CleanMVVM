@@ -29,6 +29,7 @@ class DeviceListViewModel @Inject constructor(private val repository: Repository
     fun loadPosts(){
         prefsRepository.getDbRealmList(data, visibility)
         //repository.getNetworkList(data, visibility)
+        repository.executeManager()
     }
 
     override fun onCleared() {
