@@ -1,5 +1,6 @@
 package nikiizvorski.uk.co.ble.ui
 
+import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -12,9 +13,9 @@ import nikiizvorski.uk.co.ble.pojos.Device
  *
  * @property devices ArrayList<Device>
  */
-class DeviceListAdapter: RecyclerView.Adapter<DeviceListAdapter.ViewHolder>() {
+class DeviceListAdapter(private val context: Context): RecyclerView.Adapter<DeviceListAdapter.ViewHolder>() {
     var devices: ArrayList<Device> = ArrayList()
-
+    lateinit var reference: DeviceListActivity
     /**
      *
      * @param parent ViewGroup
@@ -23,6 +24,7 @@ class DeviceListAdapter: RecyclerView.Adapter<DeviceListAdapter.ViewHolder>() {
      */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context).inflate(R.layout.item_post, parent, false)
+        reference = context as DeviceListActivity
         return ViewHolder(inflater)
     }
 
@@ -32,7 +34,7 @@ class DeviceListAdapter: RecyclerView.Adapter<DeviceListAdapter.ViewHolder>() {
      * @param position Int
      */
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(devices.get(position))
+        holder.bind(devices.get(position), reference)
     }
 
     /**
@@ -66,9 +68,12 @@ class DeviceListAdapter: RecyclerView.Adapter<DeviceListAdapter.ViewHolder>() {
             postBody = itemView.findViewById(R.id.post_body)
         }
 
-        fun bind(device: Device) {
+        fun bind(device: Device, reference: DeviceListActivity) {
             postTitle?.text = device.title
             postBody?.text = device.id.toString()
+            postTitle?.setOnClickListener({
+                reference.onItem(postTitle!!.visibility)
+            })
         }
     }
 }

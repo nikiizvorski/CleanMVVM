@@ -53,3 +53,11 @@ u
 Eapp/src/main/java/nikiizvorski/uk/co/ble/ui/DeviceRealmListAdapter.kt,0/6/064cbed9f6dfbe5fee27fc26373e7332b9976d09
 m
 =app/src/main/java/nikiizvorski/uk/co/ble/util/DeviceWorker.kt,4/4/44b7add44d429fff31eb73b72e05fae126ce010f
+[
++app/src/main/res/layout/device_fragment.xml,e/6/e656e178308f2790e5a5654b29c1d21a77270d0b
+S
+#.idea/sonarlint/issuestore/index.pb,9/f/9fe84ebb15faf917b7def6236dba604453cc61e0
+q
+Aapp/src/main/java/nikiizvorski/uk/co/ble/ui/DeviceListFragment.kt,4/b/4b98939c95360276263b73745859715aaa3effc2
+r
+Bapp/src/main/java/nikiizvorski/uk/co/ble/ui/OnAdapterManagement.kt,c/2/c2fa88aa199a44dcf7ac26cb844dc87d7bd6c650
