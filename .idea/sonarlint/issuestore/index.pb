@@ -51,3 +51,5 @@ u
 Eapp/src/main/java/nikiizvorski/uk/co/ble/repos/PrefsRepositoryImpl.kt,5/a/5ac5ecea4a8d84cc6abaf67ed39e6160e233b383
 u
 Eapp/src/main/java/nikiizvorski/uk/co/ble/ui/DeviceRealmListAdapter.kt,0/6/064cbed9f6dfbe5fee27fc26373e7332b9976d09
+m
+=app/src/main/java/nikiizvorski/uk/co/ble/util/DeviceWorker.kt,4/4/44b7add44d429fff31eb73b72e05fae126ce010f
