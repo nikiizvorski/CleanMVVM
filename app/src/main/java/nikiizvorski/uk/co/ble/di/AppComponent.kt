@@ -6,12 +6,14 @@ import dagger.Component
 import dagger.android.AndroidInjectionModule
 import dagger.android.AndroidInjector
 import dagger.android.DaggerApplication
+import dagger.android.support.AndroidSupportInjectionModule
 import javax.inject.Singleton
 
 @Suppress("unused")
 @Singleton
 @Component(modules = [
     (AndroidInjectionModule::class),
+    (AndroidSupportInjectionModule::class),
     (ActivityModule::class),
     (ViewModelModule::class),
     (AppModule::class)])

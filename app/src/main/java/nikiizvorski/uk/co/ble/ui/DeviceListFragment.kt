@@ -20,8 +20,7 @@ import javax.inject.Inject
  */
 class DeviceListFragment : DaggerFragment() {
     /**
-     * To be able to use the fragments and inject them with a shared viewmodel please update them to DaggerAppCompactActivity and
-     * update your DI to have the default methods there.
+     * Updated the Fragment and Activity Shared View Model base adjust to requirement
      */
     @Inject
     lateinit var viewModelFactory: AppViewModelFactory
