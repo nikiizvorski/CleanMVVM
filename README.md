@@ -51,11 +51,11 @@ It has been years for me when i started in University adding code documentation 
 
 # Comments and thoghts
 
-Here you can find a very clean arch that will be updated in the future with some small samples and cool integrations over the time.  If you want me to include support for Fragment Injection with ViewModel and the relation between the activity and DaggerActivity and Fragment. Please let me know. I would be adding some more about that soon when i can find some more time. 
+Here you can find a very clean arch that will be updated in the future with some small samples and cool integrations over the time. I would be adding some more about that soon when i can find some more time. 
 
 # Update
 
-Next update will probably have Fragment Integration with a shared ViewModel and Navigation Controller for Task Managment into the application.
+Next update will probably have Navigation Controller for Task Managment into the application.
 
 # Licenze
 
