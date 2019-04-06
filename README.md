@@ -2,7 +2,7 @@
 
 Integration of the latest small tricks with Kotlin: CleanMVVM Architecture with Dagger, RxJava2, KotlinX, Retrofit, OkHttp, Room, Realm, Repos and more. The structure is represented here: 
 
-![alt text](https://imgur.com/NxWnKDk)
+![alt text](https://i.imgur.com/NA77aOD.png)
 
 And this is the following example: Views and binding is in the view where it should and not have to deal with mix bindings on the model which was a bad decision on the developer who though its good to remove the views from the view and mix views and business layer together. The Business logic is structured well and in place. Models and different actions as networking and db are well places as you can see. The code is structured well and have been done with Google Code Style and Sonar Lint for linting. Documentation is added on all. 
 
