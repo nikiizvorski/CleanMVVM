@@ -1,7 +1,5 @@
 # CleanMVVM
 
-Integration of the latest small tricks with Kotlin: CleanMVVM Architecture with Dagger, RxJava2, KotlinX, Retrofit, OkHttp, Room, Realm, Repos and more. The structure is represented here: 
-
 ![alt text](https://i.imgur.com/NA77aOD.png)
 
 # Structure
