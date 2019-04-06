@@ -33,6 +33,10 @@ Testing haven't been integrated in this project. But would be fairly simple to d
 
 The project doesn't have any CD integrated. But if anyone would like to have that i would provide a sample implementation to any of the following: BitBucket, Github, CircleCI, Travis or any other.
 
+# Gradle Scripts and Managment
+
+The Gradle scripts and managment haven't been updated to production build since the project is unknown and the future requirements are also. Once someone has a proposal i can add it and update a base default one. Which most people have in their company.
+
 # Language
 
 The language of the code would stay Kotlin. The architecture can be applied and rotated to MVP fairly easy and to Java after if you want. 
