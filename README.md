@@ -33,6 +33,10 @@ Testing haven't been integrated in this project. But would be fairly simple to d
 
 The project doesn't have any CD integrated. But if anyone would like to have that i would provide a sample implementation to any of the following: BitBucket, Github, CircleCI, Travis or any other.
 
+# Bintray - Maven/JCenter
+
+Center automation and Distribution can be added also the scripts can be added without any issues or incompatibility 
+
 # Gradle Scripts and Managment
 
 The Gradle scripts and managment haven't been updated to production build since the project is unknown and the future requirements are also. Once someone has a proposal i can add it and update a base default one. Which most people have in their company.
