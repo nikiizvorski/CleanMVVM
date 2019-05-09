@@ -5,7 +5,10 @@ import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.GridLayoutManager
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.NavigationUI
 import dagger.android.AndroidInjection
+import dagger.android.support.DaggerAppCompatActivity
 import nikiizvorski.uk.co.ble.R
 import nikiizvorski.uk.co.ble.factory.AppViewModelFactory
 import kotlinx.android.synthetic.main.activity_post_list.*
@@ -18,7 +21,7 @@ import javax.inject.Inject
  * @property viewModel DeviceListViewModel
  * @property deviceListAdapter DeviceListAdapter
  */
-class DeviceListActivity: AppCompatActivity(), OnAdapterManagement {
+class DeviceListActivity: DaggerAppCompatActivity(), OnAdapterManagement {
 
     override fun onItem(int: Int) {
         viewModel.visibility.value = int
@@ -42,6 +45,8 @@ class DeviceListActivity: AppCompatActivity(), OnAdapterManagement {
     }
 
     private fun initUI() {
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.navigation_host_fragment) as NavHostFragment?
+
         post_list.layoutManager = GridLayoutManager(this, 2)
         post_list.adapter = deviceListAdapter
 

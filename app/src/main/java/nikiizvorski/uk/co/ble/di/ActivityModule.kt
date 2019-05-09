@@ -12,5 +12,5 @@ abstract class ActivityModule {
     internal abstract fun contributeDeviceListActivity(): DeviceListActivity
 
     @ContributesAndroidInjector
-    internal abstract fun contributeConnectivityFragment(): DeviceListFragment
+    internal abstract fun contributeDeviceListFragment(): DeviceListFragment
 }
