@@ -50,6 +50,10 @@ Documentation
 ---------------
 It has been years for me when i started in University adding code documentation and i would like to think and continue to do that as a good developers practise. SOLID
 
+InteliJ Plugins Used
+---------------
+Plugins that i have personally used in our company and in my personal work. 
+
 Comments and Ideas
 ---------------
 Here you can find a very clean arch that will be updated in the future with some small samples and cool integrations over the time. I would be adding some more about that soon when i can find some more time. 
