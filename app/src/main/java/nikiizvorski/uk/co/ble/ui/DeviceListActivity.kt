@@ -36,7 +36,10 @@ class DeviceListActivity: DaggerAppCompatActivity(), OnAdapterManagement {
     var deviceListAdapter: DeviceListAdapter = DeviceListAdapter(this)
     var deviceRealmList: DeviceRealmListAdapter? = null
 
-
+    /**
+     *
+     * @param savedInstanceState Bundle?
+     */
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_post_list)
@@ -44,18 +47,32 @@ class DeviceListActivity: DaggerAppCompatActivity(), OnAdapterManagement {
         initUI()
     }
 
+    /**
+     * Init UI
+     */
     private fun initUI() {
+
+        /**
+         * Nav Host Example and setup
+         *
+         * This line can be deleted but its here for the example
+         */
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.navigation_host_fragment) as NavHostFragment?
 
+        /**
+         * Normal Adapter Setup
+         */
         post_list.layoutManager = GridLayoutManager(this, 2)
         post_list.adapter = deviceListAdapter
 
         /**
+         * Realm Setup
+
         realm.executeTransaction(Realm.Transaction { realm ->
             data = realm.where(DeviceModel::class.java).findAll()
         })
 
-        post_list.adapter = DeviceRealmListAdapter(this, data, true)
+        post_list.adapter = DeviceRealmListAdapter(data, true)
         **/
 
         viewModel.visibility.observe(this, Observer { visibility ->

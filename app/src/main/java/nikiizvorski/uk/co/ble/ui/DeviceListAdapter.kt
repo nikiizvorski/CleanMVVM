@@ -71,9 +71,9 @@ class DeviceListAdapter(private val context: Context): RecyclerView.Adapter<Devi
         fun bind(device: Device, reference: DeviceListActivity) {
             postTitle?.text = device.title
             postBody?.text = device.id.toString()
-            postTitle?.setOnClickListener({
+            postTitle?.setOnClickListener {
                 reference.onItem(postTitle!!.visibility)
-            })
+            }
         }
     }
 }

@@ -16,7 +16,7 @@ import nikiizvorski.uk.co.ble.pojos.DeviceModel
  *
  * @property devices ArrayList<Device>
  */
-class DeviceRealmListAdapter(private val context: Context, private val collection: OrderedRealmCollection<DeviceModel>?, private val autoUpdate: Boolean):
+class DeviceRealmListAdapter(private val collection: OrderedRealmCollection<DeviceModel>?, autoUpdate: Boolean):
     RealmRecyclerViewAdapter<DeviceModel, DeviceRealmListAdapter.ViewHolder>(collection, autoUpdate) {
 
     /**

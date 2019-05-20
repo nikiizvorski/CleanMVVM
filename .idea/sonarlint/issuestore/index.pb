@@ -61,3 +61,13 @@ q
 Aapp/src/main/java/nikiizvorski/uk/co/ble/ui/DeviceListFragment.kt,4/b/4b98939c95360276263b73745859715aaa3effc2
 r
 Bapp/src/main/java/nikiizvorski/uk/co/ble/ui/OnAdapterManagement.kt,c/2/c2fa88aa199a44dcf7ac26cb844dc87d7bd6c650
+^
+.app/src/main/res/layout/activity_post_list.xml,f/c/fc4dde2b130ef5455b74c2f53bdf2e670b870d1a
+Y
+)app/src/main/res/navigation/nav_graph.xml,b/a/baffce053da291d96fb575a09f2bbe9aaa9c4be9
+L
+.idea/codeStyles/Project.xml,6/e/6ecd6000a7b6f4a2884412ff19f74193ed089648
+X
+(gradle/wrapper/gradle-wrapper.properties,f/b/fbe448ebfc3eb2d4e308f6b8b043666f5b57235e
+k
+;app/src/test/java/nikiizvorski/uk/co/ble/ExampleUnitTest.kt,1/1/114b01970fc79ea0607126d378282e0277e203a2
