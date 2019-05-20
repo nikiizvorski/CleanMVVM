@@ -15,6 +15,9 @@ import nikiizvorski.uk.co.ble.pojos.DeviceModel
 /**
  *
  * @property devices ArrayList<Device>
+ *
+ * You can also pass the ViewModel to the adapter directly there wouldn't be any problems with that also.
+ * Garbage collector will finish its job without any memory leaks.
  */
 class DeviceRealmListAdapter(private val collection: OrderedRealmCollection<DeviceModel>?, autoUpdate: Boolean):
     RealmRecyclerViewAdapter<DeviceModel, DeviceRealmListAdapter.ViewHolder>(collection, autoUpdate) {

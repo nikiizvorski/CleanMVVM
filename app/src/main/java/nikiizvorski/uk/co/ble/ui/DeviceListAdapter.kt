@@ -12,6 +12,9 @@ import nikiizvorski.uk.co.ble.pojos.Device
 /**
  *
  * @property devices ArrayList<Device>
+ *
+ * You can also pass the ViewModel to the adapter directly there wouldn't be any problems with that also.
+ * Garbage collector will finish its job without any memory leaks.
  */
 class DeviceListAdapter(private val context: Context): RecyclerView.Adapter<DeviceListAdapter.ViewHolder>() {
     var devices: ArrayList<Device> = ArrayList()
