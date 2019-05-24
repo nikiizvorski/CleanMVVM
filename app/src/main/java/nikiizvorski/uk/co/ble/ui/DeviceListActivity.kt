@@ -16,6 +16,7 @@ import timber.log.Timber
 import javax.inject.Inject
 
 /**
+ * Using Synthetic for Views on the Activity for Example
  *
  * @property viewModelFactory AppViewModelFactory
  * @property viewModel DeviceListViewModel

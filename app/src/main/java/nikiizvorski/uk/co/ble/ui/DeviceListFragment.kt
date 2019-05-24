@@ -3,6 +3,7 @@ package nikiizvorski.uk.co.ble.ui
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
+import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,15 +11,19 @@ import android.view.ViewGroup
 import dagger.android.support.AndroidSupportInjection
 import dagger.android.support.DaggerFragment
 import nikiizvorski.uk.co.ble.R
+import nikiizvorski.uk.co.ble.databinding.DeviceFragmentBinding
 import nikiizvorski.uk.co.ble.factory.AppViewModelFactory
 import javax.inject.Inject
 
 /**
  *
+ * Using DataBinding for Views on the Activity for Example
+ *
  * @property viewModelFactory AppViewModelFactory
  * @property viewModel DeviceListViewModel
  */
 class DeviceListFragment : DaggerFragment() {
+    private lateinit var binding: DeviceFragmentBinding
     /**
      * Updated the Fragment and Activity Shared View Model base adjust to requirement
      */
@@ -45,7 +50,8 @@ class DeviceListFragment : DaggerFragment() {
      * @return View?
      */
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.device_fragment, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.device_fragment, container, false)
+        return binding.root
     }
 
     /**
@@ -60,7 +66,7 @@ class DeviceListFragment : DaggerFragment() {
 
     private fun initUI() {
         viewModel.visibility.observe(this, Observer { visibility ->
-
+            binding.offlineLayout.visibility = View.VISIBLE
         })
     }
 }
