@@ -66,7 +66,7 @@ class DeviceListFragment : DaggerFragment() {
 
     private fun initUI() {
         viewModel.visibility.observe(this, Observer { visibility ->
-            binding.offlineLayout.visibility = View.VISIBLE
+            binding.offlineLayout.visibility = visibility!!
         })
     }
 }
