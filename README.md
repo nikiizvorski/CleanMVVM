@@ -58,11 +58,15 @@ Comments and Ideas
 ---------------
 Here you can find a very clean arch that will be updated in the future with some small samples and cool integrations over the time. I would be adding some more about that soon when i can find some more time. 
 
-Android Jetpack and Navigation Integration added
+Android Jetpack and Navigation Integration Added
 ---------------
 You can check the gist for some example and some more info about the integration. The project have a base structure of navigation host, graph and a menu with the new stuff from jetpack. Quite interesting for the new versions. Also you will find a bottomNavigation integration.
 
 https://gist.github.com/nikiizvorski/d33b4619997aee78cae099e95b5eb38e
+
+Android Lifecycle Integration Added
+---------------
+You can check the DeviceTest and DeviceFragment to see the integration of LicecycleEvents and LicecycleObserver. It can be benefitial to some projects but it can also be not so appropriate about some projects and can create a lot of confusion and issues on the way. From what i have tested from them they have worked fine in the small uses cases. Here you can get integration and be able to realise how it works.
 
 Update
 ---------------
