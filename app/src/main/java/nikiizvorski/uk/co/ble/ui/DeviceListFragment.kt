@@ -13,6 +13,7 @@ import dagger.android.support.DaggerFragment
 import nikiizvorski.uk.co.ble.R
 import nikiizvorski.uk.co.ble.databinding.DeviceFragmentBinding
 import nikiizvorski.uk.co.ble.factory.AppViewModelFactory
+import nikiizvorski.uk.co.ble.util.DeviceTest
 import javax.inject.Inject
 
 /**
@@ -23,6 +24,7 @@ import javax.inject.Inject
  * @property viewModel DeviceListViewModel
  */
 class DeviceListFragment : DaggerFragment() {
+    private lateinit var deviceTest: DeviceTest
     private lateinit var binding: DeviceFragmentBinding
     /**
      * Updated the Fragment and Activity Shared View Model base adjust to requirement
@@ -61,6 +63,7 @@ class DeviceListFragment : DaggerFragment() {
      */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        deviceTest = DeviceTest(this.lifecycle)
         initUI()
     }
 

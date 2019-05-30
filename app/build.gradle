@@ -66,9 +66,6 @@ dependencies {
     // LiveData & ViewModel
     implementation"android.arch.lifecycle:extensions:$lifecycle_version"
 
-    // Extensions
-    implementation "android.arch.lifecycle:extensions:$lifecycle_version"
-
     // Retrofit
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit_version"
