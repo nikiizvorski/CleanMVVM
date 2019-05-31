@@ -11,6 +11,10 @@ import javax.inject.Inject
 /**
  *
  *
+ * Make sure to have a proper encapsulation on your fields.
+ * If you need make duplicate just to pass the data to the view
+ * don't change the value of your data from the view directly.
+ *
  * @property repository Repository
  * @property subscription Disposable
  * @property data MutableLiveData<List<Device>>

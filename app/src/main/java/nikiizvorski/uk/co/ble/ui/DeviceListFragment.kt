@@ -53,6 +53,17 @@ class DeviceListFragment : DaggerFragment() {
      */
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.device_fragment, container, false)
+
+        /**
+         * Set the ViewModel directly in the view with binding.deviceViewModel = viewModel and use the methods straight away
+         * and after use the methods directly i can't recommend that but that's on a personal decision of the way and structure
+         * your project is going to have.
+         *
+         * Also you can directly set the lifecycle with binding.setLifecycleOwner(this) to make the data
+         * lifecycle aware also.
+         *
+         */
+
         return binding.root
     }
 

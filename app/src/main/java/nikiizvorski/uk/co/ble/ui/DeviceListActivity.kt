@@ -3,10 +3,8 @@ package nikiizvorski.uk.co.ble.ui
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.GridLayoutManager
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.NavigationUI
 import dagger.android.AndroidInjection
 import dagger.android.support.DaggerAppCompatActivity
 import nikiizvorski.uk.co.ble.R
