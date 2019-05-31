@@ -1,5 +1,6 @@
 package nikiizvorski.uk.co.ble.ui
 
+import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import io.reactivex.disposables.Disposable
@@ -25,15 +26,22 @@ import javax.inject.Inject
 class DeviceListViewModel @Inject constructor(private val repository: Repository, private val prefsRepository: PrefsRepository):ViewModel(){
     private lateinit var subscription: Disposable
     val data = MutableLiveData<List<Device>>()
-    val visibility = MutableLiveData<Int>()
+
+    /**
+     * Proper encapsulation example
+     */
+    val _visibility = MutableLiveData<Int>()
+    val visibility: LiveData<Int>
+        get() = _visibility
+
 
     init{
         loadPosts()
     }
 
     fun loadPosts(){
-        prefsRepository.getDbRealmList(data, visibility)
-        //repository.getNetworkList(data, visibility)
+        prefsRepository.getDbRealmList(data, _visibility)
+        //repository.getNetworkList(data, _visibility)
         repository.executeManager()
     }
 
@@ -44,5 +52,9 @@ class DeviceListViewModel @Inject constructor(private val repository: Repository
     override fun onCleared() {
         super.onCleared()
         subscription.dispose()
+    }
+
+    fun changeVisibility(value: Int) {
+        _visibility.value = value
     }
 }

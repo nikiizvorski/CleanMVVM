@@ -22,8 +22,12 @@ import javax.inject.Inject
  */
 class DeviceListActivity: DaggerAppCompatActivity(), OnAdapterManagement {
 
+    /**
+     * Fix for leak and encapsulation example follow the commits
+     * @param int Int
+     */
     override fun onItem(int: Int) {
-        viewModel.visibility.value = int
+        viewModel.changeVisibility(int)
     }
 
     /**
@@ -88,6 +92,9 @@ class DeviceListActivity: DaggerAppCompatActivity(), OnAdapterManagement {
         })
     }
 
+    /**
+     * Realm setup
+     */
     private fun realmSetup() {
         /*
             realm.executeTransaction(Realm.Transaction { realm ->
