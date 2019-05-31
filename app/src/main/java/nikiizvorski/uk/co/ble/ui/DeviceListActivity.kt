@@ -66,18 +66,19 @@ class DeviceListActivity: DaggerAppCompatActivity(), OnAdapterManagement {
 
         /**
          * Realm Setup
-
-        realm.executeTransaction(Realm.Transaction { realm ->
-            data = realm.where(DeviceModel::class.java).findAll()
-        })
-
-        post_list.adapter = DeviceRealmListAdapter(data, true)
         **/
+        realmSetup()
 
+        /**
+         * Observe the LiveData from ViewModel
+         */
         viewModel.visibility.observe(this, Observer { visibility ->
             progressBar.visibility = visibility!!
         })
 
+        /**
+         * Observe the LiveData from ViewModel
+         */
         viewModel.data.observe(this, Observer { data ->
             if (data != null) {
                 Timber.d("Data Observed Size: %s", data.size)
@@ -85,5 +86,15 @@ class DeviceListActivity: DaggerAppCompatActivity(), OnAdapterManagement {
                 deviceListAdapter.notifyDataSetChanged()
             }
         })
+    }
+
+    private fun realmSetup() {
+        /*
+            realm.executeTransaction(Realm.Transaction { realm ->
+                data = realm.where(DeviceModel::class.java).findAll()
+            })
+
+            post_list.adapter = DeviceRealmListAdapter(data, true)
+        */
     }
 }
