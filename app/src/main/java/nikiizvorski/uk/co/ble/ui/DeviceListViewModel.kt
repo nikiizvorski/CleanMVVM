@@ -6,6 +6,7 @@ import io.reactivex.disposables.Disposable
 import nikiizvorski.uk.co.ble.pojos.Device
 import nikiizvorski.uk.co.ble.repos.PrefsRepository
 import nikiizvorski.uk.co.ble.repos.Repository
+import timber.log.Timber
 import javax.inject.Inject
 
 /**
@@ -34,6 +35,10 @@ class DeviceListViewModel @Inject constructor(private val repository: Repository
         prefsRepository.getDbRealmList(data, visibility)
         //repository.getNetworkList(data, visibility)
         repository.executeManager()
+    }
+
+    fun exampleClick(){
+        Timber.d("Clicked")
     }
 
     override fun onCleared() {

@@ -14,6 +14,7 @@ import nikiizvorski.uk.co.ble.R
 import nikiizvorski.uk.co.ble.databinding.DeviceFragmentBinding
 import nikiizvorski.uk.co.ble.factory.AppViewModelFactory
 import nikiizvorski.uk.co.ble.util.DeviceTest
+import timber.log.Timber
 import javax.inject.Inject
 
 /**
@@ -46,6 +47,10 @@ class DeviceListFragment : DaggerFragment() {
 
     /**
      *
+     * Example of usage of direct DataBinding and ViewModel and without. You can remove all of the code and replace that logic alone.
+     * Depends on the company preference.
+     *
+     *
      * @param inflater LayoutInflater
      * @param container ViewGroup?
      * @param savedInstanceState Bundle?
@@ -53,17 +58,8 @@ class DeviceListFragment : DaggerFragment() {
      */
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.device_fragment, container, false)
-
-        /**
-         * Set the ViewModel directly in the view with binding.deviceViewModel = viewModel and use the methods straight away
-         * and after use the methods directly i can't recommend that but that's on a personal decision of the way and structure
-         * your project is going to have.
-         *
-         * Also you can directly set the lifecycle with binding.setLifecycleOwner(this) to make the data
-         * lifecycle aware also.
-         *
-         */
-
+        binding.deviceListViewModel = viewModel
+        binding.lifecycleOwner = this
         return binding.root
     }
 
@@ -79,8 +75,15 @@ class DeviceListFragment : DaggerFragment() {
     }
 
     private fun initUI() {
+        /**
+         * Observer without the view logic
+         */
         viewModel.visibility.observe(this, Observer { visibility ->
-            binding.offlineLayout.visibility = visibility!!
+            if (visibility == View.VISIBLE) {
+                Timber.d("VISIBLE")
+            } else {
+                Timber.d("INVISIBLE")
+            }
         })
     }
 }

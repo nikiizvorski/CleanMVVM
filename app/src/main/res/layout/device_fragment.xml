@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable
+                name="deviceListViewModel"
+                type="nikiizvorski.uk.co.ble.ui.DeviceListViewModel" />
+    </data>
 <RelativeLayout android:layout_width="match_parent"
                 android:id="@+id/offline_layout"
                 android:layout_height="match_parent" >
@@ -9,11 +14,12 @@
             android:layout_height="match_parent">
 
 
-        <TextView
+        <Button
                 android:text="FragmentHostExample"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"/>
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_centerInParent="true"
+                android:onClick="@{() -> deviceListViewModel.exampleClick()}"/>
 
     </RelativeLayout>
 </RelativeLayout>
