@@ -68,6 +68,10 @@ Android Lifecycle Integration Added
 ---------------
 You can check the DeviceTest and DeviceFragment to see the integration of LicecycleEvents and LicecycleObserver. It can be benefitial to some projects but it can also be not so appropriate about some projects and can create a lot of confusion and issues on the way. From what i have tested from them they have worked fine in the small uses cases. Here you can get integration and be able to realise how it works.
 
+DiffUtil Integration Added
+---------------
+DiffUtil is a utility class that can calculate the difference between two lists and output a list of update operations that converts the first list into the second one. It can be used to calculate updates for a RecyclerView Adapter. See ListAdapter and AsyncListDiffer which can compute diffs using DiffUtil on a background thread.
+
 Update
 ---------------
 Next update will probably have some more advanced stuff inside 
