@@ -1,6 +1,8 @@
 package nikiizvorski.uk.co.ble.ui
 
 import android.content.Context
+import android.support.v7.recyclerview.extensions.ListAdapter
+import android.support.v7.util.DiffUtil
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -15,8 +17,12 @@ import nikiizvorski.uk.co.ble.pojos.Device
  *
  * You can also pass the ViewModel to the adapter directly there wouldn't be any problems with that also.
  * Garbage collector will finish its job without any memory leaks.
+ *
+ * Improving with DiffUtil might be depending on your situation. ListAdapter submitList() to pass the data
+ * and after pass a callback to the constructor of the adapter implement the two methods. And comprate the objects
+ * that should be it.
  */
-class DeviceListAdapter(private val context: Context): RecyclerView.Adapter<DeviceListAdapter.ViewHolder>() {
+class DeviceListAdapter(private val context: Context): ListAdapter<Device, DeviceListAdapter.ViewHolder>(DeviceCallbackAdapter()) {
     var devices: ArrayList<Device> = ArrayList()
     lateinit var reference: DeviceListActivity
     /**
@@ -48,7 +54,7 @@ class DeviceListAdapter(private val context: Context): RecyclerView.Adapter<Devi
 
     /**
      *
-     * @param list List<Device>
+     * @param list List<Device> can be removed
      */
     fun updateData(list: List<Device>) {
         devices.clear()
@@ -79,4 +85,18 @@ class DeviceListAdapter(private val context: Context): RecyclerView.Adapter<Devi
             }
         }
     }
+}
+
+/**
+ * Update to DiffUtil example for better performance and to remove updateData method with the heavy DataSetChanged.
+ */
+class DeviceCallbackAdapter : DiffUtil.ItemCallback<Device>(){
+    override fun areItemsTheSame(p0: Device, p1: Device): Boolean {
+        return p0.id == p1.id
+    }
+
+    override fun areContentsTheSame(p0: Device, p1: Device): Boolean {
+        return p0 == p1
+    }
+
 }

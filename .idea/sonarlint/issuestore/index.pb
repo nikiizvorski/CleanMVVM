@@ -71,3 +71,5 @@ X
 (gradle/wrapper/gradle-wrapper.properties,f/b/fbe448ebfc3eb2d4e308f6b8b043666f5b57235e
 k
 ;app/src/test/java/nikiizvorski/uk/co/ble/ExampleUnitTest.kt,1/1/114b01970fc79ea0607126d378282e0277e203a2
+k
+;app/src/main/java/nikiizvorski/uk/co/ble/util/DeviceTest.kt,9/2/92fefc2254a5f74d29098bca8aa59f69550f397e
