@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.NavHostFragment
 import dagger.android.support.AndroidSupportInjection
 import dagger.android.support.DaggerFragment
 import nikiizvorski.uk.co.ble.R
@@ -75,6 +76,11 @@ class DeviceListFragment : DaggerFragment() {
     }
 
     private fun initUI() {
+        /**
+         * Find Nav Controller in Fragment?
+         */
+        NavHostFragment.findNavController(this)
+
         /**
          * Observer without the view logic
          */
