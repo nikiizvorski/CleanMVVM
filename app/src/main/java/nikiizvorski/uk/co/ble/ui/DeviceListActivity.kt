@@ -4,6 +4,8 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
 import dagger.android.AndroidInjection
 import dagger.android.support.DaggerAppCompatActivity
@@ -38,6 +40,7 @@ class DeviceListActivity: DaggerAppCompatActivity(), OnAdapterManagement {
     val viewModel by lazy { ViewModelProviders.of(this, viewModelFactory).get(DeviceListViewModel::class.java) }
     var deviceListAdapter: DeviceListAdapter = DeviceListAdapter(this)
     var deviceRealmList: DeviceRealmListAdapter? = null
+    private lateinit var navController: NavController
 
     /**
      *
@@ -46,6 +49,7 @@ class DeviceListActivity: DaggerAppCompatActivity(), OnAdapterManagement {
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_post_list)
+        navController = Navigation.findNavController(this, R.id.navigation_header_container)
         AndroidInjection.inject(this)
         initUI()
     }
@@ -54,13 +58,6 @@ class DeviceListActivity: DaggerAppCompatActivity(), OnAdapterManagement {
      * Init UI
      */
     private fun initUI() {
-
-        /**
-         * Nav Host Example and setup
-         *
-         * This line can be deleted but its here for the example
-         */
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.navigation_host_fragment) as NavHostFragment?
 
         /**
          * Normal Adapter Setup
