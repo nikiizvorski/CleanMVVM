@@ -73,3 +73,7 @@ k
 ;app/src/test/java/nikiizvorski/uk/co/ble/ExampleUnitTest.kt,1/1/114b01970fc79ea0607126d378282e0277e203a2
 k
 ;app/src/main/java/nikiizvorski/uk/co/ble/util/DeviceTest.kt,9/2/92fefc2254a5f74d29098bca8aa59f69550f397e
+A
+gradle.properties,2/a/2afbb999f001938c88fa43fc2ef52abf0f8213e4
+9
+	README.md,8/e/8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d
