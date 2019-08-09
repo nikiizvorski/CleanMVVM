@@ -1,11 +1,11 @@
 package nikiizvorski.uk.co.ble.pojos
 
-import android.arch.persistence.room.Entity
-import android.arch.persistence.room.PrimaryKey
 import android.os.Parcelable
-import android.support.annotation.Keep
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import io.realm.RealmList
 import io.realm.RealmObject
+import io.realm.internal.Keep
 import io.realm.internal.KeepMember
 import kotlinx.android.parcel.Parcelize
 

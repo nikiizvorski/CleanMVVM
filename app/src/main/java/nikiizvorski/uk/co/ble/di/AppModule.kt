@@ -1,8 +1,8 @@
 package nikiizvorski.uk.co.ble.di
 
 import android.app.Application
-import android.arch.persistence.room.Room
-import android.support.annotation.NonNull
+import androidx.annotation.NonNull
+import androidx.room.Room
 import androidx.work.WorkManager
 import dagger.Module
 import dagger.Provides

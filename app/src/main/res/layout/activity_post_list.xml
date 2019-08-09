@@ -3,7 +3,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         tools:context=".ui.DeviceListActivity">
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -36,5 +36,5 @@
                 app:navGraph="@navigation/nav_graph" app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintVertical_bias="0.901"/>
 
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

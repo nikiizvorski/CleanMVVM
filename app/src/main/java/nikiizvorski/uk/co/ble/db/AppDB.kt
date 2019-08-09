@@ -1,7 +1,7 @@
 package nikiizvorski.uk.co.ble.db
 
-import android.arch.persistence.room.Database
-import android.arch.persistence.room.RoomDatabase
+import androidx.room.Database
+import androidx.room.RoomDatabase
 import nikiizvorski.uk.co.ble.pojos.Device
 
 @Database(entities = [Device::class], version = 1, exportSchema = false)

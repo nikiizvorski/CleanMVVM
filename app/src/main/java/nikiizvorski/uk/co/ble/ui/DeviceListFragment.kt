@@ -1,13 +1,14 @@
 package nikiizvorski.uk.co.ble.ui
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
-import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.NavHostFragment
 import dagger.android.support.AndroidSupportInjection
 import dagger.android.support.DaggerFragment
@@ -25,7 +26,7 @@ import javax.inject.Inject
  * @property viewModelFactory AppViewModelFactory
  * @property viewModel DeviceListViewModel
  */
-class DeviceListFragment : DaggerFragment() {
+class DeviceListFragment : Fragment() {
     private lateinit var deviceTest: DeviceTest
     private lateinit var binding: DeviceFragmentBinding
     /**
