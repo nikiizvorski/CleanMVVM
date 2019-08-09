@@ -4,6 +4,7 @@ import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import io.reactivex.disposables.Disposable
+import kotlinx.coroutines.Dispatchers
 import nikiizvorski.uk.co.ble.pojos.Device
 import nikiizvorski.uk.co.ble.repos.PrefsRepository
 import nikiizvorski.uk.co.ble.repos.Repository
@@ -37,9 +38,13 @@ class DeviceListViewModel @Inject constructor(private val repository: Repository
 
     init{
         loadPosts()
+
+
+
     }
 
     fun loadPosts(){
+
         prefsRepository.getDbRealmList(data, _visibility)
         //repository.getNetworkList(data, _visibility)
         repository.executeManager()
