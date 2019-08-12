@@ -6,6 +6,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import androidx.recyclerview.widget.GridLayoutManager
 import dagger.android.AndroidInjection
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_device.*
@@ -64,9 +65,8 @@ class DeviceListActivity: DaggerAppCompatActivity(), OnAdapterManagement {
         /**
          * Normal Adapter Setup
          */
-
-//        binding.setVariable(R.id.post_list, GridLayoutManager(this, 2))
-//        binding.setVariable(R.id.post_list, deviceListAdapter)
+        binding.list.layoutManager = GridLayoutManager(this, 2)
+        binding.list.adapter = deviceListAdapter
 
         /**
          * Realm Setupg
