@@ -72,7 +72,7 @@ DiffUtil Integration Added
 ---------------
 DiffUtil is a utility class that can calculate the difference between two lists and output a list of update operations that converts the first list into the second one. It can be used to calculate updates for a RecyclerView Adapter. See ListAdapter and AsyncListDiffer which can compute diffs using DiffUtil on a background thread.
 
-Update
+Update - check branch unstable
 ---------------
 Next update will probably have some more advanced stuff inside
 
