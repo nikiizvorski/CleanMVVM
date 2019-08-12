@@ -1,7 +1,7 @@
 package nikiizvorski.uk.co.ble.repos
 
-import android.arch.lifecycle.MutableLiveData
 import android.view.View
+import androidx.lifecycle.MutableLiveData
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable

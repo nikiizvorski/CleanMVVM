@@ -4,6 +4,7 @@ import dagger.android.AndroidInjector
 import dagger.android.DaggerApplication
 import io.realm.Realm
 import io.realm.RealmConfiguration
+import nikiizvorski.uk.co.ble.di.DaggerAppComponent
 import timber.log.Timber
 
 /**

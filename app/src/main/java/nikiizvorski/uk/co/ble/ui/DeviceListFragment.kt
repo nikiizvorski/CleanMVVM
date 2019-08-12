@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.NavHostFragment
 import dagger.android.support.AndroidSupportInjection
@@ -26,7 +27,7 @@ import javax.inject.Inject
  * @property viewModelFactory AppViewModelFactory
  * @property viewModel DeviceListViewModel
  */
-class DeviceListFragment : Fragment() {
+class DeviceListFragment : DaggerFragment() {
     private lateinit var deviceTest: DeviceTest
     private lateinit var binding: DeviceFragmentBinding
     /**
@@ -35,7 +36,7 @@ class DeviceListFragment : Fragment() {
     @Inject
     lateinit var viewModelFactory: AppViewModelFactory
     val viewModel by lazy {  activity?.run {
-        ViewModelProviders.of(this, viewModelFactory).get(DeviceListViewModel::class.java)
+        ViewModelProvider(this, viewModelFactory).get(DeviceListViewModel::class.java)
     } ?: throw Exception("Invalid Activity") }
 
     /**
