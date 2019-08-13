@@ -28,4 +28,9 @@ interface PrefsRepository {
         data: MutableLiveData<List<Device>>,
         visibility: MutableLiveData<Int>
     )
+
+    /**
+     * Close Realm
+     */
+    fun closeRealm()
 }

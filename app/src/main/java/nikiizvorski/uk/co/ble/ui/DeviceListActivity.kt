@@ -4,12 +4,17 @@ import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
 import dagger.android.AndroidInjection
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_device.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import nikiizvorski.uk.co.ble.R
 import nikiizvorski.uk.co.ble.databinding.ActivityDeviceBinding
 import nikiizvorski.uk.co.ble.factory.AppViewModelFactory
@@ -55,6 +60,7 @@ class DeviceListActivity: DaggerAppCompatActivity(), OnAdapterManagement {
         navController = Navigation.findNavController(this, R.id.navigation_host_fragment)
         AndroidInjection.inject(this)
         initUI()
+
     }
 
     /**
@@ -78,7 +84,6 @@ class DeviceListActivity: DaggerAppCompatActivity(), OnAdapterManagement {
          */
         viewModel.visibility.observe(this, Observer { visibility ->
             progressBar.visibility = visibility!!
-//            progressBar.visibility = visibility!!
         })
 
         /**
@@ -88,6 +93,7 @@ class DeviceListActivity: DaggerAppCompatActivity(), OnAdapterManagement {
             data?.let {
                 Timber.d("Data Observed Size: %s", it.size)
                 deviceListAdapter.devices.addAll(it)
+                deviceListAdapter.notifyDataSetChanged()
             }
         })
     }

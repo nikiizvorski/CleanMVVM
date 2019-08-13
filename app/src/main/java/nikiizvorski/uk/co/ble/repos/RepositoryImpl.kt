@@ -15,6 +15,8 @@ import nikiizvorski.uk.co.ble.pojos.Device
 import timber.log.Timber
 import javax.inject.Inject
 import androidx.work.NetworkType
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import nikiizvorski.uk.co.ble.util.DeviceWorker
 
 
@@ -26,6 +28,7 @@ import nikiizvorski.uk.co.ble.util.DeviceWorker
  * @constructor
  */
 class RepositoryImpl @Inject constructor(private val appDao: AppDAO, private val deviceService: AppService, private val workManager: WorkManager) : Repository {
+
     private lateinit var subscription: Disposable
 
     /**
