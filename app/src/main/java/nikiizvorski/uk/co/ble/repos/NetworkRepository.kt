@@ -14,4 +14,11 @@ interface NetworkRepository {
      * @param visibility MutableLiveData<Int>
      */
     fun getNetworkList(data: MutableLiveData<List<Device>>, visibility: MutableLiveData<Int>)
+
+    /**
+     *
+     * @param data MutableLiveData<List<Device>>
+     * @param visibility MutableLiveData<Int>
+     */
+    suspend fun getNewNetworkList(data: MutableLiveData<List<Device>>, visibility: MutableLiveData<Int>)
 }

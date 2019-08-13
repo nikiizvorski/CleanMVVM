@@ -89,8 +89,8 @@ dependencies {
     compileOnly "org.glassfish:javax.annotation:3.1.1"
 
     //Rx
-    implementation "io.reactivex.rxjava2:rxjava:2.1.16"
-    implementation "io.reactivex.rxjava2:rxandroid:2.0.2"
+    implementation "io.reactivex.rxjava2:rxjava:2.2.11"
+    implementation "io.reactivex.rxjava2:rxandroid:2.1.1"
 
     // Room
     implementation 'androidx.room:room-runtime:2.0.0'

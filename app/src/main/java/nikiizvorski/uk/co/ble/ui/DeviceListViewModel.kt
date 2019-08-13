@@ -7,6 +7,7 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import nikiizvorski.uk.co.ble.pojos.Device
+import nikiizvorski.uk.co.ble.repos.NetworkRepository
 import nikiizvorski.uk.co.ble.repos.PrefsRepository
 import nikiizvorski.uk.co.ble.repos.Repository
 import okhttp3.Dispatcher
@@ -25,7 +26,8 @@ import javax.inject.Inject
  * @property visibility MutableLiveData<Int>
  * @constructor
  */
-class DeviceListViewModel @Inject constructor(private val repository: Repository, private val prefsRepository: PrefsRepository):
+class DeviceListViewModel @Inject constructor(private val repository: Repository, private val prefsRepository: PrefsRepository,
+                                              private val networkRepository: NetworkRepository):
     ViewModel(){
     private lateinit var subscription: Disposable
     val data: MutableLiveData<List<Device>> = MutableLiveData()
@@ -88,20 +90,33 @@ class DeviceListViewModel @Inject constructor(private val repository: Repository
     }
 
     /**
-     * Add manual to test
+     * Add manual to test the rest of the methods
      */
     fun addItems(){
-//        loadDevices()
-
-//        loadAsyncDevices()
-
-        loadItemsAsync()
+       getWebItems()
     }
 
+    /**
+     * Get Items from the Web
+     */
+    fun getWebItems(){
+        networkRepository.getNetworkList(data, _visibility)
+//        viewModelScope.launch(Dispatchers.Main) {
+//            networkRepository.getNewNetworkList(data, _visibility)
+//        }
+    }
+
+    /**
+     *
+     * @param value Int
+     */
     fun changeVisibility(value: Int) {
         _visibility.value = value
     }
 
+    /**
+     * Clear ViewModel
+     */
     override fun onCleared() {
         super.onCleared()
         prefsRepository.closeRealm()

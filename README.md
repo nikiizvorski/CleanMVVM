@@ -83,7 +83,9 @@ that are added so far. In the next versions will be provided full AndroidX integ
 
 - Implementation is added and usecases for Coroutines most variations with all upto date changes available even on alpha and beta. Mostly stable
 
-- Next Update will contain: Network with Coroutines, Working with Files Coroutines variation. 
+- Implemented Network calls with Coroutines
+
+- Next Update will contain: Working with Files Coroutines variation. 
 
 Licenze
 ---------------
