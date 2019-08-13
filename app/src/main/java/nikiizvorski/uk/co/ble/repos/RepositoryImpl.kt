@@ -1,5 +1,7 @@
 package nikiizvorski.uk.co.ble.repos
 
+import android.content.Context
+import android.os.Environment
 import android.view.View
 import androidx.lifecycle.MutableLiveData
 import androidx.work.Constraints
@@ -12,13 +14,12 @@ import io.reactivex.schedulers.Schedulers
 import nikiizvorski.uk.co.ble.api.AppService
 import nikiizvorski.uk.co.ble.db.AppDAO
 import nikiizvorski.uk.co.ble.pojos.Device
-import timber.log.Timber
 import javax.inject.Inject
 import androidx.work.NetworkType
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.withContext
 import nikiizvorski.uk.co.ble.util.DeviceWorker
+import java.io.File
+import java.io.FileInputStream
 
 
 /**
@@ -38,6 +39,26 @@ class RepositoryImpl @Inject constructor(private val appDao: AppDAO, private val
      */
     override fun deleteSingleItemWithId(id: Int) {
         appDao.deleteSingleWithId(id)
+    }
+
+    /**
+     * Write to file
+     */
+    override suspend fun writeToFile(context: Context, text: String): Boolean{
+        context.openFileOutput("text.txt", Context.MODE_PRIVATE).use {
+            it.write(text.toByteArray())
+        }
+        return true
+    }
+
+    /**
+     *
+     * @return String
+     */
+    override suspend fun readFromFile(context: Context) : String {
+        return context.openFileInput("text.txt").use {
+            it.readBytes().toString(Charsets.UTF_8)
+        }
     }
 
     /**

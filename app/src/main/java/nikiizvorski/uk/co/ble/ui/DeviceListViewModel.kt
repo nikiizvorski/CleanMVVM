@@ -1,16 +1,14 @@
 package nikiizvorski.uk.co.ble.ui
 
+import android.content.Context
 import androidx.lifecycle.*
 import io.reactivex.disposables.Disposable
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import nikiizvorski.uk.co.ble.pojos.Device
 import nikiizvorski.uk.co.ble.repos.NetworkRepository
 import nikiizvorski.uk.co.ble.repos.PrefsRepository
 import nikiizvorski.uk.co.ble.repos.Repository
-import okhttp3.Dispatcher
+import timber.log.Timber
 import javax.inject.Inject
 
 /**
@@ -27,7 +25,8 @@ import javax.inject.Inject
  * @constructor
  */
 class DeviceListViewModel @Inject constructor(private val repository: Repository, private val prefsRepository: PrefsRepository,
-                                              private val networkRepository: NetworkRepository):
+                                              private val networkRepository: NetworkRepository, private val context: Context
+):
     ViewModel(){
     private lateinit var subscription: Disposable
     val data: MutableLiveData<List<Device>> = MutableLiveData()
@@ -77,7 +76,31 @@ class DeviceListViewModel @Inject constructor(private val repository: Repository
 
     init{
         loadDevices()
+        workWithFile()
     }
+
+    /**
+     * Write/Read File it is not a good practise to add context in the ViewModel but this is the option for the example
+     */
+    private fun workWithFile() {
+        viewModelScope.launch(Dispatchers.IO) {
+            /**
+             * Write to file
+             */
+            val written: Deferred<Boolean> = async { repository.writeToFile(context, "mhm") }
+            Timber.d("File Written: " + written.await())
+
+            /**
+             * Read from file
+             */
+            val readFile: Deferred<String> = async { repository.readFromFile(context) }
+            Timber.d("File Written: " + readFile.await())
+        }
+    }
+
+    /**
+     * Read File
+     */
 
     /**
      * Stable Implementation
@@ -100,10 +123,9 @@ class DeviceListViewModel @Inject constructor(private val repository: Repository
      * Get Items from the Web
      */
     fun getWebItems(){
-        networkRepository.getNetworkList(data, _visibility)
-//        viewModelScope.launch(Dispatchers.Main) {
-//            networkRepository.getNewNetworkList(data, _visibility)
-//        }
+        viewModelScope.launch(Dispatchers.Main) {
+            networkRepository.getNewNetworkList(data, _visibility)
+        }
     }
 
     /**

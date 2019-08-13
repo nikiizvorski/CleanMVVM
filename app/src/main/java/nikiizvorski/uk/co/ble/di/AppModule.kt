@@ -1,6 +1,7 @@
 package nikiizvorski.uk.co.ble.di
 
 import android.app.Application
+import android.content.Context
 import androidx.annotation.NonNull
 import androidx.room.Room
 import androidx.work.WorkManager
@@ -22,6 +23,17 @@ import javax.inject.Singleton
 
 @Module
 class AppModule {
+
+    /**
+     *
+     * @param application Application
+     * @return Context
+     */
+    @Provides
+    @Singleton
+    fun provideContext(application: Application) : Context {
+        return application.applicationContext
+    }
 
     /**
      *

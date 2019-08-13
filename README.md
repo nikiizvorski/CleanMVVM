@@ -85,7 +85,7 @@ that are added so far. In the next versions will be provided full AndroidX integ
 
 - Implemented Network calls with Coroutines
 
-- Next Update will contain: Working with Files Coroutines variation. 
+- Implemented Working with Files Coroutines variation. 
 
 Licenze
 ---------------
