@@ -79,6 +79,10 @@ Next update will probably have some more advanced stuff inside
 - Added a new branch which will contain all the new updates from now on. The current version will stay as a base that provides all the base integration and examples
 that are added so far. In the next versions will be provided full AndroidX integration and KotlinX with Coroutines and Scopes.
 
+- What are coroutines? Why is it so important? How can it make it so easy to do concurrency and background tasks? A coroutine is a concurrency design pattern that you can use on Android to simplify code that executes asynchronously. 
+
+- Implementation is added and usecases for Coroutines most variations with all upto date changes available even on alpha and beta. Mostly stable
+
 Licenze
 ---------------
 
