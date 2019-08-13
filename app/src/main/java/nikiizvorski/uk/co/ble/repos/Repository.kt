@@ -31,4 +31,10 @@ interface Repository {
      * @param id Int
      */
     fun deleteSingleItemWithId(id: Int)
+
+    /**
+     *
+     * @return List<Device>
+     */
+    suspend fun getListDevices(): List<Device>
 }

@@ -17,6 +17,7 @@
         e: [kapt] An exception occurred: android.databinding.tool.util.LoggedErrorException: Found data binding errors.
         After a simple function name change. Please come and tell me this is good :))-->
         <Button
+                android:id="@+id/btn"
                 android:text="FragmentHostExample"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"

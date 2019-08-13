@@ -16,6 +16,7 @@ import timber.log.Timber
 import javax.inject.Inject
 import androidx.work.NetworkType
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
 import nikiizvorski.uk.co.ble.util.DeviceWorker
 
@@ -95,5 +96,16 @@ class RepositoryImpl @Inject constructor(private val appDao: AppDAO, private val
             visibility.value = View.GONE
             data.value = appDao.all
         }
+    }
+
+    /**
+     *
+     * @return List<Device>
+     */
+    override suspend fun getListDevices(): List<Device> {
+        // heavy work here
+        delay(2000)
+
+        return listOf(Device(109, 109, "STEST", "SBEST"))
     }
 }

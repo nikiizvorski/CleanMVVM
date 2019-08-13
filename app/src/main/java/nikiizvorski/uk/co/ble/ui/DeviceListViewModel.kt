@@ -1,15 +1,15 @@
 package nikiizvorski.uk.co.ble.ui
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import io.reactivex.disposables.Disposable
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import nikiizvorski.uk.co.ble.pojos.Device
 import nikiizvorski.uk.co.ble.repos.PrefsRepository
 import nikiizvorski.uk.co.ble.repos.Repository
+import okhttp3.Dispatcher
 import javax.inject.Inject
 
 /**
@@ -37,11 +37,49 @@ class DeviceListViewModel @Inject constructor(private val repository: Repository
     val visibility: LiveData<Int>
         get() = _visibility
 
+    /**
+     * New Implementation
+     */
+    var devices = liveData(Dispatchers.IO) {
+        val listDev = repository.getListDevices()
+        emit(listDev)
+    }
+
+    /**
+     * Old Implementation
+     */
+    fun loadAsyncDevices() {
+        viewModelScope.launch {
+            var emps: List<Device>? = null
+            withContext(Dispatchers.IO) {
+                emps = repository.getListDevices()
+            }
+
+            data.value = emps
+        }
+    }
+
+    /**
+     * Another Implementation of await and suspend
+     */
+    fun loadItemsAsync(){
+        /**
+         * You can remove async and await simply by adding withContext(Dispatchers.IO){}
+         */
+        viewModelScope.launch {
+            val smallList = async(Dispatchers.IO) { repository.getListDevices() }
+            data.value = smallList.await()
+        }
+    }
+
 
     init{
         loadDevices()
     }
 
+    /**
+     * Stable Implementation
+     */
     fun loadDevices(){
         viewModelScope.launch(Dispatchers.Main) {
             prefsRepository.getDbRealmList(data, _visibility)
@@ -49,8 +87,15 @@ class DeviceListViewModel @Inject constructor(private val repository: Repository
         }
     }
 
+    /**
+     * Add manual to test
+     */
     fun addItems(){
-        loadDevices()
+//        loadDevices()
+
+//        loadAsyncDevices()
+
+        loadItemsAsync()
     }
 
     fun changeVisibility(value: Int) {
