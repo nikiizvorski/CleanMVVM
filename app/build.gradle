@@ -79,13 +79,24 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-moshi:$retrofit_version"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
 
-    // Dagger 2
-    implementation "com.google.dagger:dagger:$dagger2_version"
-    implementation "com.google.dagger:dagger-android:$dagger2_version"
-    kapt "com.google.dagger:dagger-compiler:$dagger2_version"
-    kapt "com.google.dagger:dagger-android-processor:$dagger2_version"
+    // Koin for Android
+    implementation "org.koin:koin-android:2.0.1"
+    // Koin AndroidX Scope feature
+    implementation "org.koin:koin-androidx-scope:2.0.1"
+    // Koin AndroidX ViewModel feature
+    implementation "org.koin:koin-androidx-viewmodel:2.0.1"
+    // Koin AndroidX Experimental features
+    implementation "org.koin:koin-androidx-ext:2.0.1"
 
-    implementation 'com.google.dagger:dagger-android-support:2.15'
+    // Koin for Kotlin
+    implementation "org.koin:koin-core:2.0.1"
+    // Koin Extended & experimental features
+    implementation "org.koin:koin-core-ext:2.0.1"
+    // Koin for Java developers
+    implementation "org.koin:koin-java:2.0.1"
+    // Koin for Unit tests
+    testImplementation "org.koin:koin-test:2.0.1"
+
     compileOnly "org.glassfish:javax.annotation:3.1.1"
 
     //Rx

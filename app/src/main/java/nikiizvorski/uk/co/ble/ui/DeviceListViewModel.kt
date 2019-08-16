@@ -8,8 +8,9 @@ import nikiizvorski.uk.co.ble.pojos.Device
 import nikiizvorski.uk.co.ble.repos.NetworkRepository
 import nikiizvorski.uk.co.ble.repos.PrefsRepository
 import nikiizvorski.uk.co.ble.repos.Repository
+import org.koin.core.KoinComponent
+import org.koin.core.inject
 import timber.log.Timber
-import javax.inject.Inject
 
 /**
  *
@@ -24,11 +25,11 @@ import javax.inject.Inject
  * @property visibility MutableLiveData<Int>
  * @constructor
  */
-class DeviceListViewModel @Inject constructor(private val repository: Repository, private val prefsRepository: PrefsRepository,
-                                              private val networkRepository: NetworkRepository, private val context: Context
-):
-    ViewModel(){
-    private lateinit var subscription: Disposable
+class DeviceListViewModel : ViewModel(), KoinComponent {
+    private val repository: Repository by inject()
+    private val prefsRepository: PrefsRepository by inject()
+    private val networkRepository: NetworkRepository by inject()
+    private val context: Context by inject()
     val data: MutableLiveData<List<Device>> = MutableLiveData()
 
     /**
@@ -116,6 +117,8 @@ class DeviceListViewModel @Inject constructor(private val repository: Repository
      * Add manual to test the rest of the methods
      */
     fun addItems(){
+//        loadItemsAsync()
+//        loadDevices()
        getWebItems()
     }
 
@@ -142,6 +145,5 @@ class DeviceListViewModel @Inject constructor(private val repository: Repository
     override fun onCleared() {
         super.onCleared()
         prefsRepository.closeRealm()
-        subscription.dispose()
     }
 }

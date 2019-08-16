@@ -5,27 +5,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
-import dagger.android.support.AndroidSupportInjection
-import dagger.android.support.DaggerFragment
-import kotlinx.android.synthetic.main.device_fragment.view.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import nikiizvorski.uk.co.ble.R
 import nikiizvorski.uk.co.ble.databinding.DeviceFragmentBinding
-import nikiizvorski.uk.co.ble.factory.AppViewModelFactory
 import nikiizvorski.uk.co.ble.util.DeviceTest
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
-import javax.inject.Inject
 
 /**
  *
@@ -34,24 +22,19 @@ import javax.inject.Inject
  * @property viewModelFactory AppViewModelFactory
  * @property viewModel DeviceListViewModel
  */
-class DeviceListFragment : DaggerFragment() {
+class DeviceListFragment : Fragment() {
     private lateinit var deviceTest: DeviceTest
     private lateinit var binding: DeviceFragmentBinding
     /**
      * Updated the Fragment and Activity Shared View Model base adjust to requirement
      */
-    @Inject
-    lateinit var viewModelFactory: AppViewModelFactory
-    val viewModel by lazy {  activity?.run {
-        ViewModelProvider(this, viewModelFactory).get(DeviceListViewModel::class.java)
-    } ?: throw Exception("Invalid Activity") }
+    val viewModel: DeviceListViewModel by viewModel()
 
     /**
      *
      * @param context Context
      */
     override fun onAttach(context: Context) {
-        AndroidSupportInjection.inject(this)
         super.onAttach(context)
     }
 

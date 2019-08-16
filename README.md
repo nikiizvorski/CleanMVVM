@@ -84,6 +84,8 @@ Next update will probably have some more advanced stuff inside
 
 - Implemented Working with Files Coroutines variation. 
 
+- Removed Dagger Replaced Koin Implementation
+
 Licenze
 ---------------
 

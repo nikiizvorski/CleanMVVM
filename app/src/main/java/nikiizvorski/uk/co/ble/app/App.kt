@@ -1,31 +1,43 @@
 package nikiizvorski.uk.co.ble.app
 
-import dagger.android.AndroidInjector
-import dagger.android.DaggerApplication
+import android.app.Application
 import io.realm.Realm
 import io.realm.RealmConfiguration
-import nikiizvorski.uk.co.ble.di.DaggerAppComponent
+import org.koin.android.ext.koin.androidContext
+import org.koin.android.ext.koin.androidFileProperties
+import org.koin.android.ext.koin.androidLogger
+import org.koin.core.context.startKoin
 import timber.log.Timber
 
 /**
- * Application Class
- *
- * @property appComponent [ERROR : null type]
+ * App Class
  */
-@Suppress("unused")
-class App: DaggerApplication() {
-    private val appComponent = DaggerAppComponent.builder()
-        .application(this)
-        .build()
+class App: Application() {
 
     /**
      * Setup
      */
     override fun onCreate() {
         super.onCreate()
-        injectDagger()
+        injectKoin()
         setupTimber()
         setupRealm()
+    }
+
+    private fun injectKoin() {
+        startKoin {
+            // use AndroidLogger as Koin Logger - default Level.INFO
+            androidLogger()
+
+            // use the Android context given there
+            androidContext(this@App)
+
+            // load properties from assets/koin.properties file
+            androidFileProperties()
+
+            // module list
+            modules(nikiizvorski.uk.co.ble.di.module)
+        }
     }
 
     /**
@@ -42,20 +54,5 @@ class App: DaggerApplication() {
      */
     private fun setupTimber() {
         Timber.plant(Timber.DebugTree())
-    }
-
-    /**
-     * Setup Dagger
-     */
-    private fun injectDagger() {
-        appComponent.inject(this)
-    }
-
-    /**
-     * App Injector Setup
-     * @return AndroidInjector<out DaggerApplication>
-     */
-    override fun applicationInjector(): AndroidInjector<out DaggerApplication> {
-        return appComponent
     }
 }

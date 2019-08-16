@@ -11,9 +11,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import nikiizvorski.uk.co.ble.api.AppService
 import nikiizvorski.uk.co.ble.pojos.Device
+import org.koin.core.KoinComponent
+import org.koin.core.inject
 import retrofit2.HttpException
+import retrofit2.Retrofit
 import timber.log.Timber
-import javax.inject.Inject
 
 /**
  *
@@ -21,8 +23,10 @@ import javax.inject.Inject
  * @property subscription Disposable
  * @constructor
  */
-class NetworkRepositoryImpl @Inject constructor(private val deviceService: AppService): NetworkRepository {
+class NetworkRepositoryImpl : NetworkRepository, KoinComponent {
     private lateinit var subscription: Disposable
+    private val retrofit: Retrofit by inject()
+    private val deviceService: AppService = retrofit.create(AppService::class.java)
 
     /**
      *
@@ -48,6 +52,7 @@ class NetworkRepositoryImpl @Inject constructor(private val deviceService: AppSe
         withContext(Dispatchers.Main) {
             try {
                 if (response.isSuccessful) {
+                    Timber.d("Success")
                     visibility.value = View.GONE
                     data.value = response.body()
                 } else {

@@ -14,10 +14,11 @@ import io.reactivex.schedulers.Schedulers
 import nikiizvorski.uk.co.ble.api.AppService
 import nikiizvorski.uk.co.ble.db.AppDAO
 import nikiizvorski.uk.co.ble.pojos.Device
-import javax.inject.Inject
 import androidx.work.NetworkType
 import kotlinx.coroutines.delay
 import nikiizvorski.uk.co.ble.util.DeviceWorker
+import org.koin.core.KoinComponent
+import org.koin.core.inject
 import java.io.File
 import java.io.FileInputStream
 
@@ -29,7 +30,12 @@ import java.io.FileInputStream
  * @property subscription Disposable
  * @constructor
  */
-class RepositoryImpl @Inject constructor(private val appDao: AppDAO, private val deviceService: AppService, private val workManager: WorkManager) : Repository {
+class RepositoryImpl : Repository, KoinComponent {
+
+    private val appDao: AppDAO by inject()
+    private val deviceService: AppService by inject()
+    private val workManager: WorkManager by inject()
+
 
     private lateinit var subscription: Disposable
 

@@ -3,19 +3,21 @@ package nikiizvorski.uk.co.ble.repos
 import android.view.View
 import androidx.lifecycle.MutableLiveData
 import io.realm.Realm
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import nikiizvorski.uk.co.ble.db.AppDAO
 import nikiizvorski.uk.co.ble.pojos.Device
 import nikiizvorski.uk.co.ble.pojos.DeviceModel
-import javax.inject.Inject
+import org.koin.core.KoinComponent
+import org.koin.core.inject
 
 /**
  *
  * @property appDao AppDAO
  * @constructor
  */
-class PrefsRepositoryImpl @Inject constructor(private val appDao: AppDAO, private val realm: Realm): PrefsRepository {
+class PrefsRepositoryImpl : PrefsRepository, KoinComponent {
+
+    private val appDao: AppDAO by inject()
+    private val realm: Realm by inject()
 
     /**
      *
