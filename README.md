@@ -79,6 +79,10 @@ Next update will probably have some more advanced stuff inside
 - Added a new branch which will contain all the new updates from now on. The current version will stay as a base that provides all the base integration and examples
 that are added so far. In the next versions will be provided full AndroidX integration and KotlinX with Coroutines and Scopes.
 
+- Newer version will be keep updated until stable. 
+
+- Next Update will be with Koin implementation as alternative for people who prefer and like the usage - koinbranch.
+
 Licenze
 ---------------
 
