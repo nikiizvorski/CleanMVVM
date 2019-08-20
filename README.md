@@ -34,6 +34,8 @@ CI/CD
 ---------------
 The project doesn't have any CD integrated. But if anyone would like to have that i would provide a sample implementation to any of the following: BitBucket, Github, CircleCI, Travis or any other.
 
+- Added base Bitrise Integration
+
 Bintray - Maven/JCenter
 ---------------
 Center automation and Distribution can be added also the scripts can be added without any issues or incompatibility 
