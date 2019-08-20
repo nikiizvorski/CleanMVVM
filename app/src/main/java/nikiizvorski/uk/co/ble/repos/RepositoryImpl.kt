@@ -133,6 +133,6 @@ class RepositoryImpl : Repository, KoinComponent {
         // heavy work here
         delay(2000)
 
-        return listOf(Device(109, 109, "STEST", "SBEST"))
+        return listOf(Device(109, 109, "STEST", "SBEST"), Device(109, 109, "STEST", "SBEST"))
     }
 }

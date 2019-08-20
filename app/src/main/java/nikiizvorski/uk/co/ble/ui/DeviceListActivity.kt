@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import kotlinx.android.synthetic.main.activity_device.*
 import nikiizvorski.uk.co.ble.R
 import nikiizvorski.uk.co.ble.databinding.ActivityDeviceBinding
+import org.koin.androidx.viewmodel.ext.android.getViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
@@ -36,7 +37,7 @@ class DeviceListActivity: AppCompatActivity(), OnAdapterManagement {
     @Inject lateinit var realm: Realm
     var data: RealmResults<DeviceModel>? = null
     **/
-    val viewModel : DeviceListViewModel by viewModel()
+    private lateinit var viewModel: DeviceListViewModel
     var deviceListAdapter: DeviceListAdapter = DeviceListAdapter(this)
     var deviceRealmList: DeviceRealmListAdapter? = null
     private lateinit var binding: ActivityDeviceBinding
@@ -48,6 +49,7 @@ class DeviceListActivity: AppCompatActivity(), OnAdapterManagement {
      */
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
+        viewModel = getViewModel<DeviceListViewModel>()
         binding = DataBindingUtil.setContentView(this, R.layout.activity_device)
         binding.lifecycleOwner = this
         navController = Navigation.findNavController(this, R.id.navigation_host_fragment)

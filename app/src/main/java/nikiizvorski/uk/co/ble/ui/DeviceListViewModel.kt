@@ -58,6 +58,8 @@ class DeviceListViewModel : ViewModel(), KoinComponent {
             }
 
             data.value = emps
+            Timber.d("Data Observed OLD Size: %s", emps!!.size)
+            Timber.d("Data Observed NEW Size: %s", data.value!!.size)
         }
     }
 
@@ -71,6 +73,7 @@ class DeviceListViewModel : ViewModel(), KoinComponent {
         viewModelScope.launch {
             val smallList = async(Dispatchers.IO) { repository.getListDevices() }
             data.value = smallList.await()
+            Timber.d("Data Observed Size: %s", data.value!!.size)
         }
     }
 
@@ -119,7 +122,8 @@ class DeviceListViewModel : ViewModel(), KoinComponent {
     fun addItems(){
 //        loadItemsAsync()
 //        loadDevices()
-       getWebItems()
+        loadAsyncDevices()
+//       getWebItems()
     }
 
     /**
