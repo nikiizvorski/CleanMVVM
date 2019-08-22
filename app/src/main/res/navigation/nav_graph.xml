@@ -6,6 +6,12 @@
     <fragment android:id="@+id/navigation_home"
               android:name="nikiizvorski.uk.co.ble.ui.DeviceListFragment"
               android:label="NavHostExample"
-              tools:layout="@layout/device_fragment"/>
+              tools:layout="@layout/device_fragment">
+        <action android:id="@+id/action_navigation_home_to_deviceListFragmentTwo"
+                app:destination="@id/deviceListFragmentTwo"/>
+    </fragment>
+
+    <fragment android:id="@+id/deviceListFragmentTwo" android:name="nikiizvorski.uk.co.ble.ui.DeviceListFragmentTwo"
+              android:label="DeviceListFragmentTwo"/>
 
 </navigation>
