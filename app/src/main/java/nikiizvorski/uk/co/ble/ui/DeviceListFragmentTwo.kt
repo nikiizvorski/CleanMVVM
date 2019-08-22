@@ -21,7 +21,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import nikiizvorski.uk.co.ble.R
-import nikiizvorski.uk.co.ble.databinding.DeviceFragmentBinding
+import nikiizvorski.uk.co.ble.databinding.DeviceFragmentTwoBinding
 import nikiizvorski.uk.co.ble.factory.AppViewModelFactory
 import nikiizvorski.uk.co.ble.util.DeviceTest
 import timber.log.Timber
@@ -34,9 +34,9 @@ import javax.inject.Inject
  * @property viewModelFactory AppViewModelFactory
  * @property viewModel DeviceListViewModel
  */
-class DeviceListFragment : DaggerFragment() {
+class DeviceListFragmentTwo : DaggerFragment() {
     private lateinit var deviceTest: DeviceTest
-    private lateinit var binding: DeviceFragmentBinding
+    private lateinit var binding: DeviceFragmentTwoBinding
     /**
      * Updated the Fragment and Activity Shared View Model base adjust to requirement
      */
@@ -67,7 +67,7 @@ class DeviceListFragment : DaggerFragment() {
      * @return View?
      */
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.device_fragment, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.device_fragment_two, container, false)
         binding.deviceListViewModel = viewModel
         binding.lifecycleOwner = this
         return binding.root
@@ -89,9 +89,11 @@ class DeviceListFragment : DaggerFragment() {
          * Find Nav Controller in Fragment?
          *
          */
+
         binding.btn.setOnClickListener {
-            NavHostFragment.findNavController(this).navigate(R.id.action_navigation_home_to_deviceListFragmentTwo)
+            NavHostFragment.findNavController(this).navigate(R.id.navigation_home)
         }
+
         /**
         binding.btn.setOnClickListener {
 

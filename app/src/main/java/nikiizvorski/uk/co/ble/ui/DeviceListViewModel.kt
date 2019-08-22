@@ -1,11 +1,11 @@
 package nikiizvorski.uk.co.ble.ui
 
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
+import android.content.Context
+import androidx.lifecycle.*
 import io.reactivex.disposables.Disposable
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.*
 import nikiizvorski.uk.co.ble.pojos.Device
+import nikiizvorski.uk.co.ble.repos.NetworkRepository
 import nikiizvorski.uk.co.ble.repos.PrefsRepository
 import nikiizvorski.uk.co.ble.repos.Repository
 import timber.log.Timber
@@ -24,9 +24,12 @@ import javax.inject.Inject
  * @property visibility MutableLiveData<Int>
  * @constructor
  */
-class DeviceListViewModel @Inject constructor(private val repository: Repository, private val prefsRepository: PrefsRepository):ViewModel(){
+class DeviceListViewModel @Inject constructor(private val repository: Repository, private val prefsRepository: PrefsRepository,
+                                              private val networkRepository: NetworkRepository, private val context: Context
+):
+    ViewModel(){
     private lateinit var subscription: Disposable
-    val data = MutableLiveData<List<Device>>()
+    val data: MutableLiveData<List<Device>> = MutableLiveData()
 
     /**
      * Proper encapsulation example
@@ -35,31 +38,110 @@ class DeviceListViewModel @Inject constructor(private val repository: Repository
     val visibility: LiveData<Int>
         get() = _visibility
 
+    /**
+     * New Implementation
+     */
+    var devices = liveData(Dispatchers.IO) {
+        val listDev = repository.getListDevices()
+        emit(listDev)
+    }
+
+    /**
+     * Old Implementation
+     */
+    fun loadAsyncDevices() {
+        viewModelScope.launch {
+            var emps: List<Device>? = null
+            withContext(Dispatchers.IO) {
+                emps = repository.getListDevices()
+            }
+
+            data.value = emps
+        }
+    }
+
+    /**
+     * Another Implementation of await and suspend
+     */
+    fun loadItemsAsync(){
+        /**
+         * You can remove async and await simply by adding withContext(Dispatchers.IO){}
+         */
+        viewModelScope.launch {
+            val smallList = async(Dispatchers.IO) { repository.getListDevices() }
+            data.value = smallList.await()
+        }
+    }
+
 
     init{
-        loadPosts()
-
-
-
+        loadDevices()
+        workWithFile()
     }
 
-    fun loadPosts(){
+    /**
+     * Write/Read File it is not a good practise to add context in the ViewModel but this is the option for the example
+     */
+    private fun workWithFile() {
+        viewModelScope.launch(Dispatchers.IO) {
+            /**
+             * Write to file
+             */
+            val written: Deferred<Boolean> = async { repository.writeToFile(context, "mhm") }
+            Timber.d("File Written: " + written.await())
 
-        prefsRepository.getDbRealmList(data, _visibility)
-        //repository.getNetworkList(data, _visibility)
-        repository.executeManager()
+            /**
+             * Read from file
+             */
+            val readFile: Deferred<String> = async { repository.readFromFile(context) }
+            Timber.d("File Written: " + readFile.await())
+        }
     }
 
-    fun exampleClick(){
-        Timber.d("Clicked")
+    /**
+     * Read File
+     */
+
+    /**
+     * Stable Implementation
+     */
+    fun loadDevices(){
+        viewModelScope.launch(Dispatchers.Main) {
+            prefsRepository.getDbRealmList(data, _visibility)
+            repository.executeManager()
+        }
     }
 
-    override fun onCleared() {
-        super.onCleared()
-        subscription.dispose()
+    /**
+     * Add manual to test the rest of the methods
+     */
+    fun addItems(){
+       getWebItems()
     }
 
+    /**
+     * Get Items from the Web
+     */
+    fun getWebItems(){
+        viewModelScope.launch(Dispatchers.Main) {
+            networkRepository.getNewNetworkList(data, _visibility)
+        }
+    }
+
+    /**
+     *
+     * @param value Int
+     */
     fun changeVisibility(value: Int) {
         _visibility.value = value
+    }
+
+    /**
+     * Clear ViewModel
+     */
+    override fun onCleared() {
+        super.onCleared()
+        prefsRepository.closeRealm()
+        subscription.dispose()
     }
 }

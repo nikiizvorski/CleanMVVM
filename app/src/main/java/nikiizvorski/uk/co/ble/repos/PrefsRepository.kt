@@ -1,6 +1,6 @@
 package nikiizvorski.uk.co.ble.repos
 
-import android.arch.lifecycle.MutableLiveData
+import androidx.lifecycle.MutableLiveData
 import nikiizvorski.uk.co.ble.pojos.Device
 
 /**
@@ -28,4 +28,9 @@ interface PrefsRepository {
         data: MutableLiveData<List<Device>>,
         visibility: MutableLiveData<Int>
     )
+
+    /**
+     * Close Realm
+     */
+    fun closeRealm()
 }

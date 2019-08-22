@@ -1,7 +1,9 @@
 package nikiizvorski.uk.co.ble.repos
 
-import android.arch.lifecycle.MutableLiveData
+import android.content.Context
+import android.os.Environment
 import android.view.View
+import androidx.lifecycle.MutableLiveData
 import androidx.work.Constraints
 import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
@@ -12,10 +14,12 @@ import io.reactivex.schedulers.Schedulers
 import nikiizvorski.uk.co.ble.api.AppService
 import nikiizvorski.uk.co.ble.db.AppDAO
 import nikiizvorski.uk.co.ble.pojos.Device
-import timber.log.Timber
 import javax.inject.Inject
 import androidx.work.NetworkType
+import kotlinx.coroutines.delay
 import nikiizvorski.uk.co.ble.util.DeviceWorker
+import java.io.File
+import java.io.FileInputStream
 
 
 /**
@@ -26,6 +30,7 @@ import nikiizvorski.uk.co.ble.util.DeviceWorker
  * @constructor
  */
 class RepositoryImpl @Inject constructor(private val appDao: AppDAO, private val deviceService: AppService, private val workManager: WorkManager) : Repository {
+
     private lateinit var subscription: Disposable
 
     /**
@@ -34,6 +39,26 @@ class RepositoryImpl @Inject constructor(private val appDao: AppDAO, private val
      */
     override fun deleteSingleItemWithId(id: Int) {
         appDao.deleteSingleWithId(id)
+    }
+
+    /**
+     * Write to file
+     */
+    override suspend fun writeToFile(context: Context, text: String): Boolean{
+        context.openFileOutput("text.txt", Context.MODE_PRIVATE).use {
+            it.write(text.toByteArray())
+        }
+        return true
+    }
+
+    /**
+     *
+     * @return String
+     */
+    override suspend fun readFromFile(context: Context) : String {
+        return context.openFileInput("text.txt").use {
+            it.readBytes().toString(Charsets.UTF_8)
+        }
     }
 
     /**
@@ -92,5 +117,16 @@ class RepositoryImpl @Inject constructor(private val appDao: AppDAO, private val
             visibility.value = View.GONE
             data.value = appDao.all
         }
+    }
+
+    /**
+     *
+     * @return List<Device>
+     */
+    override suspend fun getListDevices(): List<Device> {
+        // heavy work here
+        delay(2000)
+
+        return listOf(Device(109, 109, "STEST", "SBEST"))
     }
 }

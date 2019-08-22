@@ -1,6 +1,6 @@
 package nikiizvorski.uk.co.ble.db
 
-import android.arch.persistence.room.*
+import androidx.room.*
 import nikiizvorski.uk.co.ble.pojos.Device
 
 @Dao

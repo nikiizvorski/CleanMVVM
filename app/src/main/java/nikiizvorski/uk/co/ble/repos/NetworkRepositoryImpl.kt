@@ -1,13 +1,17 @@
 package nikiizvorski.uk.co.ble.repos
 
-import android.arch.lifecycle.MutableLiveData
+import android.util.Log
 import android.view.View
+import androidx.lifecycle.MutableLiveData
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import nikiizvorski.uk.co.ble.api.AppService
 import nikiizvorski.uk.co.ble.pojos.Device
+import retrofit2.HttpException
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -32,5 +36,29 @@ class NetworkRepositoryImpl @Inject constructor(private val deviceService: AppSe
             .doOnSubscribe { visibility.value = View.VISIBLE }
             .doOnTerminate { visibility.value = View.GONE }
             .subscribe({ result -> data.value = result }, { visibility.value = View.VISIBLE })
+    }
+
+    /**
+     *
+     * @param data MutableLiveData<List<Device>>
+     * @param visibility MutableLiveData<Int>
+     */
+    override suspend fun getNewNetworkList(data: MutableLiveData<List<Device>>, visibility: MutableLiveData<Int>) {
+        val response = deviceService.getNewPosts()
+        withContext(Dispatchers.Main) {
+            try {
+                if (response.isSuccessful) {
+                    visibility.value = View.GONE
+                    data.value = response.body()
+                } else {
+                    visibility.value = View.VISIBLE
+                }
+            } catch (e: HttpException) {
+                Timber.e("Exception ${e.message}")
+
+            } catch (e: Throwable) {
+                Timber.e("Something else went wrong")
+            }
+        }
     }
 }

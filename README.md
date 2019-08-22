@@ -30,9 +30,13 @@ Testing
 ---------------
 Testing haven't been integrated in this project. But would be fairly simple to do that. Firebase Cloud, Espresso, Robo etc.
 
+- Added all the libraries for base setup for AndroidX on request for testing setup soon. 
+
 CI/CD
 ---------------
 The project doesn't have any CD integrated. But if anyone would like to have that i would provide a sample implementation to any of the following: BitBucket, Github, CircleCI, Travis or any other.
+
+- Added base Bitrise Integration
 
 Bintray - Maven/JCenter
 ---------------
@@ -72,12 +76,17 @@ DiffUtil Integration Added
 ---------------
 DiffUtil is a utility class that can calculate the difference between two lists and output a list of update operations that converts the first list into the second one. It can be used to calculate updates for a RecyclerView Adapter. See ListAdapter and AsyncListDiffer which can compute diffs using DiffUtil on a background thread.
 
-Update
+Update - check branch unstable
 ---------------
 Next update will probably have some more advanced stuff inside
 
-- Added a new branch which will contain all the new updates from now on. The current version will stay as a base that provides all the base integration and examples
-that are added so far. In the next versions will be provided full AndroidX integration and KotlinX with Coroutines and Scopes.
+- What are coroutines? Why is it so important? How can it make it so easy to do concurrency and background tasks? A coroutine is a concurrency design pattern that you can use on Android to simplify code that executes asynchronously. 
+
+- Implementation is added and usecases for Coroutines most variations with all upto date changes available even on alpha and beta. Mostly stable
+
+- Implemented Network calls with Coroutines
+
+- Implemented Working with Files Coroutines variation. 
 
 - Newer version will be keep updated until stable. 
 

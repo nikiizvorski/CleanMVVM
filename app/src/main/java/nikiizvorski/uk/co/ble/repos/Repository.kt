@@ -1,6 +1,7 @@
 package nikiizvorski.uk.co.ble.repos
 
-import android.arch.lifecycle.MutableLiveData
+import android.content.Context
+import androidx.lifecycle.MutableLiveData
 import nikiizvorski.uk.co.ble.pojos.Device
 
 /**
@@ -31,4 +32,25 @@ interface Repository {
      * @param id Int
      */
     fun deleteSingleItemWithId(id: Int)
+
+    /**
+     *
+     * @return List<Device>
+     */
+    suspend fun getListDevices(): List<Device>
+
+    /**
+     *
+     * @param context Context
+     * @param text String
+     * @return Boolean
+     */
+    suspend fun writeToFile(context: Context, text: String): Boolean
+
+    /**
+     *
+     * @param context Context
+     * @return String
+     */
+    suspend fun readFromFile(context: Context): String
 }

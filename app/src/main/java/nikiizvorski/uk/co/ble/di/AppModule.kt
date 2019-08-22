@@ -1,8 +1,9 @@
 package nikiizvorski.uk.co.ble.di
 
 import android.app.Application
-import android.arch.persistence.room.Room
-import android.support.annotation.NonNull
+import android.content.Context
+import androidx.annotation.NonNull
+import androidx.room.Room
 import androidx.work.WorkManager
 import dagger.Module
 import dagger.Provides
@@ -16,11 +17,23 @@ import nikiizvorski.uk.co.ble.repos.*
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
+import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Singleton
 
 @Module
 class AppModule {
+
+    /**
+     *
+     * @param application Application
+     * @return Context
+     */
+    @Provides
+    @Singleton
+    fun provideContext(application: Application) : Context {
+        return application.applicationContext
+    }
 
     /**
      *
@@ -53,8 +66,8 @@ class AppModule {
         return Retrofit.Builder()
             .client(okHttpClient)
             .baseUrl(BASE_URL)
-            .addConverterFactory(MoshiConverterFactory.create())
-            .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
+            .addConverterFactory(GsonConverterFactory.create())
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build()
     }
 

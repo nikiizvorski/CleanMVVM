@@ -1,8 +1,10 @@
 package nikiizvorski.uk.co.ble.repos
 
-import android.arch.lifecycle.MutableLiveData
 import android.view.View
+import androidx.lifecycle.MutableLiveData
 import io.realm.Realm
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import nikiizvorski.uk.co.ble.db.AppDAO
 import nikiizvorski.uk.co.ble.pojos.Device
 import nikiizvorski.uk.co.ble.pojos.DeviceModel
@@ -45,8 +47,6 @@ class PrefsRepositoryImpl @Inject constructor(private val appDao: AppDAO, privat
                 visibility.value = View.GONE
             }
         }
-
-        realm.close()
     }
 
     /**
@@ -74,5 +74,12 @@ class PrefsRepositoryImpl @Inject constructor(private val appDao: AppDAO, privat
      */
     fun findInRealm(realm: Realm, id: Int): DeviceModel? {
         return realm.where(DeviceModel::class.java).equalTo("id", id).findFirst()
+    }
+
+    /**
+     * Close Instance
+     */
+    override fun closeRealm() {
+        realm.close()
     }
 }

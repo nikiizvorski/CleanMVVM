@@ -1,17 +1,23 @@
 package nikiizvorski.uk.co.ble.ui
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.support.v7.widget.GridLayoutManager
+import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import androidx.navigation.fragment.NavHostFragment
+import androidx.recyclerview.widget.GridLayoutManager
 import dagger.android.AndroidInjection
 import dagger.android.support.DaggerAppCompatActivity
+import kotlinx.android.synthetic.main.activity_device.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import nikiizvorski.uk.co.ble.R
+import nikiizvorski.uk.co.ble.databinding.ActivityDeviceBinding
 import nikiizvorski.uk.co.ble.factory.AppViewModelFactory
-import kotlinx.android.synthetic.main.activity_post_list.*
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -37,9 +43,10 @@ class DeviceListActivity: DaggerAppCompatActivity(), OnAdapterManagement {
     var data: RealmResults<DeviceModel>? = null
     **/
     @Inject lateinit var viewModelFactory: AppViewModelFactory
-    val viewModel by lazy { ViewModelProviders.of(this, viewModelFactory).get(DeviceListViewModel::class.java) }
+    val viewModel by lazy { ViewModelProvider(this, viewModelFactory).get(DeviceListViewModel::class.java) }
     var deviceListAdapter: DeviceListAdapter = DeviceListAdapter(this)
     var deviceRealmList: DeviceRealmListAdapter? = null
+    private lateinit var binding: ActivityDeviceBinding
     private lateinit var navController: NavController
 
     /**
@@ -48,11 +55,12 @@ class DeviceListActivity: DaggerAppCompatActivity(), OnAdapterManagement {
      */
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_post_list)
-        navController = Navigation.findNavController(this, R.id.navigation_host_fragment
-        )
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_device)
+        binding.lifecycleOwner = this
+        navController = Navigation.findNavController(this, R.id.navigation_host_fragment)
         AndroidInjection.inject(this)
         initUI()
+
     }
 
     /**
@@ -63,11 +71,11 @@ class DeviceListActivity: DaggerAppCompatActivity(), OnAdapterManagement {
         /**
          * Normal Adapter Setup
          */
-        post_list.layoutManager = GridLayoutManager(this, 2)
-        post_list.adapter = deviceListAdapter
+        binding.list.layoutManager = GridLayoutManager(this, 2)
+        binding.list.adapter = deviceListAdapter
 
         /**
-         * Realm Setup
+         * Realm Setupg
         **/
         realmSetup()
 
@@ -85,6 +93,7 @@ class DeviceListActivity: DaggerAppCompatActivity(), OnAdapterManagement {
             data?.let {
                 Timber.d("Data Observed Size: %s", it.size)
                 deviceListAdapter.devices.addAll(it)
+                deviceListAdapter.notifyDataSetChanged()
             }
         })
     }
