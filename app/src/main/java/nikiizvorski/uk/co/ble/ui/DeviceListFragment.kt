@@ -23,6 +23,7 @@ import kotlinx.coroutines.launch
 import nikiizvorski.uk.co.ble.R
 import nikiizvorski.uk.co.ble.databinding.DeviceFragmentBinding
 import nikiizvorski.uk.co.ble.factory.AppViewModelFactory
+import nikiizvorski.uk.co.ble.pojos.Device
 import nikiizvorski.uk.co.ble.util.DeviceTest
 import timber.log.Timber
 import javax.inject.Inject
@@ -86,11 +87,14 @@ class DeviceListFragment : DaggerFragment() {
 
     private fun initUI() {
         /**
-         * Find Nav Controller in Fragment?
+         * Find Nav Controller in Fragment? Pass data between destinations?
          *
          */
         binding.btn.setOnClickListener {
-            NavHostFragment.findNavController(this).navigate(R.id.action_navigation_home_to_deviceListFragmentTwo)
+            val bundle = Bundle()
+            val device: Device = Device(1,1, "Niki Device", "sample")
+            bundle.putParcelable("objectid", device)
+            NavHostFragment.findNavController(this).navigate(R.id.action_navigation_home_to_deviceListFragmentTwo, bundle)
         }
         /**
         binding.btn.setOnClickListener {
