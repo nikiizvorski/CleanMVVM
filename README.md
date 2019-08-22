@@ -30,6 +30,8 @@ Testing
 ---------------
 Testing haven't been integrated in this project. But would be fairly simple to do that. Firebase Cloud, Espresso, Robo etc.
 
+- Added all the libraries for base setup for AndroidX on request for testing setup soon. 
+
 CI/CD
 ---------------
 The project doesn't have any CD integrated. But if anyone would like to have that i would provide a sample implementation to any of the following: BitBucket, Github, CircleCI, Travis or any other.
