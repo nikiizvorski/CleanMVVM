@@ -77,3 +77,5 @@ A
 	README.md,8/e/8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d
 [
 +app/src/main/res/layout/activity_device.xml,2/f/2f7f3cb2ee0e5dc245f0bc1947970767c7a4d4bf
+t
+Dapp/src/main/java/nikiizvorski/uk/co/ble/ui/DeviceListFragmentTwo.kt,4/5/45e7fc91218c51a335a4f8c45f142b235f075c3f
