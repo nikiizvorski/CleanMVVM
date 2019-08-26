@@ -23,6 +23,7 @@ import kotlinx.coroutines.launch
 import nikiizvorski.uk.co.ble.R
 import nikiizvorski.uk.co.ble.databinding.DeviceFragmentTwoBinding
 import nikiizvorski.uk.co.ble.factory.AppViewModelFactory
+import nikiizvorski.uk.co.ble.pojos.Device
 import nikiizvorski.uk.co.ble.util.DeviceTest
 import timber.log.Timber
 import javax.inject.Inject
@@ -85,6 +86,12 @@ class DeviceListFragmentTwo : DaggerFragment() {
     }
 
     private fun initUI() {
+        /**
+         * Pass and receive data simply with Navigstion? Ex:
+         */
+        val dev = arguments!!.getParcelable<Device>("objectid")
+
+        binding.btn.text = dev.title
         /**
          * Find Nav Controller in Fragment?
          *
