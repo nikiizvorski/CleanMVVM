@@ -36,8 +36,7 @@ val module: Module = module {
     /**
      * https://github.com/InsertKoinIO/koin/issues/506
      *
-     * Current Issue with Koin doesn't work with ViewModelScope and LiveData properly
-     * waiting until fix for a proper integration.
+     * Fixed someone had the same issue
      *
      * That is why Dagger is a more stable and currently best implementation it is supported out of the box.
      */

@@ -12,6 +12,7 @@ import androidx.navigation.fragment.NavHostFragment
 import nikiizvorski.uk.co.ble.R
 import nikiizvorski.uk.co.ble.databinding.DeviceFragmentBinding
 import nikiizvorski.uk.co.ble.util.DeviceTest
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
@@ -28,7 +29,7 @@ class DeviceListFragment : Fragment() {
     /**
      * Updated the Fragment and Activity Shared View Model base adjust to requirement
      */
-    val viewModel: DeviceListViewModel by viewModel()
+    val viewModel: DeviceListViewModel by sharedViewModel()
 
     /**
      *
@@ -105,7 +106,7 @@ class DeviceListFragment : Fragment() {
         /**
          * Observer without the view logic
          */
-        viewModel.visibility.observe(this, Observer { visibility ->
+        viewModel.visibility.observe(viewLifecycleOwner, Observer { visibility ->
             if (visibility == View.VISIBLE) {
                 Timber.d("VISIBLE")
             } else {

@@ -122,8 +122,8 @@ class DeviceListViewModel : ViewModel(), KoinComponent {
     fun addItems(){
 //        loadItemsAsync()
 //        loadDevices()
-        loadAsyncDevices()
-//       getWebItems()
+//        loadAsyncDevices()
+       getWebItems()
     }
 
     /**
