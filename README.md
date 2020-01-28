@@ -88,9 +88,11 @@ Next update will probably have some more advanced stuff inside
 
 - Implemented Working with Files Coroutines variation. 
 
-- Newer version will be keep updated until stable. 
+- Implemented Newer version will be keep updated until stable. 
 
-- Next Update will be with Koin implementation as alternative for people who prefer and like the usage - koinbranch.
+- Implemented Next Update will be with Koin implementation as alternative for people who prefer and like the usage - koinbranch.
+
+- Next Update will include Kotlin Extensions, MediatorLiveData, Kotlin Flow, Kotlin Sequences
 
 Licenze
 ---------------
