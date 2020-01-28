@@ -115,6 +115,8 @@ class DeviceListViewModel @Inject constructor(private val repository: Repository
      *
      * When would you use it well imagine you have items that you want in ASC/DESC you can add different order like
      * and change the objects order simply. Or imagine that you have a singleton class and you want to observe other items.
+     *
+     * You would like to keep a single stream and changing only its value on the way
      */
     fun getMediatorData() {
         /*
