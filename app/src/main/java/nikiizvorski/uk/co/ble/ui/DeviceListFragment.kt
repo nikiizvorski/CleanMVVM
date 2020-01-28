@@ -92,7 +92,7 @@ class DeviceListFragment : DaggerFragment() {
          */
         binding.btn.setOnClickListener {
             val bundle = Bundle()
-            val device: Device = Device(1,1, "Niki Device", "sample")
+            val device = Device(1,1, "Niki Device", "sample")
             bundle.putParcelable("objectid", device)
             NavHostFragment.findNavController(this).navigate(R.id.action_navigation_home_to_deviceListFragmentTwo, bundle)
         }
