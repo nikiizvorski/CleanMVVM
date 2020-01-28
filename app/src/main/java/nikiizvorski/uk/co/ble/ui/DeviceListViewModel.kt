@@ -30,6 +30,8 @@ class DeviceListViewModel @Inject constructor(private val repository: Repository
     ViewModel(){
     private lateinit var subscription: Disposable
     val data: MutableLiveData<List<Device>> = MutableLiveData()
+    val dataDB: MutableLiveData<List<Device>> = MutableLiveData()
+    val dataNetwork: MutableLiveData<List<Device>> = MutableLiveData()
 
     /**
      * Proper encapsulation example
@@ -99,10 +101,6 @@ class DeviceListViewModel @Inject constructor(private val repository: Repository
     }
 
     /**
-     * Read File
-     */
-
-    /**
      * Stable Implementation
      */
     fun loadDevices(){
@@ -110,6 +108,32 @@ class DeviceListViewModel @Inject constructor(private val repository: Repository
             prefsRepository.getDbRealmList(data, _visibility)
             repository.executeManager()
         }
+    }
+
+    /**
+     * Get Mediator Data / change data to MediatorLiveData in order to use the method and observe the changes
+     *
+     * When would you use it well imagine you have items that you want in ASC/DESC you can add different order like
+     * and change the objects order simply. Or imagine that you have a singleton class and you want to observe other items.
+     */
+    fun getMediatorData() {
+        /*
+        viewModelScope.launch(Dispatchers.Main) {
+            prefsRepository.getDbRealmList(dataDB, _visibility)
+
+            data.addSource(dataDB) {
+                it?.let { data.value = it }
+                Timber.d("WENT HERE")
+            }
+
+            networkRepository.getNewNetworkList(dataNetwork, _visibility)
+
+            data.addSource(dataNetwork) {
+                it?.let { data.value = it }
+                Timber.d("WENT HERE")
+            }
+        }
+        */
     }
 
     /**

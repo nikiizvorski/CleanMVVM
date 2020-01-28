@@ -79,3 +79,7 @@ A
 +app/src/main/res/layout/activity_device.xml,2/f/2f7f3cb2ee0e5dc245f0bc1947970767c7a4d4bf
 t
 Dapp/src/main/java/nikiizvorski/uk/co/ble/ui/DeviceListFragmentTwo.kt,4/5/45e7fc91218c51a335a4f8c45f142b235f075c3f
+k
+;app/src/main/java/nikiizvorski/uk/co/ble/util/Extensions.kt,c/a/caf8b09c217dbfce80246ec992e4098f7be09978
+_
+/app/src/main/res/layout/device_fragment_two.xml,0/6/06b8e3603daad346317cc32463d3c9b7ad79bd29
