@@ -1,6 +1,7 @@
 package nikiizvorski.uk.co.ble.ui
 
 import android.content.Context
+import android.view.View
 import androidx.lifecycle.*
 import io.reactivex.disposables.Disposable
 import kotlinx.coroutines.*
@@ -77,8 +78,10 @@ class DeviceListViewModel @Inject constructor(private val repository: Repository
 
 
     init{
-        loadDevices()
+//        loadDevices()
         workWithFile()
+        getWebItems()
+//        getWebItemsRetry()
     }
 
     /**
@@ -150,7 +153,28 @@ class DeviceListViewModel @Inject constructor(private val repository: Repository
      */
     fun getWebItems(){
         viewModelScope.launch(Dispatchers.Main) {
-            networkRepository.getNewNetworkList(data, _visibility)
+            networkRepository.getNetworkList(data, _visibility)
+        }
+    }
+
+    /**
+     * Get Items from web with Retry Coroutines
+     *
+     * setting liveData value should be on the main
+     *
+     * this is the correct way to do it instead of the rest you want to keep SOLID
+     *
+     * the rest are just examples of what you can do
+     */
+    fun getWebItemsRetry() {
+        viewModelScope.launch(Dispatchers.Main) {
+            //networkRepository.getNewNetworkList(data, _visibility)
+            val items: List<Device>? = async(Dispatchers.IO) {
+                networkRepository.getCorrectNetworkList()
+            }.await()
+
+            data.value = items
+            _visibility.value = View.GONE
         }
     }
 
