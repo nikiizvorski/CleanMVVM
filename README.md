@@ -92,7 +92,9 @@ Next update will probably have some more advanced stuff inside
 
 - Implemented Next Update will be with Koin implementation as alternative for people who prefer and like the usage - koinbranch.
 
-- Next Update will include Kotlin Extensions, MediatorLiveData, Kotlin Flow, Kotlin Sequences
+- Implemented Kotlin Extensions, MediatorLiveData, Transformations
+
+- Next Update will include Kotlin Flow, Kotlin Sequences
 
 Licenze
 ---------------
