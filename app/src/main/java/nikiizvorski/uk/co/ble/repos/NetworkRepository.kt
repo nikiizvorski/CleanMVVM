@@ -1,5 +1,6 @@
 package nikiizvorski.uk.co.ble.repos
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import nikiizvorski.uk.co.ble.pojos.Device
 
@@ -21,4 +22,16 @@ interface NetworkRepository {
      * @param visibility MutableLiveData<Int>
      */
     suspend fun getNewNetworkList(data: MutableLiveData<List<Device>>, visibility: MutableLiveData<Int>)
+
+    /**
+     *
+     * @return List<Device>?
+     */
+    suspend fun getCorrectNetworkList(): List<Device>?
+
+    /**
+     *
+     * @return MutableLiveData<List<Device>>
+     */
+    fun getNetworkData(): LiveData<List<Device>>
 }

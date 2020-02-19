@@ -15,7 +15,7 @@ import nikiizvorski.uk.co.ble.R
 import nikiizvorski.uk.co.ble.databinding.DeviceFragmentTwoBinding
 import nikiizvorski.uk.co.ble.factory.AppViewModelFactory
 import nikiizvorski.uk.co.ble.pojos.Device
-import nikiizvorski.uk.co.ble.util.DeviceTest
+import nikiizvorski.uk.co.ble.util.*
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -130,5 +130,23 @@ class DeviceListFragmentTwo : DaggerFragment() {
                 Timber.d("INVISIBLE")
             }
         })
+
+        binding.textView.text = customResult(dev)
+
+        /**
+         * Set Device Title with Extension
+         *
+         * binding.textView.text = dev.title.setFormatted()
+         */
+
+        /**
+         * Remove Device First and Last from Title .removeFirstLastChar()
+         */
+
+        /**
+         * Set Device Title with Extension Property
+         *
+         * binding.textView.text = devv.title.extensionVar
+         */
     }
 }

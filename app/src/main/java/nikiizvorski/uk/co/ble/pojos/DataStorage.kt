@@ -19,7 +19,7 @@ import kotlinx.android.parcel.Parcelize
  */
 @Parcelize
 @Entity
-data class Device(val userId: Int, @PrimaryKey val id: Int, val title: String, val body: String) : Parcelable
+data class Device(val userId: Int, @PrimaryKey val id: Int, var title: String, val body: String) : Parcelable
 
 @Keep
 @KeepMember

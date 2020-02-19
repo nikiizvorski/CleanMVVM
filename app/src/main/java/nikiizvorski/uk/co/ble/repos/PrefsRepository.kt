@@ -8,11 +8,6 @@ import nikiizvorski.uk.co.ble.pojos.Device
  */
 interface PrefsRepository {
 
-    /**
-     *
-     * @param data MutableLiveData<List<Device>>
-     */
-    fun getDbList(data: MutableLiveData<List<Device>>)
 
     /**
      *
@@ -24,13 +19,22 @@ interface PrefsRepository {
      *
      * @param data MutableLiveData<List<Device>>
      */
-    fun getDbRealmList(
-        data: MutableLiveData<List<Device>>,
-        visibility: MutableLiveData<Int>
-    )
+    fun getDbRealmList(): List<Device>
 
     /**
      * Close Realm
      */
     fun closeRealm()
+
+    /**
+     *
+     * @return Int?
+     */
+    fun getVisibilityUpdate(): Int?
+
+    /**
+     *
+     * @return List<Device>
+     */
+    fun getDbList(): List<Device>
 }
