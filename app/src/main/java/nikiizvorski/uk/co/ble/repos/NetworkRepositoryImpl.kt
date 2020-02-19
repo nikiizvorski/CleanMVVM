@@ -2,6 +2,7 @@ package nikiizvorski.uk.co.ble.repos
 
 import android.util.Log
 import android.view.View
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import io.reactivex.Flowable
 import io.reactivex.Observable
@@ -28,6 +29,8 @@ import javax.inject.Inject
  */
 class NetworkRepositoryImpl @Inject constructor(private val deviceService: AppService): NetworkRepository {
     private lateinit var subscription: Disposable
+    val mData = MutableLiveData<List<Device>>()
+
 
     /**
      *
@@ -70,6 +73,24 @@ class NetworkRepositoryImpl @Inject constructor(private val deviceService: AppSe
     override suspend fun getCorrectNetworkList(): List<Device>? {
         val response = retryIO { deviceService.getNewPosts() }
         return response.body()
+    }
+
+    /**
+     *
+     * @return MutableLiveData<List<Device>>
+     */
+    override fun getNetworkData(): LiveData<List<Device>> {
+        subscription = deviceService.getPosts()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .retryWhen { throwables -> throwables.delay(1, TimeUnit.SECONDS) }
+            .doOnSubscribe {  }
+            .doOnTerminate {  }
+            .subscribe({ result -> mData.value = result
+                Timber.d("Executed2")}, {  })
+
+        Timber.d("Executed3")
+        return mData
     }
 
     /**

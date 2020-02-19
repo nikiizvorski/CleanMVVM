@@ -3,7 +3,6 @@ package nikiizvorski.uk.co.ble.ui
 import android.content.Context
 import android.view.View
 import androidx.lifecycle.*
-import io.reactivex.disposables.Disposable
 import kotlinx.coroutines.*
 import nikiizvorski.uk.co.ble.pojos.Device
 import nikiizvorski.uk.co.ble.repos.NetworkRepository
@@ -11,6 +10,7 @@ import nikiizvorski.uk.co.ble.repos.PrefsRepository
 import nikiizvorski.uk.co.ble.repos.Repository
 import timber.log.Timber
 import javax.inject.Inject
+
 
 /**
  *
@@ -20,7 +20,6 @@ import javax.inject.Inject
  * don't change the value of your data from the view directly.
  *
  * @property repository Repository
- * @property subscription Disposable
  * @property data MutableLiveData<List<Device>>
  * @property visibility MutableLiveData<Int>
  * @constructor
@@ -29,8 +28,7 @@ class DeviceListViewModel @Inject constructor(private val repository: Repository
                                               private val networkRepository: NetworkRepository, private val context: Context
 ):
     ViewModel(){
-    private lateinit var subscription: Disposable
-    val data: MutableLiveData<List<Device>> = MutableLiveData()
+    var data: MediatorLiveData<List<Device>> = MediatorLiveData()
     val dataDB: MutableLiveData<List<Device>> = MutableLiveData()
     val dataNetwork: MutableLiveData<List<Device>> = MutableLiveData()
 
@@ -77,11 +75,16 @@ class DeviceListViewModel @Inject constructor(private val repository: Repository
     }
 
 
+    /**
+     * Change the method for different load
+     *
+     * loadDevices()
+     * getWebItemsRetry()
+     * workWithFile()
+     * transformWebItems()
+     */
     init{
-//        loadDevices()
-        workWithFile()
         getWebItems()
-//        getWebItemsRetry()
     }
 
     /**
@@ -104,11 +107,13 @@ class DeviceListViewModel @Inject constructor(private val repository: Repository
     }
 
     /**
-     * Stable Implementation
+     * We want to get the data from Realm here and update the visibility also
+     * we shouldn't pass any values
      */
     fun loadDevices(){
         viewModelScope.launch(Dispatchers.Main) {
-            prefsRepository.getDbRealmList(data, _visibility)
+            data.value = prefsRepository.getDbRealmList()
+            _visibility.value = prefsRepository.getVisibilityUpdate()
             repository.executeManager()
         }
     }
@@ -125,14 +130,11 @@ class DeviceListViewModel @Inject constructor(private val repository: Repository
         /*
         viewModelScope.launch(Dispatchers.Main) {
             prefsRepository.getDbRealmList(dataDB, _visibility)
-
             data.addSource(dataDB) {
                 it?.let { data.value = it }
                 Timber.d("WENT HERE")
             }
-
             networkRepository.getNewNetworkList(dataNetwork, _visibility)
-
             data.addSource(dataNetwork) {
                 it?.let { data.value = it }
                 Timber.d("WENT HERE")
@@ -142,18 +144,53 @@ class DeviceListViewModel @Inject constructor(private val repository: Repository
     }
 
     /**
-     * Add manual to test the rest of the methods
-     */
-    fun addItems(){
-       getWebItems()
-    }
-
-    /**
      * Get Items from the Web
      */
     fun getWebItems(){
         viewModelScope.launch(Dispatchers.Main) {
-            networkRepository.getNetworkList(data, _visibility)
+            _visibility.value = View.VISIBLE
+
+            // removeSource in order to use it with the btn
+
+            data.addSource(networkRepository.getNetworkData()){
+                data.value = it
+                _visibility.value = View.GONE
+            }
+        }
+    }
+
+    /**
+     * Functions in both map() and switchMap() run on the Main Thread, so no long running operations should be done there!
+     *
+     * They are the way to transform liveData objects not to actually represent one and not the place for ViewModel logic
+     *
+     * Transformations contains MediatorLiveData inside! As for reference
+     */
+    fun transformWebItems() {
+            networkRepository.getNetworkData().observeForever {
+                data.value = it
+                _visibility.value = View.GONE
+            }
+
+        // sampl1
+           Transformations.map(data) { list ->
+               data.value = list
+                list.forEach {
+                    it.title = it.title + it.id
+                }
+            }.observeForever {
+               Timber.d("Data: $it")
+           }
+
+        // sampl2
+        Transformations.switchMap(data) {
+            networkRepository.getNetworkData()
+        }.observeForever {
+            Timber.d("Data: $it")
+            it.forEach {
+                it.title = it.title + it.id
+            }
+            data.value = it
         }
     }
 
@@ -173,7 +210,6 @@ class DeviceListViewModel @Inject constructor(private val repository: Repository
                 networkRepository.getCorrectNetworkList()
             }.await()
 
-            data.value = items
             _visibility.value = View.GONE
         }
     }
@@ -187,11 +223,20 @@ class DeviceListViewModel @Inject constructor(private val repository: Repository
     }
 
     /**
-     * Clear ViewModel
+     * Reverse LiveData order
+     */
+    fun reverseOrder() {
+        viewModelScope.launch(Dispatchers.Main) {
+            data.value = data.value!!.reversed()
+        }
+    }
+
+    /**
+     * Clear ViewModel you don't need this method if you are only using viewModelScope it should
+     * clear everything automatically! So in that order you have to be aware of the lifecycles you are using.
      */
     override fun onCleared() {
         super.onCleared()
         prefsRepository.closeRealm()
-        subscription.dispose()
     }
 }

@@ -95,6 +95,7 @@ class DeviceListFragment : DaggerFragment() {
             val device = Device(1,1, "Niki Device", "sample")
             bundle.putParcelable("objectid", device)
             NavHostFragment.findNavController(this).navigate(R.id.action_navigation_home_to_deviceListFragmentTwo, bundle)
+            viewModel.reverseOrder()
         }
         /**
         binding.btn.setOnClickListener {

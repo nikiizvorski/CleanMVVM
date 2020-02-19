@@ -16,15 +16,15 @@ import javax.inject.Inject
  * @constructor
  */
 class PrefsRepositoryImpl @Inject constructor(private val appDao: AppDAO, private val realm: Realm): PrefsRepository {
+    private var visibility: Int = 0
+    var data: List<Device> = listOf()
+
 
     /**
      *
      * @param data MutableLiveData<List<Device>>
      */
-    override fun getDbRealmList(
-        data: MutableLiveData<List<Device>>,
-        visibility: MutableLiveData<Int>
-    ) {
+    override fun getDbRealmList(): List<Device> {
         realm.executeTransaction { realm ->
             var deviceModel = findInRealm(realm, 101)
 
@@ -34,8 +34,8 @@ class PrefsRepositoryImpl @Inject constructor(private val appDao: AppDAO, privat
                 deviceModel.title = "Samsung S10+"
                 deviceModel.body = "Their shity system doesn't work!"
 
-                data.value = listOf(Device(deviceModel.userId, deviceModel.id, deviceModel.title, deviceModel.body))
-                visibility.value = View.GONE
+                data = listOf(Device(deviceModel.userId, deviceModel.id, deviceModel.title, deviceModel.body))
+                visibility = View.GONE
             } else {
                 deviceModel = realm.createObject(DeviceModel::class.java)
                 deviceModel.id = 101
@@ -43,10 +43,12 @@ class PrefsRepositoryImpl @Inject constructor(private val appDao: AppDAO, privat
                 deviceModel.title = "Samsung S10+"
                 deviceModel.body = "Their shity system doesn't work!"
 
-                data.value = listOf(Device(deviceModel.userId, deviceModel.id, deviceModel.title, deviceModel.body))
-                visibility.value = View.GONE
+                data = listOf(Device(deviceModel.userId, deviceModel.id, deviceModel.title, deviceModel.body))
+                visibility = View.GONE
             }
         }
+
+        return data
     }
 
     /**
@@ -61,8 +63,8 @@ class PrefsRepositoryImpl @Inject constructor(private val appDao: AppDAO, privat
      *
      * @param data MutableLiveData<List<Device>>
      */
-    override fun getDbList(data: MutableLiveData<List<Device>>) {
-        data.value = appDao.all
+    override fun getDbList(): List<Device>{
+        return appDao.all
     }
 
     /**
@@ -81,5 +83,13 @@ class PrefsRepositoryImpl @Inject constructor(private val appDao: AppDAO, privat
      */
     override fun closeRealm() {
         realm.close()
+    }
+
+    /**
+     *
+     * @return Int?
+     */
+    override fun getVisibilityUpdate(): Int? {
+        return visibility
     }
 }

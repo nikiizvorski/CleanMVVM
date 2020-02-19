@@ -92,6 +92,7 @@ class DeviceListActivity: DaggerAppCompatActivity(), OnAdapterManagement {
         viewModel.data.observe(this, Observer { data ->
             data?.let {
                 Timber.d("Data Observed Size: %s", it.size)
+                deviceListAdapter.devices.clear()
                 deviceListAdapter.devices.addAll(it)
                 deviceListAdapter.notifyDataSetChanged()
             }
