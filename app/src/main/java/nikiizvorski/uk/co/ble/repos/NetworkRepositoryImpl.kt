@@ -30,6 +30,7 @@ import javax.inject.Inject
 class NetworkRepositoryImpl @Inject constructor(private val deviceService: AppService): NetworkRepository {
     private lateinit var subscription: Disposable
     val mData = MutableLiveData<List<Device>>()
+    private var visibility: Int = 0
 
 
     /**
@@ -39,14 +40,15 @@ class NetworkRepositoryImpl @Inject constructor(private val deviceService: AppSe
      * @param data MutableLiveData<List<Device>>
      * @param visibility MutableLiveData<Int>
      */
-    override fun getNetworkList(data: MutableLiveData<List<Device>>, visibility: MutableLiveData<Int>) {
+    override fun getNetworkList(): MutableLiveData<List<Device>> {
         subscription = deviceService.getPosts()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .retryWhen { throwables -> throwables.delay(1, TimeUnit.SECONDS) }
-            .doOnSubscribe { visibility.value = View.VISIBLE }
-            .doOnTerminate { visibility.value = View.GONE }
-            .subscribe({ result -> data.value = result }, { visibility.value = View.VISIBLE })
+            .doOnSubscribe { visibility = View.VISIBLE }
+            .doOnTerminate { visibility = View.GONE }
+            .subscribe({ result -> mData.value = result }, { visibility = View.VISIBLE })
+        return mData
     }
 
     /**
@@ -54,16 +56,18 @@ class NetworkRepositoryImpl @Inject constructor(private val deviceService: AppSe
      * @param data MutableLiveData<List<Device>>
      * @param visibility MutableLiveData<Int>
      */
-    override suspend fun getNewNetworkList(data: MutableLiveData<List<Device>>, visibility: MutableLiveData<Int>) {
+    override suspend fun getNewNetworkList():  MutableLiveData<List<Device>> {
         withContext(Dispatchers.Main) {
             val response = retryIO { deviceService.getNewPosts() }
             if (response.isSuccessful) {
-                    visibility.value = View.GONE
-                    data.value = response.body()
+                    visibility = View.GONE
+                    mData.value = response.body()
                 } else {
-                    visibility.value = View.VISIBLE
+                    visibility = View.VISIBLE
                 }
         }
+
+        return mData
     }
 
     /**
@@ -84,8 +88,8 @@ class NetworkRepositoryImpl @Inject constructor(private val deviceService: AppSe
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .retryWhen { throwables -> throwables.delay(1, TimeUnit.SECONDS) }
-            .doOnSubscribe {  }
-            .doOnTerminate {  }
+            .doOnSubscribe { visibility = View.VISIBLE }
+            .doOnTerminate { visibility = View.GONE }
             .subscribe({ result -> mData.value = result
                 Timber.d("Executed2")}, {  })
 
@@ -120,5 +124,13 @@ class NetworkRepositoryImpl @Inject constructor(private val deviceService: AppSe
             currentDelay = (currentDelay * factor).toLong().coerceAtMost(maxDelay)
         }
         return block() // last attempt
+    }
+
+    /**
+     *
+     * @return Int?
+     */
+    override fun getVisibilityUpdate(): Int? {
+        return visibility
     }
 }

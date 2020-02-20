@@ -30,8 +30,9 @@ import java.io.FileInputStream
  * @constructor
  */
 class RepositoryImpl @Inject constructor(private val appDao: AppDAO, private val deviceService: AppService, private val workManager: WorkManager) : Repository {
-
+    val mData = MutableLiveData<List<Device>>()
     private lateinit var subscription: Disposable
+    private var visibility: Int = 0
 
     /**
      *
@@ -65,8 +66,9 @@ class RepositoryImpl @Inject constructor(private val appDao: AppDAO, private val
      *
      * @param data MutableLiveData<List<Device>>
      */
-    override fun getDbList(data: MutableLiveData<List<Device>>) {
-        data.value = appDao.all
+    override fun getDbList(): MutableLiveData<List<Device>> {
+        mData.value = appDao.all
+        return mData
     }
 
     /**
@@ -88,10 +90,9 @@ class RepositoryImpl @Inject constructor(private val appDao: AppDAO, private val
 
     /**
      *
-     * @param data MutableLiveData<List<Device>>
-     * @param visibility MutableLiveData<Int>
+     * @return MutableLiveData<List<Device>>
      */
-    override fun getNetworkList(data: MutableLiveData<List<Device>>, visibility: MutableLiveData<Int>) {
+    override fun getNetworkList(): MutableLiveData<List<Device>> {
         if (appDao.all.isEmpty()) {
 
             subscription = Observable.fromCallable { appDao.all }
@@ -109,14 +110,16 @@ class RepositoryImpl @Inject constructor(private val appDao: AppDAO, private val
                 }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe { visibility.value = View.VISIBLE }
-                .doOnTerminate { visibility.value = View.GONE }
-                .subscribe({ result -> data.value = result }, { visibility.value = View.VISIBLE })
+                .doOnSubscribe { visibility = View.VISIBLE }
+                .doOnTerminate { visibility = View.GONE }
+                .subscribe({ result -> mData.value = result }, { visibility = View.VISIBLE })
 
         } else {
-            visibility.value = View.GONE
-            data.value = appDao.all
+            visibility = View.GONE
+            mData.value = appDao.all
         }
+
+        return mData
     }
 
     /**
@@ -128,5 +131,13 @@ class RepositoryImpl @Inject constructor(private val appDao: AppDAO, private val
         delay(2000)
 
         return listOf(Device(109, 109, "STEST", "SBEST"))
+    }
+
+    /**
+     *
+     * @return Int?
+     */
+    override fun getVisibilityUpdate(): Int? {
+        return visibility
     }
 }

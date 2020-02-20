@@ -148,13 +148,13 @@ class DeviceListViewModel @Inject constructor(private val repository: Repository
      */
     fun getWebItems(){
         viewModelScope.launch(Dispatchers.Main) {
-            _visibility.value = View.VISIBLE
+            _visibility.value = networkRepository.getVisibilityUpdate()
 
             // removeSource in order to use it with the btn
 
             data.addSource(networkRepository.getNetworkData()){
                 data.value = it
-                _visibility.value = View.GONE
+                _visibility.value = networkRepository.getVisibilityUpdate()
             }
         }
     }
@@ -210,7 +210,8 @@ class DeviceListViewModel @Inject constructor(private val repository: Repository
                 networkRepository.getCorrectNetworkList()
             }.await()
 
-            _visibility.value = View.GONE
+            data.value = items
+            _visibility.value = networkRepository.getVisibilityUpdate()
         }
     }
 
