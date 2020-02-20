@@ -37,5 +37,5 @@ interface NetworkRepository {
      *
      * @return Int?
      */
-    fun getVisibilityUpdate(): Int?
+    fun getVisibilityUpdate(): MutableLiveData<Int>
 }

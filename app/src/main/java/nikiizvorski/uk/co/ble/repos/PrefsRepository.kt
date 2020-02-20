@@ -30,7 +30,7 @@ interface PrefsRepository {
      *
      * @return Int?
      */
-    fun getVisibilityUpdate(): Int?
+    fun getVisibilityUpdate(): MutableLiveData<Int>
 
     /**
      *

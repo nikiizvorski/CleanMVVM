@@ -113,7 +113,12 @@ class DeviceListViewModel @Inject constructor(private val repository: Repository
     fun loadDevices(){
         viewModelScope.launch(Dispatchers.Main) {
             data.value = prefsRepository.getDbRealmList()
-            _visibility.value = prefsRepository.getVisibilityUpdate()
+
+            // observeForever is lifeCycleAware when you use it with ViewModelScope
+            prefsRepository.getVisibilityUpdate().observeForever{
+                _visibility.value = it
+            }
+
             repository.executeManager()
         }
     }
@@ -148,13 +153,12 @@ class DeviceListViewModel @Inject constructor(private val repository: Repository
      */
     fun getWebItems(){
         viewModelScope.launch(Dispatchers.Main) {
-            _visibility.value = networkRepository.getVisibilityUpdate()
-
-            // removeSource in order to use it with the btn
-
             data.addSource(networkRepository.getNetworkData()){
                 data.value = it
-                _visibility.value = networkRepository.getVisibilityUpdate()
+            }
+
+            networkRepository.getVisibilityUpdate().observeForever{
+                _visibility.value = it
             }
         }
     }
@@ -211,7 +215,6 @@ class DeviceListViewModel @Inject constructor(private val repository: Repository
             }.await()
 
             data.value = items
-            _visibility.value = networkRepository.getVisibilityUpdate()
         }
     }
 
