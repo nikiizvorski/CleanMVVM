@@ -1,27 +1,19 @@
 package nikiizvorski.uk.co.ble.repos
 
-import android.util.Log
 import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import io.reactivex.Flowable
-import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.withContext
 import nikiizvorski.uk.co.ble.api.AppService
 import nikiizvorski.uk.co.ble.pojos.Device
-import retrofit2.HttpException
 import timber.log.Timber
 import java.io.IOException
-import java.net.UnknownHostException
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -166,5 +158,30 @@ class NetworkRepositoryImpl @Inject constructor(private val deviceService: AppSe
      */
     override suspend fun getNetworkFlowMap(): Flow<List<Device>?> {
         return retryIO { deviceService.getFlowPosts() }
+    }
+
+    /**
+     * Example Method with Flow
+     *
+     * @return Flow<List<Device>>
+     */
+    override suspend fun getFlowMapped(): Flow<List<Device>> {
+        return flow{
+            emit(retryIO {
+                deviceService.getThePosts().map { modTitle(it) }
+            })
+
+            visibility.value = View.GONE
+        }
+    }
+
+    /**
+     *
+     * @param it Device
+     * @return Device
+     */
+    private fun modTitle(it: Device): Device {
+        it.title = it.title + it.id
+        return it
     }
 }

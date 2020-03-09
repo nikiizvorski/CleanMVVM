@@ -51,4 +51,10 @@ interface NetworkRepository {
      * @return Flow<List<Device>?>
      */
     suspend fun getNetworkFlowMap(): Flow<List<Device>?>
+
+    /**
+     *
+     * @return Flow<List<Device>>
+     */
+    suspend fun getFlowMapped(): Flow<List<Device>>
 }

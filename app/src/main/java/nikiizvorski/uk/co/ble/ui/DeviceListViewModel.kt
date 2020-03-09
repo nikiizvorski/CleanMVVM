@@ -94,7 +94,12 @@ class DeviceListViewModel @Inject constructor(private val repository: Repository
     init{
 //        getWebItems()
 //        getWebFlowItems()
-        getWebFlowCollection()
+//        getWebFlowCollection()
+        getWebFlowCollectionMapped()
+
+        networkRepository.getVisibilityUpdate().observeForever{
+            _visibility.value = it
+        }
     }
 
     /**
@@ -166,10 +171,6 @@ class DeviceListViewModel @Inject constructor(private val repository: Repository
             data.addSource(networkRepository.getNetworkData()){
                 data.value = it
             }
-
-            networkRepository.getVisibilityUpdate().observeForever{
-                _visibility.value = it
-            }
         }
     }
 
@@ -187,10 +188,6 @@ class DeviceListViewModel @Inject constructor(private val repository: Repository
             data.addSource(networkRepository.getNetworkFlow().asLiveData()) {
                 data.value = it
             }
-
-            networkRepository.getVisibilityUpdate().observeForever{
-                _visibility.value = it
-            }
         }
     }
 
@@ -205,9 +202,18 @@ class DeviceListViewModel @Inject constructor(private val repository: Repository
                 data.value = it
             }
         }
+    }
 
-        networkRepository.getVisibilityUpdate().observeForever{
-            _visibility.value = it
+    /**
+     * Flow collection in the ViewModel as it should be
+     *
+     * Example Path UI -> ViewModel Collection and LiveData -> Repository Flow -> Data Source Flow
+     */
+    fun getWebFlowCollectionMapped() {
+        viewModelScope.launch(Dispatchers.Main) {
+            networkRepository.getFlowMapped().collect{
+                data.value = it
+            }
         }
     }
 

@@ -25,4 +25,10 @@ interface AppService {
      */
     @GET("/posts")
     suspend fun getNewPosts(): Response<List<Device>>
+
+    /**
+     * Get the list of the pots from the API
+     */
+    @GET("/posts")
+    suspend fun getThePosts(): List<Device>
 }
