@@ -160,6 +160,7 @@ class NetworkRepositoryImpl @Inject constructor(private val deviceService: AppSe
     }
 
     /**
+     * Please do integrate your own Call Adapter otherwise this won't work for you.
      *
      * @return Flow<List<Device>?>
      */

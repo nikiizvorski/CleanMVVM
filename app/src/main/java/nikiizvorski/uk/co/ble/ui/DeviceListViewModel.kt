@@ -5,6 +5,8 @@ import android.view.View
 import androidx.lifecycle.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.map
 import nikiizvorski.uk.co.ble.pojos.Device
 import nikiizvorski.uk.co.ble.repos.NetworkRepository
 import nikiizvorski.uk.co.ble.repos.PrefsRepository
@@ -91,7 +93,8 @@ class DeviceListViewModel @Inject constructor(private val repository: Repository
      */
     init{
 //        getWebItems()
-        getWebFlowItems()
+//        getWebFlowItems()
+        getWebFlowCollection()
     }
 
     /**
@@ -188,6 +191,23 @@ class DeviceListViewModel @Inject constructor(private val repository: Repository
             networkRepository.getVisibilityUpdate().observeForever{
                 _visibility.value = it
             }
+        }
+    }
+
+    /**
+     * Flow collection in the ViewModel as it should be
+     *
+     * Example Path UI -> ViewModel Collection and LiveData -> Repository Flow -> Data Source Flow
+     */
+    fun getWebFlowCollection() {
+        viewModelScope.launch(Dispatchers.Main) {
+            networkRepository.getNetworkFlow().collect{
+                data.value = it
+            }
+        }
+
+        networkRepository.getVisibilityUpdate().observeForever{
+            _visibility.value = it
         }
     }
 
