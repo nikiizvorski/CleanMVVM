@@ -11,6 +11,10 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import nikiizvorski.uk.co.ble.api.AppService
 import nikiizvorski.uk.co.ble.pojos.Device
@@ -137,5 +141,29 @@ class NetworkRepositoryImpl @Inject constructor(private val deviceService: AppSe
      */
     override fun getVisibilityUpdate(): MutableLiveData<Int> {
         return visibility
+    }
+
+    /**
+     *
+     * @return Flow<List<Device>?>
+     */
+    override fun getNetworkFlow(): Flow<List<Device>?> {
+        return flow {
+            val response = retryIO { deviceService.getNewPosts() }
+            if (response.isSuccessful) {
+                visibility.value = View.GONE
+                emit(response.body())
+            } else {
+                visibility.value = View.VISIBLE
+            }
+        }
+    }
+
+    /**
+     *
+     * @return Flow<List<Device>?>
+     */
+    override suspend fun getNetworkFlowMap(): Flow<List<Device>?> {
+        return retryIO { deviceService.getFlowPosts() }
     }
 }

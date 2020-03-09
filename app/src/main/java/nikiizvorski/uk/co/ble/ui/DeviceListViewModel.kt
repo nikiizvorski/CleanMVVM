@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.View
 import androidx.lifecycle.*
 import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.Flow
 import nikiizvorski.uk.co.ble.pojos.Device
 import nikiizvorski.uk.co.ble.repos.NetworkRepository
 import nikiizvorski.uk.co.ble.repos.PrefsRepository
@@ -31,6 +32,11 @@ class DeviceListViewModel @Inject constructor(private val repository: Repository
     var data: MediatorLiveData<List<Device>> = MediatorLiveData()
     val dataDB: MutableLiveData<List<Device>> = MutableLiveData()
     val dataNetwork: MutableLiveData<List<Device>> = MutableLiveData()
+
+    /**
+     * Please use DeviceActivity Flow Collection to check the example
+     */
+    val dataFlow: Flow<List<Device>?> = networkRepository.getNetworkFlow()
 
     /**
      * Proper encapsulation example
@@ -84,7 +90,8 @@ class DeviceListViewModel @Inject constructor(private val repository: Repository
      * transformWebItems()
      */
     init{
-        getWebItems()
+//        getWebItems()
+        getWebFlowItems()
     }
 
     /**
@@ -154,6 +161,27 @@ class DeviceListViewModel @Inject constructor(private val repository: Repository
     fun getWebItems(){
         viewModelScope.launch(Dispatchers.Main) {
             data.addSource(networkRepository.getNetworkData()){
+                data.value = it
+            }
+
+            networkRepository.getVisibilityUpdate().observeForever{
+                _visibility.value = it
+            }
+        }
+    }
+
+    /**
+     * Example of cold - stream with Flow
+     * Get Items from the web using Flow and converting it to LiveData.
+     * Flow is an alternative to RxJava2 but it is inside Kotlin and can be used
+     * as an example if you are creating SDK for something and you don't want to use any other libraries
+     * that may affect your clients builds and dependencies you may use it since it is straight out of the box
+     *
+     * If you want some more examples of Flow and more advanced operations using it please don't hesitate to ask me.
+     */
+    fun getWebFlowItems() {
+        viewModelScope.launch(Dispatchers.Main) {
+            data.addSource(networkRepository.getNetworkFlow().asLiveData()) {
                 data.value = it
             }
 
