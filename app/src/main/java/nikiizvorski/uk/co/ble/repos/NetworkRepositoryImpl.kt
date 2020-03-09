@@ -1,23 +1,19 @@
 package nikiizvorski.uk.co.ble.repos
 
-import android.util.Log
 import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import io.reactivex.Flowable
-import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.withContext
 import nikiizvorski.uk.co.ble.api.AppService
 import nikiizvorski.uk.co.ble.pojos.Device
-import retrofit2.HttpException
 import timber.log.Timber
 import java.io.IOException
-import java.net.UnknownHostException
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -30,6 +26,11 @@ import javax.inject.Inject
 class NetworkRepositoryImpl @Inject constructor(private val deviceService: AppService): NetworkRepository {
     private lateinit var subscription: Disposable
     val mData = MutableLiveData<List<Device>>()
+    private var visibility: MutableLiveData<Int> = MutableLiveData()
+
+    init {
+        visibility.value = View.VISIBLE
+    }
 
 
     /**
@@ -39,14 +40,15 @@ class NetworkRepositoryImpl @Inject constructor(private val deviceService: AppSe
      * @param data MutableLiveData<List<Device>>
      * @param visibility MutableLiveData<Int>
      */
-    override fun getNetworkList(data: MutableLiveData<List<Device>>, visibility: MutableLiveData<Int>) {
+    override fun getNetworkList(): MutableLiveData<List<Device>> {
         subscription = deviceService.getPosts()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .retryWhen { throwables -> throwables.delay(1, TimeUnit.SECONDS) }
             .doOnSubscribe { visibility.value = View.VISIBLE }
             .doOnTerminate { visibility.value = View.GONE }
-            .subscribe({ result -> data.value = result }, { visibility.value = View.VISIBLE })
+            .subscribe({ result -> mData.value = result }, { visibility.value = View.VISIBLE })
+        return mData
     }
 
     /**
@@ -54,16 +56,18 @@ class NetworkRepositoryImpl @Inject constructor(private val deviceService: AppSe
      * @param data MutableLiveData<List<Device>>
      * @param visibility MutableLiveData<Int>
      */
-    override suspend fun getNewNetworkList(data: MutableLiveData<List<Device>>, visibility: MutableLiveData<Int>) {
+    override suspend fun getNewNetworkList():  MutableLiveData<List<Device>> {
         withContext(Dispatchers.Main) {
             val response = retryIO { deviceService.getNewPosts() }
             if (response.isSuccessful) {
                     visibility.value = View.GONE
-                    data.value = response.body()
+                    mData.value = response.body()
                 } else {
                     visibility.value = View.VISIBLE
                 }
         }
+
+        return mData
     }
 
     /**
@@ -84,10 +88,11 @@ class NetworkRepositoryImpl @Inject constructor(private val deviceService: AppSe
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .retryWhen { throwables -> throwables.delay(1, TimeUnit.SECONDS) }
-            .doOnSubscribe {  }
-            .doOnTerminate {  }
+            .doOnSubscribe { visibility.value = View.VISIBLE }
+            .doOnTerminate { visibility.value = View.GONE }
             .subscribe({ result -> mData.value = result
-                Timber.d("Executed2")}, {  })
+                visibility.value = View.GONE
+                Timber.d("Executed2")} , {  })
 
         Timber.d("Executed3")
         return mData
@@ -120,5 +125,63 @@ class NetworkRepositoryImpl @Inject constructor(private val deviceService: AppSe
             currentDelay = (currentDelay * factor).toLong().coerceAtMost(maxDelay)
         }
         return block() // last attempt
+    }
+
+    /**
+     *
+     * @return Int?
+     */
+    override fun getVisibilityUpdate(): MutableLiveData<Int> {
+        return visibility
+    }
+
+    /**
+     *
+     * @return Flow<List<Device>?>
+     */
+    override fun getNetworkFlow(): Flow<List<Device>?> {
+        return flow {
+            val response = retryIO { deviceService.getNewPosts() }
+            if (response.isSuccessful) {
+                visibility.value = View.GONE
+                emit(response.body())
+            } else {
+                visibility.value = View.VISIBLE
+            }
+        }
+    }
+
+    /**
+     * Please do integrate your own Call Adapter otherwise this won't work for you.
+     *
+     * @return Flow<List<Device>?>
+     */
+    override suspend fun getNetworkFlowMap(): Flow<List<Device>?> {
+        return retryIO { deviceService.getFlowPosts() }
+    }
+
+    /**
+     * Example Method with Flow
+     *
+     * @return Flow<List<Device>>
+     */
+    override suspend fun getFlowMapped(): Flow<List<Device>> {
+        return flow{
+            emit(retryIO {
+                deviceService.getThePosts().map { modTitle(it) }
+            })
+
+            visibility.value = View.GONE
+        }
+    }
+
+    /**
+     *
+     * @param it Device
+     * @return Device
+     */
+    private fun modTitle(it: Device): Device {
+        it.title = it.title + it.id
+        return it
     }
 }

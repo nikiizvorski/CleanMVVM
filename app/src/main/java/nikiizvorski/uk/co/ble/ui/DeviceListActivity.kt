@@ -13,6 +13,7 @@ import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_device.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import nikiizvorski.uk.co.ble.R
@@ -97,6 +98,17 @@ class DeviceListActivity: DaggerAppCompatActivity(), OnAdapterManagement {
                 deviceListAdapter.notifyDataSetChanged()
             }
         })
+
+        /**
+         * Collect Data from Flow once available
+         */
+        /*lifecycleScope.launch {
+            viewModel.dataFlow.collect {
+                deviceListAdapter.devices.clear()
+                deviceListAdapter.devices.addAll(it!!)
+                deviceListAdapter.notifyDataSetChanged()
+            }
+        } */
     }
 
     /**

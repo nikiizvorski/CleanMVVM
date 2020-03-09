@@ -16,7 +16,7 @@ import javax.inject.Inject
  * @constructor
  */
 class PrefsRepositoryImpl @Inject constructor(private val appDao: AppDAO, private val realm: Realm): PrefsRepository {
-    private var visibility: Int = 0
+    private var visibility: MutableLiveData<Int> = MutableLiveData()
     var data: List<Device> = listOf()
 
 
@@ -35,7 +35,7 @@ class PrefsRepositoryImpl @Inject constructor(private val appDao: AppDAO, privat
                 deviceModel.body = "Their shity system doesn't work!"
 
                 data = listOf(Device(deviceModel.userId, deviceModel.id, deviceModel.title, deviceModel.body))
-                visibility = View.GONE
+                visibility.value = View.GONE
             } else {
                 deviceModel = realm.createObject(DeviceModel::class.java)
                 deviceModel.id = 101
@@ -44,7 +44,7 @@ class PrefsRepositoryImpl @Inject constructor(private val appDao: AppDAO, privat
                 deviceModel.body = "Their shity system doesn't work!"
 
                 data = listOf(Device(deviceModel.userId, deviceModel.id, deviceModel.title, deviceModel.body))
-                visibility = View.GONE
+                visibility.value = View.GONE
             }
         }
 
@@ -89,7 +89,7 @@ class PrefsRepositoryImpl @Inject constructor(private val appDao: AppDAO, privat
      *
      * @return Int?
      */
-    override fun getVisibilityUpdate(): Int? {
+    override fun getVisibilityUpdate(): MutableLiveData<Int> {
         return visibility
     }
 }

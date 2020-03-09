@@ -4,6 +4,9 @@ import android.content.Context
 import android.view.View
 import androidx.lifecycle.*
 import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.map
 import nikiizvorski.uk.co.ble.pojos.Device
 import nikiizvorski.uk.co.ble.repos.NetworkRepository
 import nikiizvorski.uk.co.ble.repos.PrefsRepository
@@ -31,6 +34,11 @@ class DeviceListViewModel @Inject constructor(private val repository: Repository
     var data: MediatorLiveData<List<Device>> = MediatorLiveData()
     val dataDB: MutableLiveData<List<Device>> = MutableLiveData()
     val dataNetwork: MutableLiveData<List<Device>> = MutableLiveData()
+
+    /**
+     * Please use DeviceActivity Flow Collection to check the example
+     */
+    val dataFlow: Flow<List<Device>?> = networkRepository.getNetworkFlow()
 
     /**
      * Proper encapsulation example
@@ -84,7 +92,14 @@ class DeviceListViewModel @Inject constructor(private val repository: Repository
      * transformWebItems()
      */
     init{
-        getWebItems()
+//        getWebItems()
+//        getWebFlowItems()
+//        getWebFlowCollection()
+        getWebFlowCollectionMapped()
+
+        networkRepository.getVisibilityUpdate().observeForever{
+            _visibility.value = it
+        }
     }
 
     /**
@@ -113,7 +128,12 @@ class DeviceListViewModel @Inject constructor(private val repository: Repository
     fun loadDevices(){
         viewModelScope.launch(Dispatchers.Main) {
             data.value = prefsRepository.getDbRealmList()
-            _visibility.value = prefsRepository.getVisibilityUpdate()
+
+            // observeForever is lifeCycleAware when you use it with ViewModelScope
+            prefsRepository.getVisibilityUpdate().observeForever{
+                _visibility.value = it
+            }
+
             repository.executeManager()
         }
     }
@@ -148,13 +168,51 @@ class DeviceListViewModel @Inject constructor(private val repository: Repository
      */
     fun getWebItems(){
         viewModelScope.launch(Dispatchers.Main) {
-            _visibility.value = View.VISIBLE
-
-            // removeSource in order to use it with the btn
-
             data.addSource(networkRepository.getNetworkData()){
                 data.value = it
-                _visibility.value = View.GONE
+            }
+        }
+    }
+
+    /**
+     * Example of cold - stream with Flow
+     * Get Items from the web using Flow and converting it to LiveData.
+     * Flow is an alternative to RxJava2 but it is inside Kotlin and can be used
+     * as an example if you are creating SDK for something and you don't want to use any other libraries
+     * that may affect your clients builds and dependencies you may use it since it is straight out of the box
+     *
+     * If you want some more examples of Flow and more advanced operations using it please don't hesitate to ask me.
+     */
+    fun getWebFlowItems() {
+        viewModelScope.launch(Dispatchers.Main) {
+            data.addSource(networkRepository.getNetworkFlow().asLiveData()) {
+                data.value = it
+            }
+        }
+    }
+
+    /**
+     * Flow collection in the ViewModel as it should be
+     *
+     * Example Path UI -> ViewModel Collection and LiveData -> Repository Flow -> Data Source Flow
+     */
+    fun getWebFlowCollection() {
+        viewModelScope.launch(Dispatchers.Main) {
+            networkRepository.getNetworkFlow().collect{
+                data.value = it
+            }
+        }
+    }
+
+    /**
+     * Flow collection in the ViewModel as it should be
+     *
+     * Example Path UI -> ViewModel Collection and LiveData -> Repository Flow -> Data Source Flow
+     */
+    fun getWebFlowCollectionMapped() {
+        viewModelScope.launch(Dispatchers.Main) {
+            networkRepository.getFlowMapped().collect{
+                data.value = it
             }
         }
     }
@@ -210,7 +268,7 @@ class DeviceListViewModel @Inject constructor(private val repository: Repository
                 networkRepository.getCorrectNetworkList()
             }.await()
 
-            _visibility.value = View.GONE
+            data.value = items
         }
     }
 

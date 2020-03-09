@@ -16,16 +16,15 @@ interface Repository {
 
     /**
      *
-     * @param data MutableLiveData<List<Device>>
+     * @return MutableLiveData<List<Device>>
      */
-    fun getDbList(data: MutableLiveData<List<Device>>)
+    fun getDbList(): MutableLiveData<List<Device>>
 
     /**
      *
-     * @param data MutableLiveData<List<Device>>
-     * @param visibility MutableLiveData<Int>
+     * @return MutableLiveData<List<Device>>
      */
-    fun getNetworkList(data: MutableLiveData<List<Device>>, visibility: MutableLiveData<Int>)
+    fun getNetworkList(): MutableLiveData<List<Device>>
 
     /**
      *
@@ -53,4 +52,10 @@ interface Repository {
      * @return String
      */
     suspend fun readFromFile(context: Context): String
+
+    /**
+     *
+     * @return Int?
+     */
+    fun getVisibilityUpdate(): Int?
 }

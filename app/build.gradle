@@ -77,7 +77,7 @@ dependencies {
     implementation "android.arch.work:work-runtime-ktx:$work"
 
     // Support Design
-    implementation 'com.google.android.material:material:1.0.0'
+    implementation 'com.google.android.material:material:1.1.0'
 
     // RecyclerView
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
@@ -86,7 +86,7 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
 
     // LiveData & ViewModel
-    implementation 'androidx.core:core-ktx:1.1.0'
+    implementation 'androidx.core:core-ktx:1.2.0'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
@@ -95,7 +95,7 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0"
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.2.0"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.2.0"
-    implementation 'androidx.appcompat:appcompat:1.2.0-alpha01'
+    implementation 'androidx.appcompat:appcompat:1.2.0-alpha02'
 
     // Retrofit
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
@@ -117,16 +117,16 @@ dependencies {
     implementation "io.reactivex.rxjava2:rxandroid:2.1.1"
 
     // Room
-    implementation 'androidx.room:room-runtime:2.2.3'
-    kapt 'androidx.room:room-compiler:2.2.3'
+    implementation 'androidx.room:room-runtime:2.2.4'
+    kapt 'androidx.room:room-compiler:2.2.4'
 
     // Timber
     implementation 'com.jakewharton.timber:timber:4.7.1'
 
     // Realm Adapters
     implementation 'io.realm:android-adapters:3.1.0'
-    implementation 'androidx.navigation:navigation-fragment:2.2.0'
-    implementation 'androidx.navigation:navigation-ui:2.2.0'
+    implementation 'androidx.navigation:navigation-fragment:2.2.1'
+    implementation 'androidx.navigation:navigation-ui:2.2.1'
 
     // Dependencies for local unit tests
     testImplementation "junit:junit:$junitVersion"
