@@ -94,9 +94,11 @@ Next update will probably have some more advanced stuff inside
 
 - Implemented Kotlin Extensions, MediatorLiveData, Transformations
 
-- Next Update will include Kotlin Flow, Kotlin Sequences
+- Implemented and added examples for Kotlin Flow, Kotlin Flow Dispatchewrs, Kotlin Flow Collection, Kotlin Sequences and a new retrofit examples
 
-Licenze
+- Next Update will include Kotlin Sealed Classes
+
+License
 ---------------
 
 Feel free to use. If you can add me to any credits would appreciate it. Thanks.
