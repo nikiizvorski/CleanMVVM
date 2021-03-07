@@ -1,29 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
-    <data>
-        <variable
-                name="deviceListViewModel"
-                type="nikiizvorski.uk.co.ble.ui.DeviceListViewModel" />
-    </data>
-<RelativeLayout android:layout_width="match_parent"
-                android:id="@+id/offline_layout"
-                android:layout_height="match_parent" >
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/offline_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
     <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-        <!-- This is why this pattern is not a good idea too much logic where it shouldn't be
-        e: [kapt] An exception occurred: android.databinding.tool.util.LoggedErrorException: Found data binding errors.
-        After a simple function name change. Please come and tell me this is good :))-->
         <Button
                 android:id="@+id/btn"
-                android:text="First Fragment"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_centerInParent="true" />
-                <!--android:onClick="@{() -> deviceListViewModel.addItems()}"/>-->
+                android:layout_centerInParent="true"
+                android:text="First Fragment" />
 
     </RelativeLayout>
 </RelativeLayout>
-</layout>

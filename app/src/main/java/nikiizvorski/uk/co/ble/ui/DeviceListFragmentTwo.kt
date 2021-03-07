@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
@@ -59,9 +58,7 @@ class DeviceListFragmentTwo : DaggerFragment() {
      * @return View?
      */
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.device_fragment_two, container, false)
-        binding.deviceListViewModel = viewModel
-        binding.lifecycleOwner = this
+        binding = DeviceFragmentTwoBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -80,9 +77,9 @@ class DeviceListFragmentTwo : DaggerFragment() {
         /**
          * Pass and receive data simply with Navigstion? Ex:
          */
-        val dev = arguments!!.getParcelable<Device>("objectid")
+        val dev = requireArguments().getParcelable<Device>("objectid")
 
-        binding.btn.text = dev.title
+        binding.btn.text = dev!!.title
         /**
          * Find Nav Controller in Fragment?
          *

@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -43,7 +42,7 @@ class DeviceListFragment : DaggerFragment() {
      */
     @Inject
     lateinit var viewModelFactory: AppViewModelFactory
-    val viewModel by lazy {  activity?.run {
+    private val viewModel by lazy {  activity?.run {
         ViewModelProvider(this, viewModelFactory).get(DeviceListViewModel::class.java)
     } ?: throw Exception("Invalid Activity") }
 
@@ -68,9 +67,7 @@ class DeviceListFragment : DaggerFragment() {
      * @return View?
      */
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.device_fragment, container, false)
-        binding.deviceListViewModel = viewModel
-        binding.lifecycleOwner = this
+        binding = DeviceFragmentBinding.inflate(layoutInflater,  container, false)
         return binding.root
     }
 

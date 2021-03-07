@@ -61,8 +61,6 @@ q
 Aapp/src/main/java/nikiizvorski/uk/co/ble/ui/DeviceListFragment.kt,4/b/4b98939c95360276263b73745859715aaa3effc2
 r
 Bapp/src/main/java/nikiizvorski/uk/co/ble/ui/OnAdapterManagement.kt,c/2/c2fa88aa199a44dcf7ac26cb844dc87d7bd6c650
-Y
-)app/src/main/res/navigation/nav_graph.xml,b/a/baffce053da291d96fb575a09f2bbe9aaa9c4be9
 L
 .idea/codeStyles/Project.xml,6/e/6ecd6000a7b6f4a2884412ff19f74193ed089648
 X
@@ -75,8 +73,6 @@ A
 gradle.properties,2/a/2afbb999f001938c88fa43fc2ef52abf0f8213e4
 9
 	README.md,8/e/8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d
-[
-+app/src/main/res/layout/activity_device.xml,2/f/2f7f3cb2ee0e5dc245f0bc1947970767c7a4d4bf
 t
 Dapp/src/main/java/nikiizvorski/uk/co/ble/ui/DeviceListFragmentTwo.kt,4/5/45e7fc91218c51a335a4f8c45f142b235f075c3f
 k
