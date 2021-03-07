@@ -56,8 +56,7 @@ class DeviceListActivity: DaggerAppCompatActivity(), OnAdapterManagement {
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
         binding = ActivityDeviceBinding.inflate(layoutInflater)
-        val view = binding.root
-        setContentView(view)
+        setContentView(binding.root)
         navController = Navigation.findNavController(this, R.id.navigation_host_fragment)
         AndroidInjection.inject(this)
         initUI()

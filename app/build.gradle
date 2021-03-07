@@ -86,9 +86,15 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.3.0"
     implementation "androidx.lifecycle:lifecycle-common-java8:2.3.0"
 
+    //Rx
+    implementation "io.reactivex.rxjava3:rxjava:3.0.11"
+    implementation "io.reactivex.rxjava3:rxandroid:3.0.0"
+    implementation 'io.reactivex.rxjava3:rxkotlin:3.0.1'
+
+
     // Retrofit
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
-    implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit_version"
+    implementation "com.squareup.retrofit2:adapter-rxjava3:$retrofit_version"
     implementation "com.squareup.retrofit2:converter-moshi:$retrofit_version"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
 
@@ -101,12 +107,10 @@ dependencies {
     implementation 'com.google.dagger:dagger-android-support:2.15'
     compileOnly "org.glassfish:javax.annotation:3.1.1"
 
-    //Rx
-    implementation "io.reactivex.rxjava2:rxjava:2.2.11"
-    implementation "io.reactivex.rxjava2:rxandroid:2.1.1"
-
     // Room
-    implementation 'androidx.room:room-runtime:2.2.6'
+    implementation "androidx.room:room-runtime:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+    implementation "androidx.room:room-ktx:$room_version"
 
     // Timber
     implementation 'com.jakewharton.timber:timber:4.7.1'

@@ -85,7 +85,9 @@ Next update will probably have some more advanced stuff inside
 - Removed Duplicates, Added ViewBindings, Removed DataBinding, Project Gradle Updated and Android Studio Support Added,
 Gradle And Build Scripts updated, Libraries Updated to latest, KTX Updated
 
-- Update for Realm and RxJava is next
+- Update for MongoDB Realm 10 and RxJava3 is next and done
+
+Project Migrated to RxJava3 and Retrofit and Adapters have been updated also to latest. Realm has been updated to latest MongoDB realm too
 
 - Motion Layout
 

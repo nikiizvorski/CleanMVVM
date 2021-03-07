@@ -1,6 +1,6 @@
 package nikiizvorski.uk.co.ble.api
 
-import io.reactivex.Observable
+import io.reactivex.rxjava3.core.Observable
 import kotlinx.coroutines.flow.Flow
 import nikiizvorski.uk.co.ble.pojos.Device
 import retrofit2.Response
