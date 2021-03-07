@@ -1,6 +1,9 @@
 package nikiizvorski.uk.co.ble.ui
 
+import android.app.Activity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.findViewTreeLifecycleOwner
@@ -10,6 +13,7 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
 import dagger.android.AndroidInjection
 import dagger.android.support.DaggerAppCompatActivity
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.collect
@@ -17,7 +21,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import nikiizvorski.uk.co.ble.R
 import nikiizvorski.uk.co.ble.databinding.ActivityDeviceBinding
-import nikiizvorski.uk.co.ble.factory.AppViewModelFactory
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -28,7 +31,9 @@ import javax.inject.Inject
  * @property viewModel DeviceListViewModel
  * @property deviceListAdapter DeviceListAdapter
  */
-class DeviceListActivity: DaggerAppCompatActivity(), OnAdapterManagement {
+
+@AndroidEntryPoint
+class DeviceListActivity: AppCompatActivity(), OnAdapterManagement {
 
     /**
      * Fix for leak and encapsulation example follow the commits
@@ -42,8 +47,7 @@ class DeviceListActivity: DaggerAppCompatActivity(), OnAdapterManagement {
     @Inject lateinit var realm: Realm
     var data: RealmResults<DeviceModel>? = null
     **/
-    @Inject lateinit var viewModelFactory: AppViewModelFactory
-    val viewModel by lazy { ViewModelProvider(this, viewModelFactory).get(DeviceListViewModel::class.java) }
+    val viewModel by lazy { ViewModelProvider(this).get(DeviceListViewModel::class.java) }
     var deviceListAdapter: DeviceListAdapter = DeviceListAdapter(this)
     var deviceRealmList: DeviceRealmListAdapter? = null
     private lateinit var binding: ActivityDeviceBinding
@@ -58,7 +62,7 @@ class DeviceListActivity: DaggerAppCompatActivity(), OnAdapterManagement {
         binding = ActivityDeviceBinding.inflate(layoutInflater)
         setContentView(binding.root)
         navController = Navigation.findNavController(this, R.id.navigation_host_fragment)
-        AndroidInjection.inject(this)
+//        AndroidInjection.inject(this)
         initUI()
 
     }

@@ -13,13 +13,13 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
 import dagger.android.support.AndroidSupportInjection
 import dagger.android.support.DaggerFragment
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import nikiizvorski.uk.co.ble.R
 import nikiizvorski.uk.co.ble.databinding.DeviceFragmentBinding
-import nikiizvorski.uk.co.ble.factory.AppViewModelFactory
 import nikiizvorski.uk.co.ble.pojos.Device
 import nikiizvorski.uk.co.ble.util.DeviceTest
 import timber.log.Timber
@@ -32,16 +32,15 @@ import javax.inject.Inject
  * @property viewModelFactory AppViewModelFactory
  * @property viewModel DeviceListViewModel
  */
-class DeviceListFragment : DaggerFragment() {
+@AndroidEntryPoint
+class DeviceListFragment : Fragment() {
     private lateinit var deviceTest: DeviceTest
     private lateinit var binding: DeviceFragmentBinding
     /**
      * Updated the Fragment and Activity Shared View Model base adjust to requirement
      */
-    @Inject
-    lateinit var viewModelFactory: AppViewModelFactory
     private val viewModel by lazy {  activity?.run {
-        ViewModelProvider(this, viewModelFactory).get(DeviceListViewModel::class.java)
+        ViewModelProvider(this).get(DeviceListViewModel::class.java)
     } ?: throw Exception("Invalid Activity") }
 
     /**
@@ -49,7 +48,7 @@ class DeviceListFragment : DaggerFragment() {
      * @param context Context
      */
     override fun onAttach(context: Context) {
-        AndroidSupportInjection.inject(this)
+//        AndroidSupportInjection.inject(this)
         super.onAttach(context)
     }
 

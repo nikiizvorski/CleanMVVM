@@ -7,6 +7,8 @@ import androidx.room.Room
 import androidx.work.WorkManager
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 import io.realm.Realm
 import nikiizvorski.uk.co.ble.api.AppService
 import nikiizvorski.uk.co.ble.db.AppDB
@@ -21,7 +23,8 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Singleton
 
 @Module
-class AppModule {
+@InstallIn(SingletonComponent::class)
+class AppProviders {
 
     /**
      *

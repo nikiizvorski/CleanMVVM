@@ -6,14 +6,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import dagger.android.support.AndroidSupportInjection
 import dagger.android.support.DaggerFragment
+import dagger.hilt.android.AndroidEntryPoint
 import nikiizvorski.uk.co.ble.R
 import nikiizvorski.uk.co.ble.databinding.DeviceFragmentTwoBinding
-import nikiizvorski.uk.co.ble.factory.AppViewModelFactory
 import nikiizvorski.uk.co.ble.pojos.Device
 import nikiizvorski.uk.co.ble.util.*
 import timber.log.Timber
@@ -26,17 +27,16 @@ import javax.inject.Inject
  * @property viewModelFactory AppViewModelFactory
  * @property viewModel DeviceListViewModel
  */
-class DeviceListFragmentTwo : DaggerFragment() {
+@AndroidEntryPoint
+class DeviceListFragmentTwo : Fragment() {
     private lateinit var deviceTest: DeviceTest
     private lateinit var binding: DeviceFragmentTwoBinding
 
     /**
      * Updated the Fragment and Activity Shared View Model base adjust to requirement
      */
-    @Inject
-    lateinit var viewModelFactory: AppViewModelFactory
     private val viewModel by lazy {  activity?.run {
-        ViewModelProvider(this, viewModelFactory).get(DeviceListViewModel::class.java)
+        ViewModelProvider(this).get(DeviceListViewModel::class.java)
     } ?: throw Exception("Invalid Activity") }
 
     /**
@@ -44,7 +44,7 @@ class DeviceListFragmentTwo : DaggerFragment() {
      * @param context Context
      */
     override fun onAttach(context: Context) {
-        AndroidSupportInjection.inject(this)
+//        AndroidSupportInjection.inject(this)
         super.onAttach(context)
     }
 

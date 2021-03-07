@@ -3,6 +3,8 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-parcelize'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'realm-android'
+apply plugin: 'dagger.hilt.android.plugin'
+
 
 android {
     compileSdkVersion 30
@@ -98,11 +100,19 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-moshi:$retrofit_version"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
 
+    //Hilt
+    implementation "com.google.dagger:hilt-android:$hilt_version"
+    kapt "com.google.dagger:hilt-compiler:$hilt_version"
+    implementation 'androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03'
+    implementation 'androidx.hilt:hilt-common:1.0.0-alpha03'
+    implementation 'androidx.hilt:hilt-work:1.0.0-alpha03'
+    kapt 'androidx.hilt:hilt-compiler:1.0.0-alpha03'
+
     // Dagger 2
-    implementation "com.google.dagger:dagger:$dagger2_version"
-    implementation "com.google.dagger:dagger-android:$dagger2_version"
-    kapt "com.google.dagger:dagger-compiler:$dagger2_version"
-    kapt "com.google.dagger:dagger-android-processor:$dagger2_version"
+//    implementation "com.google.dagger:dagger:$dagger2_version"
+//    implementation "com.google.dagger:dagger-android:$dagger2_version"
+//    kapt "com.google.dagger:dagger-compiler:$dagger2_version"
+//    kapt "com.google.dagger:dagger-android-processor:$dagger2_version"
 
     implementation 'com.google.dagger:dagger-android-support:2.15'
     compileOnly "org.glassfish:javax.annotation:3.1.1"

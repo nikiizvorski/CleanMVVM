@@ -82,7 +82,7 @@ Next update will probably have some more advanced stuff inside
 
 - Hilt Integration and migration from Dagger
 
-- Removed Duplicates, Added ViewBindings, Removed DataBinding, Project Gradle Updated and Android Studio Support Added,
+- Removed Duplicates, Added ViewBindings, Added DataBinding, Project Gradle Updated and Android Studio Support Added,
 Gradle And Build Scripts updated, Libraries Updated to latest, KTX Updated
 
 - Update for MongoDB Realm 10 and RxJava3 is next and done
@@ -101,11 +101,13 @@ Project Migrated to RxJava3 and Retrofit and Adapters have been updated also to 
 
 - If time Composable Integration with Migration Strategy and Integration of standalone or custom View
 
-- Gradle Instant Execution Integration KSP also
+- Gradle Instant Execution Integration
 
 - Kotlin Multiplatform in mind
 
 - If requested i would make a sample integration for Pagin 3.0 and above!
+
+- KSP will be integrated at a later date whewn most libraries support it!
 
 Licenze
 ---------------

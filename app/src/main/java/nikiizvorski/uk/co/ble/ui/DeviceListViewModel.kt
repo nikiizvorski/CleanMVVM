@@ -2,7 +2,10 @@ package nikiizvorski.uk.co.ble.ui
 
 import android.content.Context
 import android.view.View
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
+import dagger.assisted.Assisted
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
@@ -27,9 +30,9 @@ import javax.inject.Inject
  * @property visibility MutableLiveData<Int>
  * @constructor
  */
+@HiltViewModel
 class DeviceListViewModel @Inject constructor(private val repository: Repository, private val prefsRepository: PrefsRepository,
-                                              private val networkRepository: NetworkRepository, private val context: Context
-):
+    private val networkRepository: NetworkRepository):
     ViewModel(){
     var data: MediatorLiveData<List<Device>> = MediatorLiveData()
     val dataDB: MutableLiveData<List<Device>> = MutableLiveData()
@@ -106,19 +109,19 @@ class DeviceListViewModel @Inject constructor(private val repository: Repository
      * Write/Read File it is not a good practise to add context in the ViewModel but this is the option for the example
      */
     private fun workWithFile() {
-        viewModelScope.launch(Dispatchers.IO) {
-            /**
-             * Write to file
-             */
-            val written: Deferred<Boolean> = async { repository.writeToFile(context, "mhm") }
-            Timber.d("File Written: " + written.await())
-
-            /**
-             * Read from file
-             */
-            val readFile: Deferred<String> = async { repository.readFromFile(context) }
-            Timber.d("File Written: " + readFile.await())
-        }
+//        viewModelScope.launch(Dispatchers.IO) {
+//            /**
+//             * Write to file
+//             */
+//            val written: Deferred<Boolean> = async { repository.writeToFile(context, "mhm") }
+//            Timber.d("File Written: " + written.await())
+//
+//            /**
+//             * Read from file
+//             */
+//            val readFile: Deferred<String> = async { repository.readFromFile(context) }
+//            Timber.d("File Written: " + readFile.await())
+//        }
     }
 
     /**
