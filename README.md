@@ -80,13 +80,30 @@ Update - check branch unstable
 ---------------
 Next update will probably have some more advanced stuff inside
 
-- What are coroutines? Why is it so important? How can it make it so easy to do concurrency and background tasks? A coroutine is a concurrency design pattern that you can use on Android to simplify code that executes asynchronously. 
+- Hilt Integration and migration from Dagger
 
-- Implementation is added and usecases for Coroutines most variations with all upto date changes available even on alpha and beta. Mostly stable
+- Removed Duplicates, Added ViewBindings, Removed DataBinding, Project Gradle Updated and Android Studio Support Added,
+Gradle And Build Scripts updated, Libraries Updated to latest, KTX Updated
 
-- Implemented Network calls with Coroutines
+- Update for Realm and RxJava is next
 
-- Implemented Working with Files Coroutines variation. 
+- Motion Layout
+
+- AppStartup Lirabry improvement
+
+- ActivityResult Library intergration and test
+
+- Openable integration for Navigation
+
+- Updated Navigation and Item Fetch
+
+- If time Composable Integration with Migration Strategy and Integration of standalone or custom View
+
+- Gradle Instant Execution Integration KSP also
+
+- Kotlin Multiplatform in mind
+
+- If requested i would make a sample integration for Pagin 3.0 and above!
 
 Licenze
 ---------------

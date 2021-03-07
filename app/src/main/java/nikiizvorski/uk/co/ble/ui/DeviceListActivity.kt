@@ -1,16 +1,15 @@
 package nikiizvorski.uk.co.ble.ui
 
 import android.os.Bundle
-import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.findViewTreeLifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
 import dagger.android.AndroidInjection
 import dagger.android.support.DaggerAppCompatActivity
-import kotlinx.android.synthetic.main.activity_device.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.collect
@@ -56,8 +55,9 @@ class DeviceListActivity: DaggerAppCompatActivity(), OnAdapterManagement {
      */
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_device)
-        binding.lifecycleOwner = this
+        binding = ActivityDeviceBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
         navController = Navigation.findNavController(this, R.id.navigation_host_fragment)
         AndroidInjection.inject(this)
         initUI()
@@ -84,7 +84,7 @@ class DeviceListActivity: DaggerAppCompatActivity(), OnAdapterManagement {
          * Observe the LiveData from ViewModel
          */
         viewModel.visibility.observe(this, Observer { visibility ->
-            progressBar.visibility = visibility!!
+            binding.progressBar.visibility = visibility!!
         })
 
         /**
