@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
@@ -28,12 +29,13 @@ import javax.inject.Inject
 class DeviceListFragmentTwo : DaggerFragment() {
     private lateinit var deviceTest: DeviceTest
     private lateinit var binding: DeviceFragmentTwoBinding
+
     /**
      * Updated the Fragment and Activity Shared View Model base adjust to requirement
      */
     @Inject
     lateinit var viewModelFactory: AppViewModelFactory
-    val viewModel by lazy {  activity?.run {
+    private val viewModel by lazy {  activity?.run {
         ViewModelProvider(this, viewModelFactory).get(DeviceListViewModel::class.java)
     } ?: throw Exception("Invalid Activity") }
 
@@ -58,7 +60,9 @@ class DeviceListFragmentTwo : DaggerFragment() {
      * @return View?
      */
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = DeviceFragmentTwoBinding.inflate(inflater, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.device_fragment_two, container, false)
+        binding.deviceListViewModel = viewModel
+        binding.lifecycleOwner = this
         return binding.root
     }
 
