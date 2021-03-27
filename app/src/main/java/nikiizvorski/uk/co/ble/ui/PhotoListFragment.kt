@@ -5,12 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import dagger.hilt.android.AndroidEntryPoint
 import nikiizvorski.uk.co.ble.R
-import nikiizvorski.uk.co.ble.databinding.DeviceFragmentBinding
+import nikiizvorski.uk.co.ble.databinding.PhotoListFragmentBinding
 import nikiizvorski.uk.co.ble.util.PhotoTest
 import timber.log.Timber
 
@@ -24,13 +26,11 @@ import timber.log.Timber
 @AndroidEntryPoint
 class PhotoListFragment : Fragment() {
     private lateinit var deviceTest: PhotoTest
-    private lateinit var binding: DeviceFragmentBinding
+    private lateinit var binding: PhotoListFragmentBinding
     /**
      * Updated the Fragment and Activity Shared View Model base adjust to requirement
      */
-    private val viewModel by lazy {  activity?.run {
-        ViewModelProvider(this).get(PhotoListViewModel::class.java)
-    } ?: throw Exception("Invalid Activity") }
+    private val viewModel: PhotoListViewModel by activityViewModels()
 
     /**
      *
@@ -44,7 +44,7 @@ class PhotoListFragment : Fragment() {
      * @return View?
      */
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = DeviceFragmentBinding.inflate(layoutInflater,  container, false)
+        binding = PhotoListFragmentBinding.inflate(layoutInflater,  container, false)
         return binding.root
     }
 

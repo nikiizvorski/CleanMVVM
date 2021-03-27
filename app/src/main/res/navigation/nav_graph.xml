@@ -6,6 +6,6 @@
     <fragment android:id="@+id/navigation_home"
               android:name="nikiizvorski.uk.co.ble.ui.PhotoListFragment"
               android:label="NavHostExample"
-              tools:layout="@layout/device_fragment"/>
+              tools:layout="@layout/photo_list_fragment"/>
 
 </navigation>
