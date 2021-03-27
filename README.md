@@ -10,7 +10,6 @@ Structure
 - DB (Room / Realm)
 - DI (Dependency Injection)
 - EXT (Constants)
-- FACTORY (AppFactory) - removed no longer needed
 - POJOS (DataStorage Models Room/Realm Integration)
 - REPOS (NetworkRepo, RepoIntegration, PrefsRepo)
 - UI (Views and ViewModels - Sample Integration with ViewBindings and DataBinding) 
