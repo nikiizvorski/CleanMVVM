@@ -7,20 +7,32 @@ Structure
 
 - API (Services)
 - App (Application)
-- DB (Room)
+- DB (Room / Realm)
 - DI (Dependency Injection)
 - EXT (Constants)
-- FACTORY (AppFactory)
+- FACTORY (AppFactory) - removed no longer needed
 - POJOS (DataStorage Models Room/Realm Integration)
 - REPOS (NetworkRepo, RepoIntegration, PrefsRepo)
-- UI (Views and ViewModels - Sample Integration with KTX and Synthetics) 
-- UTILS (DeviceUtil and DeviceWorker Integration)
+- UI (Views and ViewModels - Sample Integration with ViewBindings and DataBinding) 
+- UTILS (Extensions and Worker Integration)
 
-This project is for learning purpose for people as a starting point. There should be some better organization but the code can be used in production applications with small adjustments depending on the project and the logic has to be cleared a bit. It contains mostly small example of how to properly use the new apis and updates and also simple integration and adaptation to the new versions of Android Jetpack. Most of the example code inside is for that. I would higlhy recommend to ask me first for a more cleaner sample of this architecture. 
+This project is for learning purpose for people as a starting point for MVVM. There should be some better organization but the code can be used in production applications with small adjustments depending on the project and the logic has to be cleared a bit. It contains mostly small example of how to properly use the new apis and updates and also simple integration and adaptation to the new versions of Android Jetpack also you could add Composable implementation from here also used with Navigation. Most of the example code inside is for that to be able to understand the flow and if you have troubles making your own implementation. I would higlhy recommend to ask me first for a more cleaner sample of this architecture and i could give you an updated version with an application in production so you could see how the new api is implemented. I don't have time to update the whole application and publish it now. If you would rather have a better implementation go and visit Android Developer website. 
+
+Dissadvantage of the project
+---------------
+There could be quite a lot of issues happening with DataBinding and some people even might say that there is logic inside the views. But to achieve MVVM at this stage you have to use it since there is no way to achieve it except to provide two directional data binding that is why most people prefer to go for MVI as it might be looking cleaner with Undirection data flow. Views shouldn't grow too much when you separate your logic properly. But ViewModels do grow quite a lof if you use are using SharedViewModels and you need to most of the time. 
+
+Advantages of this project
+---------------
+MVVM is quite simple to use and there is almost no problems with this architecture when you use it correclty. Also to mention MVI and MVVM could be thought the same way it really depends on the implementation. MVVM is also simple to test even now with the Hilt implementation becomes easier. Using coroutines and flow also give an advantage. 
 
 Business Logic
 ---------------
-The following has been applied. Views and binding is in the view where it should. There shouldn't be any of that in there. You have ViewModels taking care of that. View are used with AndroidX Integration to remove and optimise boilerplate. Models and different actions as networking and db are using the Repository pattern.
+The following has been applied. Views and binding is in the view where it should. There shouldn't be any of that in there. You have ViewModels taking care of that. View are used with AndroidX Integration to remove and optimise boilerplate. Models and different actions as networking and db are using the Repository pattern. 
+
+The flow in this project is:
+
+- View observe data - ViewModel routes the data being observed and asks from repositories or model - model or repo get's the data and either passes to viewmodel or updates the observer itself which would be better to do to have undirectional data flow and logic separation. 
 
 Code Style and Linting
 ---------------
@@ -74,13 +86,13 @@ You can check the DeviceTest and DeviceFragment to see the integration of Licecy
 
 DiffUtil Integration Added
 ---------------
-DiffUtil is a utility class that can calculate the difference between two lists and output a list of update operations that converts the first list into the second one. It can be used to calculate updates for a RecyclerView Adapter. See ListAdapter and AsyncListDiffer which can compute diffs using DiffUtil on a background thread.
+DiffUtil is a utility class that can calculate the difference between two lists and output a list of update operations that converts the first list into the second one. It can be used to calculate updates for a RecyclerView Adapter. See ListAdapter and AsyncListDiffer which can compute diffs using DiffUtil on a background thread. There is a better alternative please refer to documentation.
 
-Update - check branch unstable
+Update - check branch unstable was merged
 ---------------
 Next update will probably have some more advanced stuff inside
 
-- Hilt Integration and migration from Dagger
+- Hilt Integration - done
 
 - Removed Duplicates, Added ViewBindings, Added DataBinding, Project Gradle Updated and Android Studio Support Added,
 Gradle And Build Scripts updated, Libraries Updated to latest, KTX Updated
@@ -119,11 +131,11 @@ Project Migrated to RxJava3 and Retrofit and Adapters have been updated also to 
 
 - Implemented and added examples for Kotlin Flow, Kotlin Flow Dispatchewrs, Kotlin Flow Collection, Kotlin Sequences and a new retrofit examples
 
-- Next Update will include Kotlin Sealed Classes
+- Next Update will include Kotlin Sealed Classes and example of how you could clean your UI state
 
 License
 ---------------
 
-Feel free to use. If you can add me to any credits would appreciate it. Thanks. A good base would be to have something like the new projects that i will be adding for MVI and KotlinMultiplatform with MVI.
+Feel free to use. If you can add me to any credits would appreciate it. Thanks. A good base would be to have something like the new projects that i will be adding for MVI and KotlinMultiplatform with MVI. You could also adapt this project for KotlinMultiplatform.
 
 
