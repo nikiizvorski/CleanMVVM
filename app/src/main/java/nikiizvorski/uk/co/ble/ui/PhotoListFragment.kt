@@ -11,7 +11,7 @@ import androidx.navigation.fragment.NavHostFragment
 import dagger.hilt.android.AndroidEntryPoint
 import nikiizvorski.uk.co.ble.R
 import nikiizvorski.uk.co.ble.databinding.DeviceFragmentBinding
-import nikiizvorski.uk.co.ble.util.DeviceTest
+import nikiizvorski.uk.co.ble.util.PhotoTest
 import timber.log.Timber
 
 /**
@@ -23,7 +23,7 @@ import timber.log.Timber
  */
 @AndroidEntryPoint
 class PhotoListFragment : Fragment() {
-    private lateinit var deviceTest: DeviceTest
+    private lateinit var deviceTest: PhotoTest
     private lateinit var binding: DeviceFragmentBinding
     /**
      * Updated the Fragment and Activity Shared View Model base adjust to requirement
@@ -55,20 +55,16 @@ class PhotoListFragment : Fragment() {
      */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        deviceTest = DeviceTest(this.lifecycle)
+        deviceTest = PhotoTest(this.lifecycle)
         initUI()
     }
 
     private fun initUI() {
         /**
-         * Find Nav Controller in Fragment? Pass data between destinations?
+         * Reverse items
          *
          */
         binding.btn.setOnClickListener {
-            val bundle = Bundle()
-//            val device = Photo()
-//            bundle.putParcelable("objectid", device)
-            NavHostFragment.findNavController(this).navigate(R.id.action_navigation_home_to_deviceListFragmentTwo, bundle)
             viewModel.reverseOrder()
         }
 
