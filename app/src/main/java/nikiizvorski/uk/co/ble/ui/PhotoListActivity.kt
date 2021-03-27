@@ -1,6 +1,7 @@
 package nikiizvorski.uk.co.ble.ui
 
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -8,6 +9,7 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import nikiizvorski.uk.co.ble.R
 import nikiizvorski.uk.co.ble.databinding.ActivityDeviceBinding
 import timber.log.Timber
@@ -21,6 +23,7 @@ import timber.log.Timber
  * @property deviceListAdapter DeviceListAdapter
  */
 
+@ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class PhotoListActivity: AppCompatActivity(), OnAdapterManagement {
 
@@ -36,7 +39,8 @@ class PhotoListActivity: AppCompatActivity(), OnAdapterManagement {
     @Inject lateinit var realm: Realm
     var data: RealmResults<DeviceModel>? = null
     **/
-    val viewModel by lazy { ViewModelProvider(this).get(PhotoListViewModel::class.java) }
+
+    private val viewModel: PhotoListViewModel by viewModels()
     var deviceListAdapter: DeviceListAdapter = DeviceListAdapter(this)
     //var deviceRealmList: DeviceRealmListAdapter? = null
     private lateinit var binding: ActivityDeviceBinding

@@ -10,7 +10,7 @@ import timber.log.Timber
  *
  * @constructor
  */
-class DeviceTest(lifecycle: Lifecycle) : LifecycleObserver {
+class PhotoTest(lifecycle: Lifecycle) : LifecycleObserver {
 
     init {
         lifecycle.addObserver(this)
