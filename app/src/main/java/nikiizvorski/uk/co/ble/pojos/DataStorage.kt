@@ -15,9 +15,6 @@ import kotlinx.android.parcel.Parcelize
  * @property body String
  * @constructor
  */
-//@Parcelize
-//@Entity
-//data class Device(val userId: Int, @PrimaryKey val id: Int, var title: String, val body: String) : Parcelable
 
 @Keep
 @KeepMember
