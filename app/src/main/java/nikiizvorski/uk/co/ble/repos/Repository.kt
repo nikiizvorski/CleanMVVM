@@ -2,7 +2,7 @@ package nikiizvorski.uk.co.ble.repos
 
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
-import nikiizvorski.uk.co.ble.pojos.Device
+import nikiizvorski.uk.co.ble.pojos.Photos
 
 /**
  * Repository Main
@@ -18,13 +18,13 @@ interface Repository {
      *
      * @return MutableLiveData<List<Device>>
      */
-    fun getDbList(): MutableLiveData<List<Device>>
+    fun getDbList(): MutableLiveData<List<Photos>>
 
     /**
      *
      * @return MutableLiveData<List<Device>>
      */
-    fun getNetworkList(): MutableLiveData<List<Device>>
+    fun getNetworkList(): MutableLiveData<List<Photos>>
 
     /**
      *
@@ -36,7 +36,7 @@ interface Repository {
      *
      * @return List<Device>
      */
-    suspend fun getListDevices(): List<Device>
+    suspend fun getListDevices(): List<Photos>
 
     /**
      *

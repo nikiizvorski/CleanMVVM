@@ -1,7 +1,7 @@
 package nikiizvorski.uk.co.ble.repos
 
 import androidx.lifecycle.MutableLiveData
-import nikiizvorski.uk.co.ble.pojos.Device
+import nikiizvorski.uk.co.ble.pojos.Photos
 
 /**
  * Deal with DB
@@ -19,7 +19,7 @@ interface PrefsRepository {
      *
      * @param data MutableLiveData<List<Device>>
      */
-    fun getDbRealmList(): List<Device>
+    fun getDbRealmList(): List<Photos>
 
     /**
      * Close Realm
@@ -36,5 +36,5 @@ interface PrefsRepository {
      *
      * @return List<Device>
      */
-    fun getDbList(): List<Device>
+    fun getDbList(): List<Photos>
 }

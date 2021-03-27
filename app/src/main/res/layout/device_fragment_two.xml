@@ -3,7 +3,7 @@
     <data>
         <variable
                 name="deviceListViewModel"
-                type="nikiizvorski.uk.co.ble.ui.DeviceListViewModel" />
+                type="nikiizvorski.uk.co.ble.ui.PhotoListViewModel" />
     </data>
     <RelativeLayout android:layout_width="match_parent"
             android:id="@+id/offline_layout"

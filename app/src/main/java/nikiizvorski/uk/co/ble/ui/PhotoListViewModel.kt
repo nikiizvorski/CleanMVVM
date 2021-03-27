@@ -1,16 +1,12 @@
 package nikiizvorski.uk.co.ble.ui
 
-import android.content.Context
 import android.view.View
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
-import dagger.assisted.Assisted
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.map
-import nikiizvorski.uk.co.ble.pojos.Device
+import nikiizvorski.uk.co.ble.pojos.Photo
+import nikiizvorski.uk.co.ble.pojos.Photos
 import nikiizvorski.uk.co.ble.repos.NetworkRepository
 import nikiizvorski.uk.co.ble.repos.PrefsRepository
 import nikiizvorski.uk.co.ble.repos.Repository
@@ -31,17 +27,17 @@ import javax.inject.Inject
  * @constructor
  */
 @HiltViewModel
-class DeviceListViewModel @Inject constructor(private val repository: Repository, private val prefsRepository: PrefsRepository,
-    private val networkRepository: NetworkRepository):
+class PhotoListViewModel @Inject constructor(private val repository: Repository, private val prefsRepository: PrefsRepository,
+                                             private val networkRepository: NetworkRepository):
     ViewModel(){
-    var data: MediatorLiveData<List<Device>> = MediatorLiveData()
-    val dataDB: MutableLiveData<List<Device>> = MutableLiveData()
-    val dataNetwork: MutableLiveData<List<Device>> = MutableLiveData()
+    var data: MediatorLiveData<List<Photo>> = MediatorLiveData()
+    val dataDB: MutableLiveData<List<Photos>> = MutableLiveData()
+    val dataNetwork: MutableLiveData<List<Photos>> = MutableLiveData()
 
     /**
      * Please use DeviceActivity Flow Collection to check the example
      */
-    val dataFlow: Flow<List<Device>?> = networkRepository.getNetworkFlow()
+//    val dataFlow: Flow<List<Photo>?> = networkRepository.getNetworkFlow()
 
     /**
      * Proper encapsulation example
@@ -62,14 +58,14 @@ class DeviceListViewModel @Inject constructor(private val repository: Repository
      * Old Implementation
      */
     fun loadAsyncDevices() {
-        viewModelScope.launch {
-            var emps: List<Device>? = null
-            withContext(Dispatchers.IO) {
-                emps = repository.getListDevices()
-            }
-
-            data.value = emps
-        }
+//        viewModelScope.launch {
+//            var emps: List<Photos>?
+//            withContext(Dispatchers.IO) {
+//                emps = repository.getListDevices()
+//            }
+//
+//            data.value = emps
+//        }
     }
 
     /**
@@ -81,7 +77,7 @@ class DeviceListViewModel @Inject constructor(private val repository: Repository
          */
         viewModelScope.launch {
             val smallList = async(Dispatchers.IO) { repository.getListDevices() }
-            data.value = smallList.await()
+//            data.value = smallList.await()
         }
     }
 
@@ -95,10 +91,10 @@ class DeviceListViewModel @Inject constructor(private val repository: Repository
      * transformWebItems()
      */
     init{
-//        getWebItems()
+//        getWebItemsRetry()
 //        getWebFlowItems()
 //        getWebFlowCollection()
-        getWebFlowCollectionMapped()
+        getWebItems()
 
         networkRepository.getVisibilityUpdate().observeForever{
             _visibility.value = it
@@ -130,14 +126,14 @@ class DeviceListViewModel @Inject constructor(private val repository: Repository
      */
     fun loadDevices(){
         viewModelScope.launch(Dispatchers.Main) {
-            data.value = prefsRepository.getDbRealmList()
-
-            // observeForever is lifeCycleAware when you use it with ViewModelScope
-            prefsRepository.getVisibilityUpdate().observeForever{
-                _visibility.value = it
-            }
-
-            repository.executeManager()
+//            data.value = prefsRepository.getDbRealmList()
+//
+//            // observeForever is lifeCycleAware when you use it with ViewModelScope
+//            prefsRepository.getVisibilityUpdate().observeForever{
+//                _visibility.value = it
+//            }
+//
+//            repository.executeManager()
         }
     }
 
@@ -189,7 +185,7 @@ class DeviceListViewModel @Inject constructor(private val repository: Repository
     fun getWebFlowItems() {
         viewModelScope.launch(Dispatchers.Main) {
             data.addSource(networkRepository.getNetworkFlow().asLiveData()) {
-                data.value = it
+                data.value = it!!.photos
             }
         }
     }
@@ -202,7 +198,7 @@ class DeviceListViewModel @Inject constructor(private val repository: Repository
     fun getWebFlowCollection() {
         viewModelScope.launch(Dispatchers.Main) {
             networkRepository.getNetworkFlow().collect{
-                data.value = it
+                data.value = it!!.photos
             }
         }
     }
@@ -237,7 +233,7 @@ class DeviceListViewModel @Inject constructor(private val repository: Repository
            Transformations.map(data) { list ->
                data.value = list
                 list.forEach {
-                    it.title = it.title + it.id
+                    it.photographer = it.photographer + it.photographer_id
                 }
             }.observeForever {
                Timber.d("Data: $it")
@@ -249,7 +245,7 @@ class DeviceListViewModel @Inject constructor(private val repository: Repository
         }.observeForever {
             Timber.d("Data: $it")
             it.forEach {
-                it.title = it.title + it.id
+                it.photographer = it.photographer + it.photographer_id
             }
             data.value = it
         }
@@ -267,7 +263,7 @@ class DeviceListViewModel @Inject constructor(private val repository: Repository
     fun getWebItemsRetry() {
         viewModelScope.launch(Dispatchers.Main) {
             //networkRepository.getNewNetworkList(data, _visibility)
-            val items: List<Device>? = async(Dispatchers.IO) {
+            val items: List<Photo> = async(Dispatchers.IO) {
                 networkRepository.getCorrectNetworkList()
             }.await()
 

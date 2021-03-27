@@ -1,26 +1,27 @@
 package nikiizvorski.uk.co.ble.ui
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import io.realm.OrderedRealmCollection
 import io.realm.RealmRecyclerViewAdapter
 import nikiizvorski.uk.co.ble.R
-import nikiizvorski.uk.co.ble.pojos.Device
-import nikiizvorski.uk.co.ble.pojos.DeviceModel
+import nikiizvorski.uk.co.ble.pojos.PhotoModel
+import nikiizvorski.uk.co.ble.pojos.Photo
 
 /**
  *
- * @property devices ArrayList<Device>
+ * @property photos ArrayList<Photos>
  *
  * You can also pass the ViewModel to the adapter directly there wouldn't be any problems with that also.
  * Garbage collector will finish its job without any memory leaks.
  */
-class DeviceRealmListAdapter(private val collection: OrderedRealmCollection<DeviceModel>?, autoUpdate: Boolean):
-    RealmRecyclerViewAdapter<DeviceModel, DeviceRealmListAdapter.ViewHolder>(collection, autoUpdate) {
+class PhotoRealmListAdapter(private val collection: OrderedRealmCollection<PhotoModel>?, autoUpdate: Boolean):
+    RealmRecyclerViewAdapter<PhotoModel, PhotoRealmListAdapter.ViewHolder>(collection, autoUpdate) {
 
     /**
      *
@@ -54,7 +55,7 @@ class DeviceRealmListAdapter(private val collection: OrderedRealmCollection<Devi
      *
      * @param list List<Device>
      */
-    fun updateData(list: List<Device>) {
+    fun updateData(list: List<PhotoModel>) {
         this.notifyDataSetChanged()
     }
 
@@ -66,16 +67,15 @@ class DeviceRealmListAdapter(private val collection: OrderedRealmCollection<Devi
      */
     class ViewHolder(inflater: View): RecyclerView.ViewHolder(inflater) {
         private var postTitle: TextView? = null
-        private var postBody: TextView? = null
+        private var postBody: ImageView? = null
 
         init {
             postTitle = itemView.findViewById(R.id.post_title)
-            postBody = itemView.findViewById(R.id.post_body)
+            postBody = itemView.findViewById(R.id.imageView)
         }
 
-        fun bind(device: DeviceModel) {
+        fun bind(device: PhotoModel) {
             postTitle?.text = device.title
-            postBody?.text = device.id.toString()
         }
     }
 }

@@ -1,57 +1,57 @@
 package nikiizvorski.uk.co.ble.db
 
 import androidx.room.*
-import nikiizvorski.uk.co.ble.pojos.Device
+import nikiizvorski.uk.co.ble.pojos.Photos
 
 @Dao
 interface AppDAO {
 
     /**
      *
-     * @param devices Array<out Device>
+     * @param photos Array<out Photo>
      */
     @Insert
-    fun insertOne(vararg devices: Device)
+    fun insertOne(vararg photos: Photos)
 
     /**
      *
-     * @param devices List<Device>
+     * @param photos List<Photo>
      */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     @JvmSuppressWildcards
-    fun insertAll(devices: List<Device>)
+    fun insertAll(photos: List<Photos>)
 
     /**
-     * get all devices by order
+     * get all photos by order
      */
-    @get:Query("SELECT * FROM device ORDER BY id DESC")
-    val all: List<Device>
+    @get:Query("SELECT * FROM photos ORDER BY page DESC")
+    val all: List<Photos>
 
     /**
      *
      * @param theId Int
-     * @return Array<Device>
+     * @return Array<Photo>
      */
-    @Query("SELECT * FROM device WHERE userId > :theId")
-    fun loadUsersWithId(theId: Int): Array<Device>
+    @Query("SELECT * FROM photos WHERE page > :theId")
+    fun loadUsersWithId(theId: Int): Array<Photos>
 
     /**
      *
      * @param id Int
      */
-    @Query("DELETE FROM device WHERE id = :id")
+    @Query("DELETE FROM photos WHERE page = :id")
     fun deleteSingleWithId(id: Int)
 
     /**
      *
-     * @param devices Array<out Device>
+     * @param photos Array<out Photo>
      */
     @Update
-    fun updateDevices(vararg devices: Device)
+    fun updateDevices(vararg photos: Photos)
 
     /**
      * delete all devices
      */
-    @Query("DELETE FROM device")
+    @Query("DELETE FROM photos")
     fun deleteAllFromDevices()
 }

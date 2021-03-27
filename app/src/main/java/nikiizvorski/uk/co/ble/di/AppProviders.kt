@@ -65,6 +65,9 @@ class AppProviders {
     @Provides
     @Singleton
     fun provideRetrofit(@NonNull okHttpClient: OkHttpClient): Retrofit {
+        /**
+         * Remove the adapter and try newNetworkList next time to see where is your issue ;(
+         */
         return Retrofit.Builder()
             .client(okHttpClient)
             .baseUrl(BASE_URL)

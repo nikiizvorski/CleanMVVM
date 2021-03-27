@@ -109,6 +109,8 @@ Project Migrated to RxJava3 and Retrofit and Adapters have been updated also to 
 
 - KSP will be integrated at a later date whewn most libraries support it!
 
+- MotionLayout can be simply added from ConvertView Tab if you are already using ConstraintsLayout.
+
 Licenze
 ---------------
 

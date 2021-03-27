@@ -1,31 +1,20 @@
 package nikiizvorski.uk.co.ble.ui
 
-import android.app.Activity
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.findViewTreeLifecycleOwner
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
-import dagger.android.AndroidInjection
-import dagger.android.support.DaggerAppCompatActivity
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import nikiizvorski.uk.co.ble.R
 import nikiizvorski.uk.co.ble.databinding.ActivityDeviceBinding
 import timber.log.Timber
-import javax.inject.Inject
+
 
 /**
- * Using Synthetic for Views on the Activity for Example
+ * Using ViewBindings updated
  *
  * @property viewModelFactory AppViewModelFactory
  * @property viewModel DeviceListViewModel
@@ -33,7 +22,7 @@ import javax.inject.Inject
  */
 
 @AndroidEntryPoint
-class DeviceListActivity: AppCompatActivity(), OnAdapterManagement {
+class PhotoListActivity: AppCompatActivity(), OnAdapterManagement {
 
     /**
      * Fix for leak and encapsulation example follow the commits
@@ -47,9 +36,9 @@ class DeviceListActivity: AppCompatActivity(), OnAdapterManagement {
     @Inject lateinit var realm: Realm
     var data: RealmResults<DeviceModel>? = null
     **/
-    val viewModel by lazy { ViewModelProvider(this).get(DeviceListViewModel::class.java) }
+    val viewModel by lazy { ViewModelProvider(this).get(PhotoListViewModel::class.java) }
     var deviceListAdapter: DeviceListAdapter = DeviceListAdapter(this)
-    var deviceRealmList: DeviceRealmListAdapter? = null
+    //var deviceRealmList: DeviceRealmListAdapter? = null
     private lateinit var binding: ActivityDeviceBinding
     private lateinit var navController: NavController
 
@@ -62,7 +51,6 @@ class DeviceListActivity: AppCompatActivity(), OnAdapterManagement {
         binding = ActivityDeviceBinding.inflate(layoutInflater)
         setContentView(binding.root)
         navController = Navigation.findNavController(this, R.id.navigation_host_fragment)
-//        AndroidInjection.inject(this)
         initUI()
 
     }
