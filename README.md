@@ -15,7 +15,7 @@ Structure
 - UI (Views and ViewModels - Sample Integration with ViewBindings and DataBinding) 
 - UTILS (Extensions and Worker Integration)
 
-This project is for learning purpose for people as a starting point for MVVM. There should be some better organization but the code can be used in production applications with small adjustments depending on the project and the logic has to be cleared a bit. It contains mostly small example of how to properly use the new apis and updates and also simple integration and adaptation to the new versions of Android Jetpack also you could add Composable implementation from here also used with Navigation. Most of the example code inside is for that to be able to understand the flow and if you have troubles making your own implementation. I would higlhy recommend to ask me first for a more cleaner sample of this architecture and i could give you an updated version with an application in production so you could see how the new api is implemented. I don't have time to update the whole application and publish it now. If you would rather have a better implementation go and visit Android Developer website. 
+This project is for learning purpose for people as a starting point for MVVM with Hilt and Android Developers example architecture. There should be some better organization but the code can be used in production applications with small adjustments depending on the project and the logic has to be cleared a bit. It contains mostly small example of how to properly use the new apis and updates and also simple integration and adaptation to the new versions of Android Jetpack also you could add Composable implementation from here also used with Navigation. Most of the example code inside is for that to be able to understand the flow and if you have troubles making your own implementation. I would higlhy recommend to ask me first for a more cleaner sample of this architecture and i could give you an updated version with an application in production so you could see how the new api is implemented. I don't have time to update the whole application and publish it now. If you would rather have a better implementation go and visit Android Developer website. 
 
 - This project would probably be discontinued or would be updated on requests. I would currently focus to update https://github.com/nikiizvorski/SimpleMVI look into it. Don't hesitate to ask me anything.
 
@@ -25,7 +25,7 @@ There could be quite a lot of issues happening with DataBinding and some people 
 
 Advantages of this project
 ---------------
-MVVM is quite simple to use and there is almost no problems with this architecture when you use it correclty. Also to mention MVI and MVVM could be thought the same way it really depends on the implementation. MVVM is also simple to test even now with the Hilt implementation becomes easier. Using coroutines and flow also give an advantage. 
+MVVM is quite simple to use and there is almost no problems with this architecture when you use it correclty. Also to mention MVI and MVVM could be thought the same way it really depends on the implementation. MVVM is also simple to test even now with the Hilt implementation becomes easier. Using coroutines and flow also give an advantage. MVI is quite cleaner but takes time to learn so once you grasp it in big projects it is a wonder. As mentioned by everyone there is no best architecture almost all projects can be made with either one. But best would be to consider your resource, team, future of your project. 
 
 Business Logic
 ---------------
