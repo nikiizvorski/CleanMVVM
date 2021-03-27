@@ -1,25 +1,22 @@
 package nikiizvorski.uk.co.ble.repos
 
 import android.content.Context
-import android.os.Environment
 import android.view.View
 import androidx.lifecycle.MutableLiveData
 import androidx.work.Constraints
 import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
-import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
-import io.reactivex.schedulers.Schedulers
 import nikiizvorski.uk.co.ble.api.AppService
 import nikiizvorski.uk.co.ble.db.AppDAO
-import nikiizvorski.uk.co.ble.pojos.Device
+import nikiizvorski.uk.co.ble.pojos.Photos
 import javax.inject.Inject
 import androidx.work.NetworkType
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.disposables.Disposable
+import io.reactivex.rxjava3.schedulers.Schedulers
 import kotlinx.coroutines.delay
 import nikiizvorski.uk.co.ble.util.DeviceWorker
-import java.io.File
-import java.io.FileInputStream
 
 
 /**
@@ -30,7 +27,7 @@ import java.io.FileInputStream
  * @constructor
  */
 class RepositoryImpl @Inject constructor(private val appDao: AppDAO, private val deviceService: AppService, private val workManager: WorkManager) : Repository {
-    val mData = MutableLiveData<List<Device>>()
+    val mData = MutableLiveData<List<Photos>>()
     private lateinit var subscription: Disposable
     private var visibility: Int = 0
 
@@ -66,7 +63,7 @@ class RepositoryImpl @Inject constructor(private val appDao: AppDAO, private val
      *
      * @param data MutableLiveData<List<Device>>
      */
-    override fun getDbList(): MutableLiveData<List<Device>> {
+    override fun getDbList(): MutableLiveData<List<Photos>> {
         mData.value = appDao.all
         return mData
     }
@@ -92,7 +89,7 @@ class RepositoryImpl @Inject constructor(private val appDao: AppDAO, private val
      *
      * @return MutableLiveData<List<Device>>
      */
-    override fun getNetworkList(): MutableLiveData<List<Device>> {
+    override fun getNetworkList(): MutableLiveData<List<Photos>> {
         if (appDao.all.isEmpty()) {
 
             subscription = Observable.fromCallable { appDao.all }
@@ -126,11 +123,11 @@ class RepositoryImpl @Inject constructor(private val appDao: AppDAO, private val
      *
      * @return List<Device>
      */
-    override suspend fun getListDevices(): List<Device> {
+    override suspend fun getListDevices(): List<Photos> {
         // heavy work here
         delay(2000)
-
-        return listOf(Device(109, 109, "STEST", "SBEST"))
+        //listOf(Photo(109, 109, 100.toString(), 100) todo
+        return listOf()
     }
 
     /**

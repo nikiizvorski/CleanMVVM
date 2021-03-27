@@ -7,7 +7,8 @@ import androidx.room.Room
 import androidx.work.WorkManager
 import dagger.Module
 import dagger.Provides
-import io.reactivex.schedulers.Schedulers
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 import io.realm.Realm
 import nikiizvorski.uk.co.ble.api.AppService
 import nikiizvorski.uk.co.ble.db.AppDB
@@ -16,13 +17,14 @@ import nikiizvorski.uk.co.ble.ext.BASE_URL
 import nikiizvorski.uk.co.ble.repos.*
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
+import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Singleton
 
 @Module
-class AppModule {
+@InstallIn(SingletonComponent::class)
+class AppProviders {
 
     /**
      *
@@ -63,11 +65,14 @@ class AppModule {
     @Provides
     @Singleton
     fun provideRetrofit(@NonNull okHttpClient: OkHttpClient): Retrofit {
+        /**
+         * Remove the adapter and try newNetworkList next time to see where is your issue ;(
+         */
         return Retrofit.Builder()
             .client(okHttpClient)
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
-            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
             .build()
     }
 

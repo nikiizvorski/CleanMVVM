@@ -3,11 +3,9 @@ package nikiizvorski.uk.co.ble.repos
 import android.view.View
 import androidx.lifecycle.MutableLiveData
 import io.realm.Realm
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import nikiizvorski.uk.co.ble.db.AppDAO
-import nikiizvorski.uk.co.ble.pojos.Device
-import nikiizvorski.uk.co.ble.pojos.DeviceModel
+import nikiizvorski.uk.co.ble.pojos.Photos
+import nikiizvorski.uk.co.ble.pojos.PhotoModel
 import javax.inject.Inject
 
 /**
@@ -17,14 +15,14 @@ import javax.inject.Inject
  */
 class PrefsRepositoryImpl @Inject constructor(private val appDao: AppDAO, private val realm: Realm): PrefsRepository {
     private var visibility: MutableLiveData<Int> = MutableLiveData()
-    var data: List<Device> = listOf()
+    var data: List<Photos> = listOf()
 
 
     /**
      *
      * @param data MutableLiveData<List<Device>>
      */
-    override fun getDbRealmList(): List<Device> {
+    override fun getDbRealmList(): List<Photos> {
         realm.executeTransaction { realm ->
             var deviceModel = findInRealm(realm, 101)
 
@@ -32,18 +30,18 @@ class PrefsRepositoryImpl @Inject constructor(private val appDao: AppDAO, privat
                 deviceModel.id = 101
                 deviceModel.userId = 111
                 deviceModel.title = "Samsung S10+"
-                deviceModel.body = "Their shity system doesn't work!"
+                deviceModel.body = "Their shitty system doesn't work!"
 
-                data = listOf(Device(deviceModel.userId, deviceModel.id, deviceModel.title, deviceModel.body))
+//                data = listOf(Photo(deviceModel.userId, deviceModel.id, deviceModel.title, deviceModel.body.length))
                 visibility.value = View.GONE
             } else {
-                deviceModel = realm.createObject(DeviceModel::class.java)
+                deviceModel = realm.createObject(PhotoModel::class.java)
                 deviceModel.id = 101
                 deviceModel.userId = 111
                 deviceModel.title = "Samsung S10+"
-                deviceModel.body = "Their shity system doesn't work!"
+                deviceModel.body = "Their shitty system doesn't work!"
 
-                data = listOf(Device(deviceModel.userId, deviceModel.id, deviceModel.title, deviceModel.body))
+//                data = listOf(Photo(deviceModel.userId, deviceModel.id, deviceModel.title, deviceModel.body.length))
                 visibility.value = View.GONE
             }
         }
@@ -63,7 +61,7 @@ class PrefsRepositoryImpl @Inject constructor(private val appDao: AppDAO, privat
      *
      * @param data MutableLiveData<List<Device>>
      */
-    override fun getDbList(): List<Device>{
+    override fun getDbList(): List<Photos>{
         return appDao.all
     }
 
@@ -74,8 +72,8 @@ class PrefsRepositoryImpl @Inject constructor(private val appDao: AppDAO, privat
      * @param id    the id
      * @return the user model
      */
-    fun findInRealm(realm: Realm, id: Int): DeviceModel? {
-        return realm.where(DeviceModel::class.java).equalTo("id", id).findFirst()
+    fun findInRealm(realm: Realm, id: Int): PhotoModel? {
+        return realm.where(PhotoModel::class.java).equalTo("id", id).findFirst()
     }
 
     /**

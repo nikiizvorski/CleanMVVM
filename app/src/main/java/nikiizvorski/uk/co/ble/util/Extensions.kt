@@ -1,7 +1,6 @@
 package nikiizvorski.uk.co.ble.util
 
-import nikiizvorski.uk.co.ble.pojos.Device
-import nikiizvorski.uk.co.ble.pojos.DeviceModel
+import nikiizvorski.uk.co.ble.pojos.Photos
 
 /**
  * Kotlin provides the ability to extend a class with new functionality without having to inherit from the class
@@ -41,9 +40,9 @@ fun String.removeFirstLastChar(): String =  this.substring(1, this.length - 1)
  * @param device DeviceModel
  * @return String
  */
-fun customResult(device: Device) = with(device.title) {
-        // in here, the scope is actually the String
-        this
+fun customResult(device: Photos) = with(device.page) {
+        // in here, the scope is actually the String using this you can see it
+        this.toString()
 }
 
 
