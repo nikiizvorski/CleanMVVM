@@ -73,7 +73,7 @@ Plugins that i have personally used in our company and in my personal work.
 
 Comments and Ideas
 ---------------
-Here you can find a very clean arch that will be updated in the future with some small samples and cool integrations over the time. I would be adding some more about that soon when i can find some more time. 
+Please do make sure to comment if you see something that is not right. I do appreciate it. Currently this project is disscontinued and probably won't be updated anytime soon. Don't really have the time but if any request please contact me directly.
 
 Android Jetpack and Navigation Integration Added
 ---------------
