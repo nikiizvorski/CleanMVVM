@@ -16,11 +16,11 @@ Structure
 - UI (Views and ViewModels - Sample Integration with KTX and Synthetics) 
 - UTILS (DeviceUtil and DeviceWorker Integration)
 
-This project is for learning purpose for people as a starting point. There should be some better organization but the code can be used in production applications with small adjustments depending on the project.  Most of the example code inside is for that. Adapter Management over MVVM architecture has been integrated.
+This project is for learning purpose for people as a starting point. There should be some better organization but the code can be used in production applications with small adjustments depending on the project and the logic has to be cleared a bit. It contains mostly small example of how to properly use the new apis and updates and also simple integration and adaptation to the new versions of Android Jetpack. Most of the example code inside is for that. I would higlhy recommend to ask me first for a more cleaner sample of this architecture. 
 
 Business Logic
 ---------------
-The following has been applied. Views and binding is in the view where it should. There shouldn't be any of that in there. You have ViewModels taking care of that. View are used with AndroidX Integration to remove and optimise boilerplate. Models and different actions as networking and db are well places as you can see in different Repository.
+The following has been applied. Views and binding is in the view where it should. There shouldn't be any of that in there. You have ViewModels taking care of that. View are used with AndroidX Integration to remove and optimise boilerplate. Models and different actions as networking and db are using the Repository pattern.
 
 Code Style and Linting
 ---------------
@@ -124,5 +124,6 @@ Project Migrated to RxJava3 and Retrofit and Adapters have been updated also to 
 License
 ---------------
 
-Feel free to use. If you can add me to any credits would appreciate it. Thanks.
+Feel free to use. If you can add me to any credits would appreciate it. Thanks. A good base would be to have something like the new projects that i will be adding for MVI and KotlinMultiplatform with MVI.
+
 
