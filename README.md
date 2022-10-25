@@ -1,6 +1,6 @@
 # CleanMVVM
 
-Please don't use this project as it is! It's a project to just showcase a really outdated API and usage. It's not even fully functional and it could lead to bad practises.
+**Please don't use this project as it is! It's a project to just showcase a really outdated API and usage. It's not even fully functional and it could lead to bad practises.**
 
 ![alt text](https://i.imgur.com/NA77aOD.png)
 
